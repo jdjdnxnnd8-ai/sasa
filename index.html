@@ -37,7 +37,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* شاشة تسجيل الدخول الإجبارية */
+/* شاشة تسجيل الدخول الإجبارية وتفعيل الصوت */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -73,7 +73,7 @@ body {
 }
 .btn-main:hover { background: #165b43; }
 
-/* الهيدر العلوي وشريط الإعدادات */
+/* الهيدر العلوي والشريط */
 header {
     width: 100%;
     max-width: 1000px;
@@ -141,7 +141,7 @@ header {
     border-radius: 10px; font-size: 1em; outline: none; margin-bottom: 12px;
 }
 
-/* الهيدر الخاص بالأقسام */
+/* صندوق الأقسام المنظمة */
 .category-box {
     background: white;
     border-radius: 20px;
@@ -163,7 +163,6 @@ header {
     gap: 10px;
 }
 
-/* شبكة الأزرار داخل الأقسام */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -180,8 +179,8 @@ header {
 .card-btn .icon { font-size: 1.8em; }
 .card-btn span { font-size: 0.95em; font-weight: bold; text-align: center; }
 
-/* التبويبات والمصحف داخل عبادتي */
-.tab-menu { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+/* تبويبات الأقسام التحتية */
+.tab-menu { display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; flex-wrap: wrap; }
 .tab-btn {
     padding: 10px 18px; background: #e8f0ec; border: none; border-radius: 8px;
     color: #0b3d2c; font-weight: bold; cursor: pointer; font-size: 0.9em;
@@ -191,7 +190,7 @@ header {
 .tab-content.active { display: block; }
 
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
-.quran-img { width: 100%; max-width: 450px; height: auto; border-radius: 12px; border: 2px solid #0b3d2c; }
+.quran-img { width: 100%; max-width: 480px; height: auto; border-radius: 12px; border: 2px solid #0b3d2c; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
 input, select, audio {
     width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px;
@@ -206,10 +205,10 @@ input, select, audio {
 <div id="loginOverlay">
     <div class="login-card">
         <h2>قـريـب 💚</h2>
-        <p>مرحباً بك، يرجى تسجيل الدخول للبدء</p>
+        <p>مرحباً بك، يرجى تسجيل الدخول لبدء تشغيل الأصوات</p>
         <input type="text" id="loginName" placeholder="اسم المستخدم">
         <input type="password" id="loginPass" placeholder="كلمة السر">
-        <button class="btn-main" onclick="performLogin()">تسجيل الدخول</button>
+        <button class="btn-main" onclick="performLogin()">دخول وتفعيل التطبيق</button>
     </div>
 </div>
 
@@ -291,7 +290,7 @@ input, select, audio {
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الأول: الاحتياجات اليومية -->
+    <!-- القسم الأول: الاحتياجات اليومية (مرتب فوق) -->
     <!-- ========================================== -->
     <div class="category-box">
         <div class="category-header">✋ الاحتياجات اليومية للتعبير السريع</div>
@@ -332,32 +331,32 @@ input, select, audio {
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الثاني: عبادتي -->
+    <!-- القسم الثاني: عبادتي (تحت القسم الأول مباشرة وبدون اختفاء) -->
     <!-- ========================================== -->
     <div class="category-box">
-        <div class="category-header">🌙 قسم «عبادتي» (قرآن وأذكار)</div>
+        <div class="category-header">🌙 قسم «عبادتي» (المصحف كامل والأذكار)</div>
         
         <div class="tab-menu">
-            <button class="tab-btn active" onclick="switchTab('mushafTab', this)">📖 المصحف الشريف</button>
-            <button class="tab-btn" onclick="switchTab('quranAudioTab', this)">🎧 القرآن الصوتي</button>
+            <button class="tab-btn active" onclick="switchTab('mushafTab', this)">📖 المصحف الشريف كاملاً (604 صفحة)</button>
+            <button class="tab-btn" onclick="switchTab('quranAudioTab', this)">🎧 القرآن الصوتي (114 سورة)</button>
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف -->
+        <!-- المصحف الشريف كاملاً -->
         <div id="mushafTab" class="tab-content active">
-            <p style="text-align:center; font-size:0.9em; color:#666;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة للتقليب)</p>
+            <p style="text-align:center; font-size:0.95em; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب يساراً أو يميناً لتقليب المصحف)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" alt="المصحف">
+                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" alt="المصحف الشريف">
             </div>
-            <div style="display:flex; justify-content:space-between; max-width:450px; margin:0 auto;">
-                <button class="btn-main" style="width:auto; padding:8px 18px;" onclick="nextPage()">التالية ⬅️</button>
-                <button class="btn-main" style="width:auto; padding:8px 18px;" onclick="prevPage()">➡️ السابقة</button>
+            <div style="display:flex; justify-content:space-between; max-width:480px; margin:15px auto 0;">
+                <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
+                <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="prevPage()">➡️ السابقة</button>
             </div>
         </div>
 
-        <!-- القرآن الصوتي -->
+        <!-- القرآن الصوتي كاملاً -->
         <div id="quranAudioTab" class="tab-content">
-            <input type="text" id="quranSearch" placeholder="🔍 ابحث باسم السورة..." oninput="filterSurahs()">
+            <input type="text" id="quranSearch" placeholder="🔍 ابحث عن اسم السورة (مثلاً: البقرة، يس، الملك)..." oninput="filterSurahs()">
             <select id="surahSelect" onchange="changeSurah()"></select>
             <audio id="audioPlayer" controls></audio>
         </div>
@@ -365,22 +364,23 @@ input, select, audio {
         <!-- الأذكار والمسبحة -->
         <div id="azkarTab" class="tab-content">
             <div style="text-align:center; margin-bottom:15px;">
-                <button style="background:#0b3d2c; color:white; border:none; width:80px; height:80px; border-radius:50%; font-size:1.5em; font-weight:bold; cursor:pointer;" onclick="countUp()">
+                <button style="background:#0b3d2c; color:white; border:none; width:85px; height:85px; border-radius:50%; font-size:1.5em; font-weight:bold; cursor:pointer;" onclick="countUp()">
                     <span id="counter">0</span>
                 </button>
-                <p style="margin-top:5px; color:#666;">اضغط للاستغفار</p>
+                <p style="margin-top:5px; color:#666;">اضغط على الدائرة للاستغفار</p>
             </div>
             <button class="btn-main" onclick="speak('أستغفر الله العظيم وأتوب إليه')">🔊 نطق: أستغفر الله</button>
             <button class="btn-main" style="margin-top:8px;" onclick="speak('سبحان الله وبحمده سبحان الله العظيم')">🔊 نطق: سبحان الله وبحمده</button>
+            <button class="btn-main" style="margin-top:8px;" onclick="speak('لا إله إلا الله وحده لا شريك له')">🔊 نطق: لا إله إلا الله</button>
         </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الثالث: لغة الإشارة -->
+    <!-- القسم الثالث: لغة الإشارة (تحت القسم الثاني) -->
     <!-- ========================================== -->
     <div class="category-box">
         <div class="category-header">🤟 قسم لغة الإشارة (للصم والبكم)</div>
-        <p style="margin-bottom:15px; font-size:0.95em; color:#555;">اضغط على الكلمة لتنطق بصوت عالٍ للمحيطين بك:</p>
+        <p style="margin-bottom:15px; font-size:0.95em; color:#555;">اضغط على العبارة لتنطق بصوت عالٍ وواضح للمحيطين بك:</p>
         <div class="grid-container">
             <button class="card-btn" style="background:#165b43;" onclick="speak('شكراً لك')">
                 <span class="icon">🤝</span>
@@ -405,6 +405,14 @@ input, select, audio {
 
 <script>
 let currentRate = 0.85;
+
+// تفعيل نطق الصوت الأول لتجاوز حظر المتصفحات
+function initSpeechEngine() {
+    if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(u);
+    }
+}
 
 function speak(text) {
     if ('speechSynthesis' in window) {
@@ -450,13 +458,15 @@ function requestNotificationPermission() {
 }
 
 function switchTab(tabId, btnEl) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // إخفاء محتويات التبويبات داخل عبادتي فقط ليبقى كل قسم مرتب تحت بعضه
+    const parentBox = btnEl.closest('.category-box');
+    parentBox.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    parentBox.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     btnEl.classList.add('active');
 }
 
-// المصحف وتقليب الصفحات
+// المصحف وتقليب الصفحات كامل (604 صفحة)
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
@@ -474,7 +484,7 @@ quranBox.addEventListener('touchend', e => {
     if (touchEndX - touchStartX > 50) prevPage();
 });
 
-// القرآن الصوتي
+// القرآن الصوتي (114 سورة كاملة)
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
 const select = document.getElementById("surahSelect");
 const audio = document.getElementById("audioPlayer");
@@ -508,6 +518,7 @@ function countUp() { c++; document.getElementById("counter").innerText = c; }
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
+        initSpeechEngine(); // تفعيل محرك الصوت مع أول ضغطة
         localStorage.setItem("qareeb_logged", "true");
         document.getElementById("loginOverlay").style.display = "none";
     } else {
