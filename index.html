@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تطبيق قريب - Qareeb</title>
+<title>Sasa medo - تطبيق قريب</title>
+<meta name="description" content="موقع Sasa medo - تطبيق قريب للقرآن الكريم والاحتياجات اليومية">
 <style>
 :root {
     --bg-color: #0b1a13;
@@ -193,7 +193,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
-/* ================= المصحف الشريف وتقليب الصفحات 3D المطور ================= */
+/* المصحف الشريف 3D */
 .quran-viewer { 
     text-align: center; 
     perspective: 1500px; 
@@ -222,7 +222,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     box-shadow: 20px 10px 30px rgba(0,0,0,0.7);
 }
 
-/* بوصلة القبلة المتطورة */
+/* بوصلة القبلة الذكية من موقعك */
 .compass-wrapper {
     position: relative;
     width: 250px; height: 250px;
@@ -290,11 +290,11 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .nav-item.active { color: var(--accent-color); }
 .nav-item span.icon { font-size: 1.3em; }
 
-.azkar-card, .hadith-card {
+.azkar-card, .hadith-card, .book-card {
     background: #0b1a13; border: 1px solid var(--card-border);
     padding: 16px; border-radius: 12px; margin-bottom: 12px;
 }
-.azkar-card p, .hadith-card p { font-size: 0.95em; line-height: 1.7; color: #e2e8f0; }
+.azkar-card p, .hadith-card p, .book-card p { font-size: 0.95em; line-height: 1.7; color: #e2e8f0; }
 </style>
 </head>
 
@@ -313,7 +313,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 
 <header>
     <h1>تطبيق قريب - Qareeb</h1>
-    <p>احتياجاتك توصل بكلمة 💚</p>
+    <p>Sasa medo 💚</p>
 </header>
 
 <div class="container">
@@ -332,7 +332,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- لوحة الصدارة للمستغفرين TOP -->
+    <!-- لوحة الصدارة TOP -->
     <div class="top-board">
         <div class="top-title">
             <span>🏆 متصدري المستغفرين اليوم</span>
@@ -341,7 +341,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <div class="top-list" id="topList"></div>
     </div>
 
-    <!-- قسم الكتابة والنطق الفوري والتواصل -->
+    <!-- قسم الكتابة والنطق الفوري -->
     <div class="speak-box">
         <h3>✍️ كتابة ونطق فوري للاحتياجات:</h3>
         <input type="text" id="customTextInput" placeholder="اكتب جملتك هنا لتنطق فورا...">
@@ -440,11 +440,11 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- 2. قسم القبلة بجد -->
+    <!-- 2. قسم القبلة الحقيقية من موقعك الجغرافي -->
     <div id="qiblaSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--accent-color); text-align:center;">🕋 بوصلة القبلة الحقيقية</h3>
-        <p style="margin-top:5px; text-align:center; color:var(--text-muted); font-size:0.9em;" id="qiblaStatus">قم بتدوير الهاتف لمطابقة خط البوصلة مع الكعبة الشريفة</p>
+        <h3 style="color: var(--accent-color); text-align:center;">🕋 القبلة المباشرة من موقعك الحالي</h3>
+        <p style="margin-top:5px; text-align:center; color:var(--text-muted); font-size:0.9em;" id="qiblaStatus">قم بتدوير الهاتف لمطابقة خط البوصلة مع موقع الكعبة</p>
         
         <div class="compass-wrapper">
             <div class="kaaba-marker" id="kaabaMarker">🕋</div>
@@ -456,32 +456,22 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <p style="font-size:0.8em; text-align:center; color:var(--text-muted); margin-top:10px;" id="qiblaAngleText">زاوية القبلة: --</p>
     </div>
 
-    <!-- 3. قسم الاستماع للقرآن -->
+    <!-- 3. قسم الاستماع للقرآن (الشيخ المختار مشاري العفاسي) -->
     <div id="audioSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color); margin-bottom: 10px;">🎧 الاستماع للقرآن الكريم</h3>
-        
-        <label style="font-size:0.85em; color:var(--text-muted);">اختر القارئ والشيخ:</label>
-        <select id="reciterSelect" style="width:100%; padding:10px; margin-top:5px; margin-bottom:12px; background:#0b1a13; color:white; border:1px solid var(--card-border); border-radius:8px;" onchange="changeSurah()">
-            <option value="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/">مشاري راشد العفاسي</option>
-            <option value="https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/">عبد الباسط عبد الصمد</option>
-            <option value="https://everyayah.com/data/Minshawi_Murattal_128kbps/">محمد صديق المنشاوي</option>
-            <option value="https://everyayah.com/data/Saood_ash-Shuraym_128kbps/">سعود الشريم</option>
-            <option value="https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/">عبد الرحمن السديس</option>
-            <option value="https://everyayah.com/data/Maher_AlMuaiqly_64kbps/">ماهر المعيقلي</option>
-            <option value="https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/">ياسر الدوسري</option>
-        </select>
+        <p style="font-size:0.85em; color:var(--text-muted); margin-bottom:10px;">القارئ الأساسي: الشيخ مشاري راشد العفاسي</p>
 
-        <label style="font-size:0.85em; color:var(--text-muted);">اختر السورة الشريفة:</label>
+        <label style="font-size:0.85em; color:var(--text-muted);">اختر السورة الشريفة (114 سورة كاملة):</label>
         <select id="surahSelect" style="width:100%; padding:10px; margin-top:5px; background:#0b1a13; color:white; border:1px solid var(--card-border); border-radius:8px;" onchange="changeSurah()"></select>
         
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 4. قسم الأذكار المكتوبة -->
+    <!-- 4. قسم الأذكار الموسع والشامل جداً -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--accent-color); margin-bottom: 12px;">📿 حصن المسلم والأذكار المكتوبة</h3>
+        <h3 style="color: var(--accent-color); margin-bottom: 12px;">📿 الموسوعة الشاملة للأذكار</h3>
         
         <div class="azkar-card">
             <h4 style="color:var(--accent-color); margin-bottom:6px;">☀️ أذكار الصباح</h4>
@@ -494,12 +484,27 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
 
         <div class="azkar-card">
-            <h4 style="color:var(--accent-color); margin-bottom:6px;">🛌 أذكار النوم</h4>
-            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. قراءة آية الكرسي والمعوذتين.</p>
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">🛌 أذكار النوم والاستيقاظ</h4>
+            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. وعند الاستيقاظ: الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">🕌 أذكار ما بعد الصلاة</h4>
+            <p>أستغفر الله (3 مرات)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام. آية الكرسي، والتسبيح والتحميد والتكبير 33 مرة.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">🤲 أذكار الشدائد والكروب</h4>
+            <p>لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات ورب الأرض ورب العرش الكريم. حسبي الله ونعم الوكيل.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">🚗 أذكار السفر والخروج</h4>
+            <p>بسم الله توكلت على الله ولا حول ولا قوة إلا بالله. دعاء السفر: سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون.</p>
         </div>
     </div>
 
-    <!-- 5. قسم الأحاديث النبوية المكتوبة -->
+    <!-- 5. قسم الأحاديث الشامل جداً -->
     <div id="hadithSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
@@ -515,15 +520,20 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
 
         <div class="hadith-card">
-            <h4 style="color:var(--accent-color); margin-bottom:6px;">3. حديث الأخلاق وحسن التعامل:</h4>
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">3. حديث حسن الخلق والكلام:</h4>
             <p>عن أبي هريرة رضي الله عنه أن رسول الله صلى الله عليه وسلم قال: "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت، ومن كان يؤمن بالله واليوم الآخر فليكرِم جاره..." [متفق عليه]</p>
+        </div>
+
+        <div class="hadith-card">
+            <h4 style="color:var(--accent-color); margin-bottom:6px;">4. حديث التكافل والرحمة:</h4>
+            <p>عن النعمان بن بشير رضي الله عنهما قال: قال رسول الله صلى الله عليه وسلم: "مثل المؤمنين في توادهم وتراحمهم وتعاطفهم مثل الجسد إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى". [متفق عليه]</p>
         </div>
     </div>
 
     <!-- 6. قسم التحفيظ الشامل -->
     <div id="tahfeezSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--accent-color); margin-bottom:12px;">📈 برنامج التحفيظ والترديد</h3>
+        <h3 style="color: var(--accent-color); margin-bottom:12px;">📈 برنامج التحفيظ والترديد المتقدم</h3>
         
         <label style="font-size:0.85em; color:var(--text-muted);">السورة المراد حفظها:</label>
         <select id="tahfeezSurahSelect" style="width:100%; padding:10px; margin:5px 0 10px; background:#0b1a13; color:white; border:1px solid var(--card-border); border-radius:8px;"></select>
@@ -539,7 +549,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
             </div>
         </div>
 
-        <label style="font-size:0.85em; color:var(--text-muted);">عدد مرات التكرار:</label>
+        <label style="font-size:0.85em; color:var(--text-muted);">عدد مرات التكرار والترديد:</label>
         <select id="repeatTimes" style="width:100%; padding:10px; margin:5px 0 15px; background:#0b1a13; color:white; border:1px solid var(--card-border); border-radius:8px;">
             <option value="3">تكرار 3 مرات</option>
             <option value="5">تكرار 5 مرات</option>
@@ -549,7 +559,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <button class="btn-main" onclick="startTahfeez()">بدء جلسة الحفظ</button>
     </div>
 
-    <!-- بقية الأقسام -->
+    <!-- 7. قسم التسبيح -->
     <div id="tasbihSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color);">💎 التسبيح والمسبحة الإلكترونية</h3>
@@ -561,10 +571,25 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
+    <!-- 8. قسم الكتب الموسع -->
     <div id="booksSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--accent-color);">📚 الكتب الدينية والمكتبة</h3>
-        <p style="margin-top:10px; color:var(--text-muted);">مكتبة متكاملة من كتب التفسير والفقه والسيرة النبوية المطهرة.</p>
+        <h3 style="color: var(--accent-color); margin-bottom:12px;">📚 المكتبة والكتب الدينية الشاملة</h3>
+        
+        <div class="book-card">
+            <h4 style="color:var(--accent-color); margin-bottom:4px;">1. تفسير ابن كثير</h4>
+            <p>من أشهر الكتب الإسلامية المختصة بتفسير القرآن الكريم بالقرآن والحديث وأقوال الصحابة والتابعين.</p>
+        </div>
+
+        <div class="book-card">
+            <h4 style="color:var(--accent-color); margin-bottom:4px;">2. كتاب رياض الصالحين</h4>
+            <p>كتاب متكامل للإمام النووي يجمع الأحاديث الصحيحة الموزعة على أبواب السلوك والعبادات والأخلاق.</p>
+        </div>
+
+        <div class="book-card">
+            <h4 style="color:var(--accent-color); margin-bottom:4px;">3. السيرة النبوية لابن هشام</h4>
+            <p>من أهم وأشمل المصادر في توثيق سيرة النبي صلى الله عليه وسلم وغزواته وحياته.</p>
+        </div>
     </div>
 
 </div>
@@ -637,7 +662,6 @@ function playRealisticPageFlipSound() {
         let buf = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
         let data = buf.getChannelData(0);
 
-        // إنشاء صوت احتكاك خفيف للورق (Paper Rustle Noise)
         for (let i = 0; i < buf.length; i++) {
             let env = Math.sin((i / buf.length) * Math.PI);
             data[i] = (Math.random() * 2 - 1) * env;
@@ -646,7 +670,6 @@ function playRealisticPageFlipSound() {
         let src = audioCtx.createBufferSource();
         src.buffer = buf;
 
-        // فلترة الصوت ليكون دافئاً ومشابهاً للورق الحقيقي
         let filter = audioCtx.createBiquadFilter();
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
@@ -669,10 +692,7 @@ function updateQuranPage(direction = 'next') {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
     
-    // تشغيل صوت التقليب الناعم
     playRealisticPageFlipSound();
-    
-    // إطلاق أنيميشن الانثناء والتقليب
     img.classList.add(direction === 'next' ? 'flip-next' : 'flip-prev');
 
     setTimeout(() => {
@@ -708,7 +728,7 @@ function prevPage() {
     }
 }
 
-/* ================= بوصلة القبلة وموقع الكعبة وعلامة الصح ✅ ================= */
+/* ================= بوصلة القبلة الحقيقية المباشرة من موقع الجغرافي ================= */
 let qiblaBearing = 136.8;
 
 function calculateQiblaAngle(lat, lng) {
@@ -892,7 +912,7 @@ function startPrayerCountdown() {
     }, 1000);
 }
 
-/* الاستماع للقرآن والتحفيظ */
+/* الاستماع للقرآن للشيخ العفاسي */
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
 
 function loadSurahs() {
@@ -916,10 +936,9 @@ function changeSurah() {
     let select = document.getElementById("surahSelect");
     let audio = document.getElementById("audioPlayer");
     let num = select.value;
-    let reciterBaseUrl = document.getElementById("reciterSelect").value;
-    if(!num || !reciterBaseUrl) return;
+    if(!num) return;
     let file = num.toString().padStart(3, '0') + ".mp3";
-    audio.src = reciterBaseUrl + file;
+    audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
 function startTahfeez() {
@@ -953,4 +972,3 @@ updateLeaderboard();
 
 </body>
 </html>
-
