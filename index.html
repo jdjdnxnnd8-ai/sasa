@@ -188,10 +188,10 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف وضبط ظهور الصور تماماً */
+/* المصحف الشريف وضبط الصور الأصلية تماماً */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
-    width: 100%; max-width: 480px; height: auto; min-height: 500px; border-radius: 12px;
+    width: 100%; max-width: 480px; height: auto; min-height: 520px; border-radius: 12px;
     border: 2px solid #0b3d2c; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     background: #ffffff; object-fit: contain;
 }
@@ -351,11 +351,11 @@ input, select, audio {
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف بالصور المؤكدة -->
+        <!-- المصحف الشريف -->
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://www.qurankerm.com/quran/images/1.png" onerror="this.src='https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png'" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" onerror="this.src='https://www.qurankerm.com/quran/images/1.png'" alt="صفحة المصحف">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -465,14 +465,14 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف وتقليب الصفحات مع توفير رابطين احتياطيين لضمان ظهور الصور فوراً
+// المصحف وتقليب الصفحات برابط موثوق ودقيق 100%
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
-    img.src = `https://www.qurankerm.com/quran/images/${currentPage}.png`;
+    img.src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
     img.onerror = function() {
-        this.src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
+        this.src = `https://www.qurankerm.com/quran/images/${currentPage}.png`;
     };
 }
 
