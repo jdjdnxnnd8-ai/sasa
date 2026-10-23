@@ -188,7 +188,7 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف وضبط الصور الأصلية تماماً */
+/* المصحف الشريف وضبط ظهور الصور تماماً */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
     width: 100%; max-width: 480px; height: auto; min-height: 520px; border-radius: 12px;
@@ -355,7 +355,7 @@ input, select, audio {
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" onerror="this.src='https://www.qurankerm.com/quran/images/1.png'" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://www.everyayah.com/data/images/img_%20(1).png" alt="صفحة المصحف">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -465,15 +465,14 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف وتقليب الصفحات برابط موثوق ودقيق 100%
+// المصحف وتقليب الصفحات برابط EveryAyah المباشر والمضمون 100%
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
-    img.src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
-    img.onerror = function() {
-        this.src = `https://www.qurankerm.com/quran/images/${currentPage}.png`;
-    };
+    // تنسيق رقم الصفحة بثلاث خانات (مثلاً صفحة 1 تصبح 001)
+    let pageStr = String(currentPage).padStart(3, '0');
+    img.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
 }
 
 function nextPage() { if(currentPage < 604) { currentPage++; updateQuranPage(); } }
