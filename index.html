@@ -81,7 +81,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 
 .container { width: 100%; max-width: 500px; padding: 0 15px; }
 
-/* شريط أوقات الصلاة */
+/* شريط أوقات الصلاة الحقيقية */
 .prayer-bar {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -91,8 +91,11 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     text-align: center;
 }
 .prayer-title { color: var(--accent-color); font-size: 1.1em; font-weight: bold; margin-bottom: 5px; }
-.prayer-timer { font-size: 1.5em; font-weight: bold; margin-bottom: 10px; }
-.prayer-times-grid { display: flex; justify-content: space-around; font-size: 0.85em; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px; }
+.prayer-timer { font-size: 1.5em; font-weight: bold; margin-bottom: 10px; color: #ffffff; }
+.prayer-location { font-size: 0.8em; color: var(--text-muted); margin-bottom: 8px; }
+.prayer-times-grid { display: flex; justify-content: space-around; font-size: 0.8em; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px; flex-wrap: wrap; gap: 5px; }
+.prayer-times-grid div { display: flex; flex-direction: column; align-items: center; }
+.prayer-times-grid span.p-time { color: var(--accent-color); font-weight: bold; }
 
 /* قسم الكتابة والنطق */
 .speak-box {
@@ -109,7 +112,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     color: white; border-radius: 8px; font-size: 0.95em; outline: none;
 }
 
-/* شبكة أزرار الاحتياجات (للصم والبكم) */
+/* شبكة أزرار الاحتياجات */
 .needs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -185,6 +188,32 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     background: #fff; object-fit: contain; display: block; margin: 0 auto 15px;
 }
 
+/* بوصلة القبلة التفاعلية الحقيقية */
+.compass-container {
+    position: relative;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 5px solid var(--accent-color);
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0b1a13;
+}
+.compass-arrow {
+    width: 8px; height: 180px;
+    background: linear-gradient(to bottom, #ff4d4d 50%, var(--accent-color) 50%);
+    position: absolute;
+    border-radius: 4px;
+    transform-origin: center center;
+    transition: transform 0.2s ease-out;
+}
+.compass-kaaba {
+    position: absolute;
+    top: 10px;
+    font-size: 1.5em;
+}
+
 /* الشريط السفلي الثابت */
 .bottom-nav {
     position: fixed;
@@ -226,17 +255,17 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 
 <div class="container">
 
-    <!-- شريط أوقات الصلاة -->
+    <!-- شريط أوقات الصلاة الحقيقية -->
     <div class="prayer-bar">
-        <div class="prayer-title">أذان المغرب</div>
-        <div class="prayer-timer" id="prayerTimer">01:13:49</div>
-        <div style="font-size: 0.8em; color: var(--text-muted); margin-bottom: 8px;">باقي على الأذان • Alexandria</div>
+        <div class="prayer-title" id="nextPrayerName">الصلاة القادمة: ...</div>
+        <div class="prayer-timer" id="prayerTimer">00:00:00</div>
+        <div class="prayer-location" id="userLocationText">جاري تحديد الموقع تلقائياً...</div>
         <div class="prayer-times-grid">
-            <div>الفجر 04:45</div>
-            <div>الظهر 11:41</div>
-            <div>العصر 14:52</div>
-            <div>المغرب 17:40</div>
-            <div>العشاء 18:58</div>
+            <div>الفجر <span class="p-time" id="time-Fajr">--:--</span></div>
+            <div>الظهر <span class="p-time" id="time-Dhuhr">--:--</span></div>
+            <div>العصر <span class="p-time" id="time-Asr">--:--</span></div>
+            <div>المغرب <span class="p-time" id="time-Maghrib">--:--</span></div>
+            <div>العشاء <span class="p-time" id="time-Isha">--:--</span></div>
         </div>
     </div>
 
@@ -251,7 +280,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <!-- الشاشة الرئيسية -->
     <div id="mainHomeSection">
         
-        <!-- قسم الاحتياجات الصوتية (الصم والبكم) -->
+        <!-- قسم الاحتياجات الصوتية -->
         <div class="section-title">🔊 أزرار الاحتياجات والتواصل السريع</div>
         <div class="needs-grid">
             <button class="need-btn" onclick="speakText('أحتاج مساعدة من فضلك')">
@@ -340,7 +369,22 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- 2. قسم الاستماع للقرآن -->
+    <!-- 2. قسم القبلة الحقيقية المباشرة -->
+    <div id="qiblaSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color); text-align:center;">🕋 بوصلة القبلة الحقيقية</h3>
+        <p style="margin-top:5px; text-align:center; color:var(--text-muted); font-size:0.9em;" id="qiblaStatus">دبّر هاتفك ولف مع البوصلة باتجاه الكعبة</p>
+        
+        <div class="compass-container">
+            <span class="compass-kaaba">🕋</span>
+            <div class="compass-arrow" id="compassArrow"></div>
+        </div>
+
+        <button class="btn-main" onclick="requestCompassPermission()">تفعيل بوصلة الهاتف</button>
+        <p style="font-size:0.8em; text-align:center; color:var(--text-muted); margin-top:10px;" id="qiblaAngleText">درجة القبلة: --</p>
+    </div>
+
+    <!-- 3. قسم الاستماع للقرآن -->
     <div id="audioSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color); margin-bottom: 10px;">🎧 الاستماع للقرآن</h3>
@@ -348,7 +392,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 3. قسم الأذكار -->
+    <!-- 4. قسم الأذكار -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color); margin-bottom: 10px;">📿 الأذكار</h3>
@@ -362,7 +406,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- الأقسام الثانوية -->
+    <!-- بقية الأقسام -->
     <div id="hadithSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color);">📜 الأحاديث النبوية</h3>
@@ -378,12 +422,6 @@ header p { font-size: 0.85em; color: var(--text-muted); }
             </button>
             <p style="margin-top:10px; color:var(--text-muted);">اضغط للتسبيح</p>
         </div>
-    </div>
-
-    <div id="qiblaSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--accent-color);">🕋 اتجاه القبلة</h3>
-        <p style="margin-top:10px; color:var(--text-muted);">زاوية القبلة من الشمال: 135 درجة (Alexandria, Egypt).</p>
     </div>
 
     <div id="tahfeezSection" class="content-section">
@@ -418,9 +456,9 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <span class="icon">📿</span>
         <span>الأذكار</span>
     </button>
-    <button class="nav-item" onclick="openSection('hadithSection')">
-        <span class="icon">⚙️</span>
-        <span>المزيد</span>
+    <button class="nav-item" onclick="openSection('qiblaSection')">
+        <span class="icon">🕋</span>
+        <span>القبلة</span>
     </button>
 </nav>
 
@@ -469,11 +507,150 @@ function openSection(sectionId) {
     document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
     document.getElementById(sectionId).classList.add("active");
     window.scrollTo(0, 0);
+
+    if(sectionId === 'qiblaSection') {
+        requestCompassPermission();
+    }
 }
 
 function closeSections() {
     document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
     document.getElementById("mainHomeSection").style.display = "block";
+}
+
+/* ================= 1. نظام مواقيت الصلاة الحقيقية المباشرة (API) ================= */
+let userLat = 30.0444, userLng = 31.2357; // الإحداثيات الإفتراضية (القاهرة)
+let prayerTimesData = {};
+
+function initRealPrayerTimes() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
+            fetchPrayerTimes(userLat, userLng);
+        }, () => {
+            fetchPrayerTimes(userLat, userLng); // استخدام الموقع الافتراضي في حالة الرفض
+        });
+    } else {
+        fetchPrayerTimes(userLat, userLng);
+    }
+}
+
+function fetchPrayerTimes(lat, lng) {
+    document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة لموقعك الحالي...";
+    fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
+        .then(res => res.json())
+        .then(data => {
+            prayerTimesData = data.data.timings;
+            let meta = data.data.meta;
+            document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
+            
+            document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
+            document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
+            document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
+            document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
+            document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
+
+            startPrayerCountdown();
+        }).catch(() => {
+            document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من اتصال الإنترنت.";
+        });
+}
+
+function startPrayerCountdown() {
+    setInterval(() => {
+        if (!prayerTimesData.Fajr) return;
+
+        let now = new Date();
+        let prayers = [
+            { name: "الفجر", time: prayerTimesData.Fajr },
+            { name: "الظهر", time: prayerTimesData.Dhuhr },
+            { name: "العصر", time: prayerTimesData.Asr },
+            { name: "المغرب", time: prayerTimesData.Maghrib },
+            { name: "العشاء", time: prayerTimesData.Isha }
+        ];
+
+        let nextPrayer = null;
+        let nextPrayerDate = null;
+
+        for (let p of prayers) {
+            let [h, m] = p.time.split(':').map(Number);
+            let pDate = new Date();
+            pDate.setHours(h, m, 0, 0);
+
+            if (pDate > now) {
+                nextPrayer = p;
+                nextPrayerDate = pDate;
+                break;
+            }
+        }
+
+        // إذا كانت جميع صلوات اليوم انتهت، تكون الصلاة القادمة فجر الغد
+        if (!nextPrayer) {
+            nextPrayer = prayers[0];
+            let [h, m] = prayers[0].time.split(':').map(Number);
+            nextPrayerDate = new Date();
+            nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
+            nextPrayerDate.setHours(h, m, 0, 0);
+        }
+
+        let diff = nextPrayerDate - now;
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("nextPrayerName").innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
+        document.getElementById("prayerTimer").innerText = 
+            `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+    }, 1000);
+}
+
+/* ================= 2. نظام بوصلة القبلة الحقيقية وبوصلة الموبايل ================= */
+let qiblaBearing = 136.8; // مكة المكرمة تقريباً بالنسبة لمصر
+
+function calculateQiblaAngle(lat, lng) {
+    let kaabaLat = 21.4225 * Math.PI / 180;
+    let kaabaLng = 39.8262 * Math.PI / 180;
+    let myLat = lat * Math.PI / 180;
+    let myLng = lng * Math.PI / 180;
+
+    let y = Math.sin(kaabaLng - myLng);
+    let x = Math.cos(myLat) * Math.tan(kaabaLat) - Math.sin(myLat) * Math.cos(kaabaLng - myLng);
+    qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
+    qiblaBearing = (qiblaBearing + 360) % 360;
+    document.getElementById("qiblaAngleText").innerText = `زاوية القبلة لموقعك: ${Math.round(qiblaBearing)}°`;
+}
+
+function requestCompassPermission() {
+    calculateQiblaAngle(userLat, userLng);
+
+    if (window.DeviceOrientationEvent) {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission()
+                .then(permissionState => {
+                    if (permissionState === 'granted') {
+                        window.addEventListener('deviceorientation', handleOrientation, true);
+                    } else {
+                        alert("يرجى تفعيل صلاحية الحركة والتوجيه لمشاهدة القبلة.");
+                    }
+                });
+        } else {
+            window.addEventListener('deviceorientation', handleOrientation, true);
+        }
+    } else {
+        document.getElementById("qiblaStatus").innerText = "جهازك لا يدعم حسّاس البوصلة تلقائياً.";
+    }
+}
+
+function handleOrientation(event) {
+    let alpha = event.alpha || event.webkitCompassHeading;
+    if (alpha !== null && alpha !== undefined) {
+        let compassHeading = event.webkitCompassHeading || (360 - alpha);
+        let arrowDegree = qiblaBearing - compassHeading;
+        document.getElementById("compassArrow").style.transform = `rotate(${arrowDegree}deg)`;
+        document.getElementById("qiblaStatus").innerText = `حرك هاتفك للوصول للزاوية (${Math.round(qiblaBearing)}°)`;
+    }
 }
 
 // التحكم بالمصحف
@@ -549,6 +726,7 @@ if(localStorage.getItem("qareeb_logged") === "true") {
 }
 
 loadSurahs();
+initRealPrayerTimes();
 </script>
 
 </body>
