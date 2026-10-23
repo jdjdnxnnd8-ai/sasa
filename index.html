@@ -5,6 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تطبيق قريب - Qareeb</title>
 <style>
+:root {
+    --bg-color: #f4f7f6;
+    --text-color: #2c3e50;
+    --card-bg: #0b3d2c;
+    --card-text: #ffffff;
+    --base-font-size: 16px;
+}
+
+body.high-contrast {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --card-bg: #004d33;
+    --card-text: #ffff00;
+}
+
 * {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,12 +27,14 @@
 }
 
 body {
-    background-color: #f4f7f6;
-    color: #2c3e50;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: var(--base-font-size);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 50px;
+    transition: all 0.3s ease;
 }
 
 /* شاشة تسجيل الدخول */
@@ -39,41 +56,89 @@ body {
     max-width: 400px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    color: #2c3e50;
 }
 
-.login-card h2 { color: #0b3d2c; margin-bottom: 8px; font-size: 32px; }
-.login-card p { color: #666; font-size: 15px; margin-bottom: 20px; }
+.login-card h2 { color: #0b3d2c; margin-bottom: 8px; font-size: 2em; }
+.login-card p { color: #666; font-size: 0.9em; margin-bottom: 20px; }
 .login-card input {
     width: 100%; padding: 12px; margin: 8px 0;
-    border: 1px solid #ccc; border-radius: 10px; font-size: 15px; outline: none;
+    border: 1px solid #ccc; border-radius: 10px; font-size: 1em; outline: none;
 }
 
 .btn-main {
     width: 100%; padding: 14px; background: #0b3d2c; color: white;
-    border: none; border-radius: 10px; font-size: 16px; font-weight: bold;
+    border: none; border-radius: 10px; font-size: 1em; font-weight: bold;
     cursor: pointer; margin-top: 10px; transition: 0.2s;
 }
 .btn-main:hover { background: #165b43; }
 
-/* الهيدر والعناوين */
-header { text-align: center; padding: 30px 15px 15px; }
-.logo-title { font-size: 46px; color: #0b3d2c; font-weight: bold; }
-.sub-title { color: #1e6b52; font-size: 20px; font-weight: bold; margin-top: 5px; }
-.desc { color: #555; font-size: 15px; margin-top: 5px; }
+/* الهيدر العلوي وشريط الإعدادات */
+header {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-group { text-align: right; }
+.logo-title { font-size: 2.5em; color: #0b3d2c; font-weight: bold; }
+.sub-title { color: #1e6b52; font-size: 1.1em; font-weight: bold; }
+
+.settings-icon-btn {
+    background: #e8f0ec;
+    border: 1px solid #0b3d2c;
+    color: #0b3d2c;
+    padding: 10px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.95em;
+}
+
+/* نافذة الإعدادات */
+.settings-modal {
+    display: none;
+    background: white;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    color: #2c3e50;
+}
+.settings-modal.active { display: block; }
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+.settings-row:last-child { border-bottom: none; }
+.settings-label { display: flex; align-items: center; gap: 12px; }
+.settings-label .icon { font-size: 1.5em; background: #e8f0ec; padding: 8px; border-radius: 10px; }
 
 /* حاوية المحتوى */
-.container { width: 100%; max-width: 1000px; padding: 20px; }
+.container { width: 100%; max-width: 1000px; padding: 0 15px; }
 
 /* قسم الكتابة والنطق */
 .speak-box {
     background: white; padding: 20px; border-radius: 18px;
     border: 1px solid #e0e7e3; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 25px;
+    margin-bottom: 25px; color: #2c3e50;
 }
-.speak-box h3 { color: #0b3d2c; font-size: 18px; margin-bottom: 12px; }
+.speak-box h3 { color: #0b3d2c; font-size: 1.1em; margin-bottom: 12px; }
 .speak-box input {
     width: 100%; padding: 14px; border: 1px solid #ccc;
-    border-radius: 10px; font-size: 16px; outline: none; margin-bottom: 12px;
+    border-radius: 10px; font-size: 1em; outline: none; margin-bottom: 12px;
 }
 
 /* الأقسام المنسقة */
@@ -84,10 +149,11 @@ header { text-align: center; padding: 30px 15px 15px; }
     margin-bottom: 25px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.06);
     border: 1px solid #e0e7e3;
+    color: #2c3e50;
 }
 
 .category-header {
-    font-size: 22px;
+    font-size: 1.3em;
     color: #0b3d2c;
     font-weight: bold;
     margin-bottom: 20px;
@@ -116,7 +182,7 @@ header { text-align: center; padding: 30px 15px 15px; }
 .tab-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; flex-wrap: wrap; }
 .tab-btn {
     padding: 10px 18px; background: #e8f0ec; border: none; border-radius: 8px;
-    color: #0b3d2c; font-weight: bold; cursor: pointer; font-size: 15px;
+    color: #0b3d2c; font-weight: bold; cursor: pointer; font-size: 0.95em;
 }
 .tab-btn.active { background: #0b3d2c; color: white; }
 .tab-content { display: none; }
@@ -125,14 +191,15 @@ header { text-align: center; padding: 30px 15px 15px; }
 /* المصحف الشريف */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
-    width: 100%; max-width: 500px; height: auto; border-radius: 12px;
+    width: 100%; max-width: 480px; height: auto; border-radius: 12px;
     border: 2px solid #0b3d2c; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: #fff; min-height: 400px; object-fit: contain;
 }
-.page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 500px; margin: 15px auto 0; }
+.page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 15px auto 0; }
 
 input, select, audio {
     width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px;
-    border: 1px solid #ccc; font-size: 15px;
+    border: 1px solid #ccc; font-size: 1em;
 }
 </style>
 </head>
@@ -151,12 +218,78 @@ input, select, audio {
 </div>
 
 <header>
-    <div class="logo-title">قـريـب</div>
-    <div class="sub-title">احتياجاتك توصل بكلمة 💚</div>
-    <div class="desc">اختر ما تحتاج إليه، وسنساعدك على التعبير عنه بسهولة.</div>
+    <div class="logo-group">
+        <div class="logo-title">قـريـب</div>
+        <div class="sub-title">احتياجاتك توصل بكلمة 💚</div>
+    </div>
+    <button class="settings-icon-btn" onclick="toggleSettings()">
+        <span>⚙️</span>
+        <span>الإعدادات</span>
+    </button>
 </header>
 
 <div class="container">
+
+    <!-- نافذة الإعدادات -->
+    <div id="settingsModal" class="settings-modal">
+        <h3 style="margin-bottom: 15px; color: #0b3d2c;">⚙️ إعدادات التطبيق</h3>
+        
+        <div class="settings-row">
+            <div class="settings-label">
+                <span class="icon">T</span>
+                <div>
+                    <b>حجم الخط</b>
+                    <p style="font-size:0.85em; color:#666;">عادي - كبير - كبير جداً</p>
+                </div>
+            </div>
+            <select style="width:auto;" onchange="changeFontSize(this.value)">
+                <option value="16px">عادي</option>
+                <option value="19px">كبير</option>
+                <option value="22px">كبير جداً</option>
+            </select>
+        </div>
+
+        <div class="settings-row">
+            <div class="settings-label">
+                <span class="icon">🔊</span>
+                <div>
+                    <b>سرعة ونبرة الصوت</b>
+                    <p style="font-size:0.85em; color:#666;">التحكم بمدرب النطق الصوتي</p>
+                </div>
+            </div>
+            <select id="speechRate" style="width:auto;" onchange="updateSpeechRate(this.value)">
+                <option value="0.7">بطيء جداً</option>
+                <option value="0.85" selected>متوسط</option>
+                <option value="1.0">سريع</option>
+            </select>
+        </div>
+
+        <div class="settings-row">
+            <div class="settings-label">
+                <span class="icon">🔔</span>
+                <div>
+                    <b>التنبيهات وتذكير الصلاة</b>
+                    <p style="font-size:0.85em; color:#666;">تفعيل تذكير الصلاة والأذكار</p>
+                </div>
+            </div>
+            <button class="btn-main" style="width:auto; padding:8px 15px;" onclick="requestNotificationPermission()">تفعيل التنبيهات</button>
+        </div>
+
+        <div class="settings-row">
+            <div class="settings-label">
+                <span class="icon">🎨</span>
+                <div>
+                    <b>مظهر التطبيق</b>
+                    <p style="font-size:0.85em; color:#666;">تباين وضوح القراءة</p>
+                </div>
+            </div>
+            <button class="btn-main" style="width:auto; padding:8px 15px; background:#333;" onclick="toggleContrast()">تغيير التباين</button>
+        </div>
+
+        <div style="text-align: left; margin-top: 15px;">
+            <button class="btn-main" style="background: #c0392b; width: auto; padding: 8px 15px;" onclick="logout()">تسجيل الخروج</button>
+        </div>
+    </div>
 
     <!-- قسم الكتابة والنطق الفوري -->
     <div class="speak-box">
@@ -207,7 +340,7 @@ input, select, audio {
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الثاني: عبادتي (المصحف والقرآن والأذكار) -->
+    <!-- القسم الثاني: عبادتي -->
     <!-- ========================================== -->
     <div class="category-box">
         <div class="category-header">🌙 قسم «عبادتي»</div>
@@ -218,7 +351,7 @@ input, select, audio {
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف (صور واضحة تماماً) -->
+        <!-- المصحف الشريف -->
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
@@ -251,11 +384,11 @@ input, select, audio {
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الثالث: لغة الإشارة (مع الإيموجيز والتعابير) -->
+    <!-- القسم الثالث: لغة الإشارة -->
     <!-- ========================================== -->
     <div class="category-box">
         <div class="category-header">🤟 قسم لغة الإشارة (للصم والبكم)</div>
-        <p style="margin-bottom:15px; font-size:15px; color:#555;">اضغط على الكلمة لتنطق بصوت عالٍ، مع الإشارات التوضيحية:</p>
+        <p style="margin-bottom:15px; font-size:15px; color:#555;">اضغط على الكلمة لتنطق بصوت عالٍ، مع الإشارات التوضيحية والإيموجيز:</p>
         <div class="grid-container">
             <button class="card-btn" style="background:#165b43;" onclick="speak('شكراً لك')">
                 <span class="icon">🤝❤️</span>
@@ -279,13 +412,14 @@ input, select, audio {
 </div>
 
 <script>
-// نطق الصوت المباشر
+let currentRate = 0.85;
+
 function speak(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ar-SA';
-        utterance.rate = 0.85;
+        utterance.rate = currentRate;
         window.speechSynthesis.speak(utterance);
     }
 }
@@ -293,6 +427,35 @@ function speak(text) {
 function speakCustomText() {
     let text = document.getElementById("customTextInput").value;
     if(text.trim() !== "") speak(text);
+}
+
+// التحكم بالإعدادات
+function toggleSettings() {
+    document.getElementById("settingsModal").classList.toggle("active");
+}
+
+function changeFontSize(size) {
+    document.documentElement.style.setProperty('--base-font-size', size);
+}
+
+function updateSpeechRate(rate) {
+    currentRate = parseFloat(rate);
+}
+
+function toggleContrast() {
+    document.body.classList.toggle("high-contrast");
+}
+
+function requestNotificationPermission() {
+    if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                alert("تم تفعيل إشعارات وتنبيهات الصلاة والأذكار بنجاح!");
+            } else {
+                alert("يرجى السماح بالإشعارات من إعدادات متصفحك.");
+            }
+        });
+    }
 }
 
 // تبويبات عبادتي
@@ -316,12 +479,14 @@ function prevPage() { if(currentPage > 1) { currentPage--; updateQuranPage(); } 
 
 let touchStartX = 0, touchEndX = 0;
 const quranBox = document.getElementById("quranBox");
-quranBox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
-quranBox.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    if (touchStartX - touchEndX > 50) nextPage();
-    if (touchEndX - touchStartX > 50) prevPage();
-});
+if(quranBox) {
+    quranBox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+    quranBox.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) nextPage();
+        if (touchEndX - touchStartX > 50) prevPage();
+    });
+}
 
 // القرآن الصوتي والبحث
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
@@ -329,6 +494,7 @@ const select = document.getElementById("surahSelect");
 const audio = document.getElementById("audioPlayer");
 
 function loadSurahs(filter = "") {
+    if(!select) return;
     select.innerHTML = "";
     surahs.forEach((s, i) => {
         if(s.includes(filter)) {
@@ -354,7 +520,7 @@ function filterSurahs() { loadSurahs(document.getElementById("quranSearch").valu
 let c = 0;
 function countUp() { c++; document.getElementById("counter").innerText = c; }
 
-// تسجيل الدخول
+// تسجيل الدخول والخروج
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
@@ -364,8 +530,13 @@ function performLogin() {
         localStorage.setItem("qareeb_logged", "true");
         document.getElementById("loginOverlay").style.display = "none";
     } else {
-        alert("يرجى إدخال اسمك أولاً");
+        alert("يرجى إدخال اسم المستخدم");
     }
+}
+
+function logout() {
+    localStorage.removeItem("qareeb_logged");
+    location.reload();
 }
 
 if(localStorage.getItem("qareeb_logged") === "true") {
