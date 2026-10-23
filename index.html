@@ -30,7 +30,7 @@ body {
     padding-bottom: 90px;
 }
 
-/* شاشة تسجيل الدخول التلقائية */
+/* شاشة تسجيل الدخول */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -95,20 +95,6 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .prayer-times-grid div { display: flex; flex-direction: column; align-items: center; }
 .prayer-times-grid span.p-time { color: var(--accent-gold); font-weight: bold; }
 
-/* لوحة الصدارة TOP */
-.top-board {
-    background: #ffffff;
-    border: 1px solid #d1d5db;
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.top-title { color: var(--card-green); font-weight: bold; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
-.top-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.top-item { display: flex; justify-content: space-between; font-size: 0.9em; background: #f9fafb; padding: 8px 12px; border-radius: 8px; border: 1px solid #e5e7eb; color: var(--text-dark); }
-.top-rank { font-weight: bold; color: var(--card-green); width: 25px; }
-
 /* قسم الكتابة والنطق الفوري */
 .speak-box {
     background: #ffffff;
@@ -125,7 +111,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     color: var(--text-dark); border-radius: 8px; font-size: 0.95em; outline: none;
 }
 
-/* تصميم الأزرار الطولية المطابقة للصورة تماماً */
+/* الأزرار الطولية للمطالب والتواصل السريع */
 .needs-stack {
     display: flex;
     flex-direction: column;
@@ -176,7 +162,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     box-shadow: 0 4px 10px rgba(20, 67, 49, 0.2);
 }
 
-/* الأقسام الإضافية */
+/* الأقسام الشبكية */
 .section-title { font-size: 1.1em; color: var(--card-green); margin: 20px 0 10px 0; font-weight: bold; }
 .grid-container {
     display: grid;
@@ -300,17 +286,18 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     background: #f9fafb; border: 1px solid #e5e7eb;
     padding: 14px; border-radius: 12px; margin-bottom: 12px;
 }
+.azkar-card h4 { color: var(--card-green); margin-bottom: 6px; }
 .azkar-card p, .hadith-card p, .book-card p { font-size: 0.95em; line-height: 1.7; color: #374151; }
 </style>
 </head>
 
 <body>
 
-<!-- شاشة تسجيل الدخول الإلزامية والحفظ التلقائي -->
+<!-- شاشة تسجيل الدخول التلقائية -->
 <div id="loginOverlay">
     <div class="login-card">
         <h2>قـريـب 💚</h2>
-        <p>أهلاً بك في تطبيق Sasa medo، يرجى إدخال اسمك وكلمة السر لتسجيل حسابك الأساسي:</p>
+        <p>أهلاً بك في تطبيق Sasa medo، يرجى تسجيل حسابك:</p>
         <input type="text" id="loginName" placeholder="اسم المستخدم أو البريد">
         <input type="password" id="loginPass" placeholder="كلمة السر">
         <button class="btn-main" onclick="performLogin()">دخول وحفظ الحساب</button>
@@ -339,15 +326,6 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- لوحة الصدارة TOP -->
-    <div class="top-board">
-        <div class="top-title">
-            <span>🏆 متصدري المستغفرين اليوم</span>
-            <span style="font-size:0.8em; color:var(--text-muted);" id="userRankText">مركزك: #4</span>
-        </div>
-        <div class="top-list" id="topList"></div>
-    </div>
-
     <!-- كتابة ونطق فوري -->
     <div class="speak-box">
         <h3>✍️ كتابة ونطق فوري للاحتياجات:</h3>
@@ -358,7 +336,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <!-- الشاشة الرئيسية -->
     <div id="mainHomeSection">
         
-        <!-- الأزرار الطولية المطابقة للصورة تماماً -->
+        <!-- الأزرار الطولية المضافة والموسعة جداً -->
         <div class="needs-stack">
             <button class="need-row-btn" onclick="speakText('أحتاج مساعدة من فضلك')">
                 <span class="icon">🤍</span>
@@ -391,6 +369,34 @@ header p { font-size: 0.85em; color: var(--text-muted); }
             <button class="need-row-btn" onclick="speakText('أحتاج أتواصل مع أحد')">
                 <span class="icon">🗣️</span>
                 <span>أحتاج أتواصل مع أحد</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('أريد أن أنام الآن')">
+                <span class="icon">🌙</span>
+                <span>أريد أن أنام</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('أشعر بالبرد الشديد')">
+                <span class="icon">🥶</span>
+                <span>أشعر بالبرد</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('أشعر بالحر الشديد')">
+                <span class="icon">🥵</span>
+                <span>أشعر بالحر</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('يرجى تشغيل التلفاز')">
+                <span class="icon">📺</span>
+                <span>تشغيل التلفاز</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('يرجى فتح الباب')">
+                <span class="icon">🚪</span>
+                <span>افتح الباب</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('أحتاج لمشاهدة عائلتي')">
+                <span class="icon">👨‍👩‍👧‍👦</span>
+                <span>أريد عائلتي</span>
+            </button>
+            <button class="need-row-btn" onclick="speakText('شكراً جزيلاً لك')">
+                <span class="icon">💚</span>
+                <span>شكراً لك</span>
             </button>
         </div>
 
@@ -483,24 +489,60 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 4. أذكار الدين كلها (موسوعة متكاملة) -->
+    <!-- 4. أذكار الدين كلها الضخمة جداً -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين كله</h3>
+        <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين الكبرى</h3>
         
-        <div class="azkar-card"><h4>☀️ أذكار الصباح والمساء</h4><p>أصبحنا وأصبح الملك لله... والرضا بالله رباً وبالإسلام ديناً وبمحمد نبياً (3 مرات).</p></div>
-        <div class="azkar-card"><h4>🛌 أذكار النوم</h4><p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها...</p></div>
-        <div class="azkar-card"><h4>🕌 أذكار المسجد والصلوات</h4><p>اللهم افتح لي أبواب رحمتك (عند الدخول)، اللهم إني أسألك من فضلك (عند الخروج).</p></div>
-        <div class="azkar-card"><h4>🚗 أذكار السفر والخروج من المنزل</h4><p>بسم الله توكلت على الله ولا حول ولا قوة إلا بالله، سبحان الذي سخر لنا هذا...</p></div>
-        <div class="azkar-card"><h4>🤲 أذكار الشدائد والفرج</h4><p>لا إله إلا أنت سبحانك إني كنت من الظالمين، حسبي الله ونعم الوكيل في كل أمر.</p></div>
+        <div class="azkar-card">
+            <h4>☀️ أذكار الصباح</h4>
+            <p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. رضيت بالله رباً وبالإسلام ديناً وبمحمد صلى الله عليه وسلم نبياً (3 مرات).</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🌙 أذكار المساء</h4>
+            <p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق (3 مرات). بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم (3 مرات). يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🛌 أذكار النوم والاستيقاظ</h4>
+            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. قراءة آية الكرسي والمعوذتين. وعند الاستيقاظ: الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🕌 أذكار ما بعد الصلاة الفريضة</h4>
+            <p>أستغفر الله (3 مرات)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام. اللهم لا مانع لما أعطيت ولا معطي لما منعت ولا ينفع ذا الجد منك الجد. سبحان الله (33)، الحمد لله (33)، الله أكبر (33)، تمام المائة: لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🚪 أذكار الدخول والخروج من المنزل والمسجد</h4>
+            <p>خروج المنزل: بسم الله توكلت على الله ولا حول ولا قوة إلا بالله. دخول المنزل: بسم الله ولجنا وبسم الله خرجنا وعلى ربنا توكلنا. دخول المسجد: اللهم افتح لي أبواب رحمتك.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🍲 أذكار الطعام والشراب</h4>
+            <p>قبل الطعام: بسم الله، وفي أوله وآخره إذا نسي: بسم الله أوله وآخره. بعد الطعام: الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🤲 أذكار الكرب والهم والمغفرة</h4>
+            <p>لا إله إلا أنت سبحانك إني كنت من الظالمين. حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم (7 مرات). سيد الاستغفار: اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت...</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🚗 أذكار السفر والسوار</h4>
+            <p>الله أكبر (3 مرات)، سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون. اللهم إنا نسألك في سفرنا هذا البر والتقوى ومن العمل ما ترضى.</p>
+        </div>
     </div>
 
-    <!-- 5. الأحاديث -->
+    <!-- 5. الأحاديث الموسعة -->
     <div id="hadithSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية</h3>
-        <div class="hadith-card"><h4>1. حديث النية</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى...</p></div>
-        <div class="hadith-card"><h4>2. حديث الدين النصيحة</h4><p>الدين النصيحة، قلنا: لمن؟ قال: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتها.</p></div>
+        <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
+        <div class="hadith-card"><h4>1. حديث النية والإخلاص</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله...</p></div>
+        <div class="hadith-card"><h4>2. حديث البر والوالدين</h4><p>جاء رجل إلى النبي فقال: من أحق الناس بحسن صحابتي؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أبوك.</p></div>
+        <div class="hadith-card"><h4>3. حديث الدين النصيحة</h4><p>الدين النصيحة، قلنا: لمن؟ قال: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتها.</p></div>
+        <div class="hadith-card"><h4>4. حديث الأخلاق</h4><p>إن من أحبكم إلي وأقربكم مني مجلسا يوم القيامة أحاسنكم أخلاقا.</p></div>
     </div>
 
     <!-- 6. التسبيح واحتساب الحسنات الفورية -->
@@ -524,14 +566,17 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <div id="tahfeezSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green);">📈 برنامج التحفيظ</h3>
-        <p style="color:var(--text-muted); margin-top:10px;">اختر السورة ونطاق الآيات للتكرار والحفظ.</p>
+        <p style="color:var(--text-muted); margin-top:10px;">اختر السورة ونطاق الآيات للتكرار والحفظ المتقن.</p>
     </div>
 
-    <!-- 8. الكتب -->
+    <!-- 8. الكتب الموسعة -->
     <div id="booksSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">📚 الكتب الدينية</h3>
-        <div class="book-card"><h4>تفسير ابن كثير</h4><p>تفسير القرآن العظيم.</p></div>
+        <h3 style="color: var(--card-green); margin-bottom:12px;">📚 الكتب والمكتبة الإسلامية</h3>
+        <div class="book-card"><h4>1. تفسير ابن كثير</h4><p>تفسير القرآن العظيم للعلامة الحافظ ابن كثير.</p></div>
+        <div class="book-card"><h4>2. كتاب رياض الصالحين</h4><p>دليل السالكين إلى طريق رب العالمين للإمام النووي.</p></div>
+        <div class="book-card"><h4>3. السيرة النبوية لابن هشام</h4><p>توثيق السيرة العطرة للنبي صلى الله عليه وسلم.</p></div>
+        <div class="book-card"><h4>4. كتاب التوحيد</h4><p>شرح العقيدة والتوحيد الإسلامي الصافي.</p></div>
     </div>
 
     <!-- الإعدادات -->
@@ -713,7 +758,7 @@ function handleOrientation(event) {
     }
 }
 
-/* نظام التسبيح وحساب الحسنات الدقيقة (استغفار وتسبيح) */
+/* نظام التسبيح وحساب الحسنات الدقيقة */
 let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
 updateTasbihUI();
 
@@ -721,51 +766,12 @@ function countUp() {
     userIstighfarCount++; 
     localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
     updateTasbihUI();
-    updateLeaderboard();
 }
 
 function updateTasbihUI() {
     document.getElementById("counter").innerText = userIstighfarCount;
-    // احتساب الحسنات: كل تسبيحة/استغفار يمنح تقريباً 100 حسنة مضاعفة (فضل الله واسع، وكل حرف بعشر حسنات)
     let totalHasanat = userIstighfarCount * 100;
     document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
-}
-
-let mockLeaderboard = [
-    { name: "أحمد بن علي", count: 1250 },
-    { name: "فاطمة الزهراء", count: 980 },
-    { name: "محمود مطاوع", count: 720 },
-    { name: "Sasa medo", count: userIstighfarCount }
-];
-
-function updateLeaderboard() {
-    let currentUserName = localStorage.getItem("qareeb_username") || "Sasa medo";
-    let userEntry = mockLeaderboard.find(u => u.name === "Sasa medo" || u.name === currentUserName);
-    if (userEntry) {
-        userEntry.name = currentUserName;
-        userEntry.count = userIstighfarCount;
-    }
-    mockLeaderboard.sort((a, b) => b.count - a.count);
-
-    let listEl = document.getElementById("topList");
-    if(!listEl) return;
-    listEl.innerHTML = "";
-
-    mockLeaderboard.forEach((item, index) => {
-        let isMe = item.name === currentUserName;
-        if (isMe) {
-            let rankText = document.getElementById("userRankText");
-            if(rankText) rankText.innerText = `مركزك: #${index + 1}`;
-        }
-        let row = document.createElement("div");
-        row.className = "top-item";
-        row.style.border = isMe ? "1px solid var(--card-green)" : "1px solid #e5e7eb";
-        row.innerHTML = `
-            <div><span class="top-rank">#${index + 1}</span> <b>${item.name}</b></div>
-            <div style="color:var(--card-green); font-weight:bold;">${item.count} استغفار</div>
-        `;
-        listEl.appendChild(row);
-    });
 }
 
 /* مواقيت الصلاة الحقيقية */
@@ -875,7 +881,7 @@ function changeSurah() {
     audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
-/* نظام تسجيل الدخول التلقائي الحفظ الأساسي */
+/* تسجيل الدخول والاحتفاظ بالحساب */
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
@@ -884,7 +890,6 @@ function performLogin() {
         document.getElementById("loginOverlay").style.display = "none";
         document.getElementById("welcomeUser").innerText = name.trim();
         document.getElementById("currentLoggedInUser").innerText = name.trim();
-        updateLeaderboard();
     } else {
         alert("يرجى إدخال اسم المستخدم أو الحساب الأساسي");
     }
@@ -905,7 +910,6 @@ if(localStorage.getItem("qareeb_logged") === "true") {
 
 loadSurahs();
 initRealPrayerTimes();
-updateLeaderboard();
 </script>
 
 </body>
