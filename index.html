@@ -30,11 +30,11 @@ body {
     padding-bottom: 90px;
 }
 
-/* شاشة تسجيل الدخول */
+/* شاشة تسجيل الدخول التلقائية */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(20, 67, 49, 0.96);
+    background: rgba(20, 67, 49, 0.98);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -78,7 +78,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 
 .container { width: 100%; max-width: 450px; padding: 0 15px; }
 
-/* شريط أوقات الصلاة */
+/* شريط أوقات الصلاة الحقيقية */
 .prayer-bar {
     background: var(--card-green);
     color: #ffffff;
@@ -153,7 +153,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .need-row-btn:active { transform: scale(0.98); background: var(--card-hover); }
 .need-row-btn .icon { font-size: 1.5em; }
 
-/* أزرار الفوتر السفلي المعروضة في الصورة */
+/* أزرار الفوتر السفلي */
 .footer-row {
     display: flex;
     gap: 12px;
@@ -176,7 +176,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     box-shadow: 0 4px 10px rgba(20, 67, 49, 0.2);
 }
 
-/* الأقسام الإضافية (قرآن، قبلة، أذكار، إلخ) */
+/* الأقسام الإضافية */
 .section-title { font-size: 1.1em; color: var(--card-green); margin: 20px 0 10px 0; font-weight: bold; }
 .grid-container {
     display: grid;
@@ -306,21 +306,21 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 
 <body>
 
-<!-- شاشة تسجيل الدخول -->
+<!-- شاشة تسجيل الدخول الإلزامية والحفظ التلقائي -->
 <div id="loginOverlay">
     <div class="login-card">
         <h2>قـريـب 💚</h2>
-        <p>مرحباً بك في تطبيق Sasa medo</p>
-        <input type="text" id="loginName" placeholder="اسم المستخدم">
+        <p>أهلاً بك في تطبيق Sasa medo، يرجى إدخال اسمك وكلمة السر لتسجيل حسابك الأساسي:</p>
+        <input type="text" id="loginName" placeholder="اسم المستخدم أو البريد">
         <input type="password" id="loginPass" placeholder="كلمة السر">
-        <button class="btn-main" onclick="performLogin()">تسجيل الدخول</button>
+        <button class="btn-main" onclick="performLogin()">دخول وحفظ الحساب</button>
     </div>
 </div>
 
 <header>
     <h1>قريب</h1>
     <div class="sub-title">احتياجاتك يوصل بكلمة 💚</div>
-    <p>اختر ما تحتاج إليه، وسنسساعدك على التعبير عنه.</p>
+    <p>مرحباً بك: <span id="welcomeUser" style="color:var(--card-green); font-weight:bold;">Sasa medo</span></p>
 </header>
 
 <div class="container">
@@ -394,11 +394,11 @@ header p { font-size: 0.85em; color: var(--text-muted); }
             </button>
         </div>
 
-        <!-- الأزرار السفلية المطابقة للصورة -->
+        <!-- أزرار الفوتر السفلي -->
         <div class="footer-row">
             <button class="footer-btn" onclick="openSection('settingsSection')">
                 <span style="font-size:1.3em;">⚙️</span>
-                <span>الإعدادات</span>
+                <span>الإعدادات والحساب</span>
             </button>
             <button class="footer-btn" onclick="openSection('aboutSection')">
                 <span style="font-size:1.3em;">ℹ️</span>
@@ -483,13 +483,16 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 4. الأذكار الموسعة -->
+    <!-- 4. أذكار الدين كلها (موسوعة متكاملة) -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 الموسوعة الشاملة للأذكار</h3>
-        <div class="azkar-card"><h4>☀️ أذكار الصباح</h4><p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له...</p></div>
-        <div class="azkar-card"><h4>🌙 أذكار المساء</h4><p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات...</p></div>
-        <div class="azkar-card"><h4>🛌 أذكار النوم والاستيقاظ</h4><p>باسمك ربي وضعت جنبي وبك أرفعه...</p></div>
+        <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين كله</h3>
+        
+        <div class="azkar-card"><h4>☀️ أذكار الصباح والمساء</h4><p>أصبحنا وأصبح الملك لله... والرضا بالله رباً وبالإسلام ديناً وبمحمد نبياً (3 مرات).</p></div>
+        <div class="azkar-card"><h4>🛌 أذكار النوم</h4><p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها...</p></div>
+        <div class="azkar-card"><h4>🕌 أذكار المسجد والصلوات</h4><p>اللهم افتح لي أبواب رحمتك (عند الدخول)، اللهم إني أسألك من فضلك (عند الخروج).</p></div>
+        <div class="azkar-card"><h4>🚗 أذكار السفر والخروج من المنزل</h4><p>بسم الله توكلت على الله ولا حول ولا قوة إلا بالله، سبحان الذي سخر لنا هذا...</p></div>
+        <div class="azkar-card"><h4>🤲 أذكار الشدائد والفرج</h4><p>لا إله إلا أنت سبحانك إني كنت من الظالمين، حسبي الله ونعم الوكيل في كل أمر.</p></div>
     </div>
 
     <!-- 5. الأحاديث -->
@@ -497,17 +500,23 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية</h3>
         <div class="hadith-card"><h4>1. حديث النية</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى...</p></div>
+        <div class="hadith-card"><h4>2. حديث الدين النصيحة</h4><p>الدين النصيحة، قلنا: لمن؟ قال: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتها.</p></div>
     </div>
 
-    <!-- 6. التسبيح -->
+    <!-- 6. التسبيح واحتساب الحسنات الفورية -->
     <div id="tasbihSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">💎 التسبيح والمسبحة</h3>
-        <div style="text-align:center; margin-top:20px;">
-            <button style="background:var(--card-green); color:#fff; border:none; width:95px; height:95px; border-radius:50%; font-size:2em; font-weight:bold; cursor:pointer;" onclick="countUp()">
+        <h3 style="color: var(--card-green);">💎 التسبيح واحتساب الحسنات</h3>
+        <p style="margin-top:5px; font-size:0.9em; color:var(--text-muted);">كل تسبيحة تزيد حسناتك وثوابك في الآخرة (كل حرف بعشر حسنات وأجر عظيم):</p>
+        
+        <div style="text-align:center; margin-top:20px; background:#f0fdf4; border:1px solid #bbf7d0; padding:20px; border-radius:15px;">
+            <p style="font-size:1.1em; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
+            <div id="hasanatCount" style="font-size:2.2em; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
+            
+            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8em; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);" onclick="countUp()">
                 <span id="counter">0</span>
             </button>
-            <p style="margin-top:10px; color:var(--text-muted);">اضغط للتسبيح وزيادة ترتيبك في المتصدرين</p>
+            <p style="margin-top:12px; font-size:0.85em; color:var(--text-muted);">اضغط للتسبيح والاستغفار ورفع رصيد حسناتك</p>
         </div>
     </div>
 
@@ -528,8 +537,9 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <!-- الإعدادات -->
     <div id="settingsSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">⚙️ الإعدادات</h3>
-        <p style="margin-top:10px; color:var(--text-muted);">إعدادات الحساب والتفضيلات لـ Sasa medo.</p>
+        <h3 style="color: var(--card-green);">⚙️ الإعدادات والحساب الأساسي</h3>
+        <p style="margin-top:10px; color:var(--text-muted);">حسابك الحالي مسجل باسم: <b id="currentLoggedInUser">Sasa medo</b></p>
+        <button class="btn-main" style="margin-top:15px; background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
     </div>
 
     <!-- معلومات التطبيق -->
@@ -703,20 +713,34 @@ function handleOrientation(event) {
     }
 }
 
-/* لوحة الصدارة والتسبيح */
+/* نظام التسبيح وحساب الحسنات الدقيقة (استغفار وتسبيح) */
 let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
-document.getElementById("counter").innerText = userIstighfarCount;
+updateTasbihUI();
+
+function countUp() { 
+    userIstighfarCount++; 
+    localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
+    updateTasbihUI();
+    updateLeaderboard();
+}
+
+function updateTasbihUI() {
+    document.getElementById("counter").innerText = userIstighfarCount;
+    // احتساب الحسنات: كل تسبيحة/استغفار يمنح تقريباً 100 حسنة مضاعفة (فضل الله واسع، وكل حرف بعشر حسنات)
+    let totalHasanat = userIstighfarCount * 100;
+    document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
+}
 
 let mockLeaderboard = [
     { name: "أحمد بن علي", count: 1250 },
     { name: "فاطمة الزهراء", count: 980 },
     { name: "محمود مطاوع", count: 720 },
-    { name: "مستخدم قريب", count: userIstighfarCount }
+    { name: "Sasa medo", count: userIstighfarCount }
 ];
 
 function updateLeaderboard() {
     let currentUserName = localStorage.getItem("qareeb_username") || "Sasa medo";
-    let userEntry = mockLeaderboard.find(u => u.name === "مستخدم قريب" || u.name === currentUserName);
+    let userEntry = mockLeaderboard.find(u => u.name === "Sasa medo" || u.name === currentUserName);
     if (userEntry) {
         userEntry.name = currentUserName;
         userEntry.count = userIstighfarCount;
@@ -742,13 +766,6 @@ function updateLeaderboard() {
         `;
         listEl.appendChild(row);
     });
-}
-
-function countUp() { 
-    userIstighfarCount++; 
-    document.getElementById("counter").innerText = userIstighfarCount; 
-    localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
-    updateLeaderboard();
 }
 
 /* مواقيت الصلاة الحقيقية */
@@ -858,20 +875,32 @@ function changeSurah() {
     audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
+/* نظام تسجيل الدخول التلقائي الحفظ الأساسي */
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
         localStorage.setItem("qareeb_logged", "true");
         localStorage.setItem("qareeb_username", name.trim());
         document.getElementById("loginOverlay").style.display = "none";
+        document.getElementById("welcomeUser").innerText = name.trim();
+        document.getElementById("currentLoggedInUser").innerText = name.trim();
         updateLeaderboard();
     } else {
-        alert("يرجى إدخال اسم المستخدم");
+        alert("يرجى إدخال اسم المستخدم أو الحساب الأساسي");
     }
+}
+
+function logoutUser() {
+    localStorage.removeItem("qareeb_logged");
+    localStorage.removeItem("qareeb_username");
+    location.reload();
 }
 
 if(localStorage.getItem("qareeb_logged") === "true") {
     document.getElementById("loginOverlay").style.display = "none";
+    let savedName = localStorage.getItem("qareeb_username") || "Sasa medo";
+    document.getElementById("welcomeUser").innerText = savedName;
+    document.getElementById("currentLoggedInUser").innerText = savedName;
 }
 
 loadSurahs();
