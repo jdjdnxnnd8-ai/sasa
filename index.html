@@ -67,7 +67,6 @@ body {
 }
 .btn-main:hover { opacity: 0.9; }
 
-/* الهيدر العلوي */
 header {
     width: 100%;
     max-width: 500px;
@@ -97,7 +96,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .prayer-times-grid div { display: flex; flex-direction: column; align-items: center; }
 .prayer-times-grid span.p-time { color: var(--accent-color); font-weight: bold; }
 
-/* لوحة الصدارة للمستغفرين TOP */
+/* لوحة الصدارة TOP */
 .top-board {
     background: linear-gradient(135deg, #16432a, #0b1a13);
     border: 1px solid var(--accent-color);
@@ -206,15 +205,8 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     transition: transform 0.4s ease-in-out, opacity 0.3s;
     transform-origin: right center;
 }
-
-.quran-img.flip-next {
-    transform: rotateY(-90deg);
-    opacity: 0.2;
-}
-.quran-img.flip-prev {
-    transform: rotateY(90deg);
-    opacity: 0.2;
-}
+.quran-img.flip-next { transform: rotateY(-90deg); opacity: 0.2; }
+.quran-img.flip-prev { transform: rotateY(90deg); opacity: 0.2; }
 
 /* بوصلة القبلة */
 .compass-container {
@@ -236,11 +228,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     transform-origin: center center;
     transition: transform 0.2s ease-out;
 }
-.compass-kaaba {
-    position: absolute;
-    top: 10px;
-    font-size: 1.5em;
-}
+.compass-kaaba { position: absolute; top: 10px; font-size: 1.5em; }
 
 /* الشريط السفلي الثابت */
 .bottom-nav {
@@ -297,20 +285,18 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- قائمة المتصدرين للمستغفرين TOP -->
+    <!-- لوحة الصدارة للمستغفرين TOP -->
     <div class="top-board">
         <div class="top-title">
             <span>🏆 متصدري المستغفرين اليوم</span>
             <span style="font-size:0.8em; color:var(--text-muted);" id="userRankText">مركزك: #4</span>
         </div>
-        <div class="top-list" id="topList">
-            <!-- ينمو ديناميكياً مع استغفارات المستخدم -->
-        </div>
+        <div class="top-list" id="topList"></div>
     </div>
 
-    <!-- قسم الكتابة والنطق المباشر -->
+    <!-- قسم الكتابة والنطق المباشر (ذكر / أنثى) -->
     <div class="speak-box">
-        <h3>✍️ كتابة ونطق فوري (اختيار الصوت):</h3>
+        <h3>✍️ كتابة ونطق فوري (اختر نوع الصوت):</h3>
         <input type="text" id="customTextInput" placeholder="اكتب جملتك هنا لتنطق فورا...">
         <select id="voiceSelect"></select>
         <button class="btn-main" onclick="speakCustomText()">🔊 نطق الجملة</button>
@@ -342,24 +328,21 @@ header p { font-size: 0.85em; color: var(--text-muted); }
                 <span class="icon">🍲</span>
                 <span>أحتاج طعام</span>
             </button>
-
             <button class="need-btn" onclick="speakText('أحتاج الذهاب إلى الطبيب')">
                 <span class="icon">🩺</span>
                 <span>أحتاج الطبيب</span>
             </button>
-
             <button class="need-btn" onclick="speakText('أريد الذهاب إلى دورة المياه')">
                 <span class="icon">🚻</span>
                 <span>دورة المياه</span>
             </button>
-
             <button class="need-btn" onclick="speakText('أشعر بالتعب وأحتاج إلى الراحة')">
                 <span class="icon">🛌</span>
                 <span>أحتاج راحة</span>
             </button>
         </div>
 
-        <!-- الأقسام الرئيسية -->
+        <!-- الأقسام العامة -->
         <div class="section-title">الأقسام العامة</div>
         <div class="grid-container">
             <button class="card-btn" onclick="openSection('quranSection')">
@@ -374,7 +357,6 @@ header p { font-size: 0.85em; color: var(--text-muted); }
                 <span class="icon">📿</span>
                 <span>الأذكار</span>
             </button>
-
             <button class="card-btn" onclick="openSection('hadithSection')">
                 <span class="icon">📜</span>
                 <span>الأحاديث</span>
@@ -427,22 +409,20 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <p style="font-size:0.8em; text-align:center; color:var(--text-muted); margin-top:10px;" id="qiblaAngleText">درجة القبلة: --</p>
     </div>
 
-    <!-- 3. قسم الاستماع للقرآن مع كبار القراء وشيوخ العالم الإسلامي -->
+    <!-- 3. قسم الاستماع للقرآن (محدث ليعمل لكل الشيوخ بفاعلية) -->
     <div id="audioSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--accent-color); margin-bottom: 10px;">🎧 الاستماع للقرآن الكريم</h3>
         
         <label style="font-size:0.85em; color:var(--text-muted);">اختر القارئ والشيخ:</label>
         <select id="reciterSelect" style="width:100%; padding:10px; margin-top:5px; margin-bottom:12px; background:#0b1a13; color:white; border:1px solid var(--card-border); border-radius:8px;" onchange="changeSurah()">
-            <option value="mishaari_raashid_al_3afaasee">مشاري راشد العفاسي</option>
-            <option value="abdul_basit_murattal">عبد الباسط عبد الصمد</option>
-            <option value="minshawi_murattal">محمد صديق المنشاوي</option>
-            <option value="khaled_al_qahtani">خالد القحطاني</option>
-            <option value="saood_ash_shuraym">سعود الشريم</option>
-            <option value="abdurrahmaan_as_sudais">عبد الرحمن السدیس</option>
-            <option value="maher_al_muaiqly">ماهر المعيقلي</option>
-            <option value="yasser_ad-dussary">ياسر الدوسري</option>
-            <option value="mahmoud_ali_al_banna">محمود علي البناء</option>
+            <option value="https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/">مشاري راشد العفاسي</option>
+            <option value="https://everyayah.com/data/Abdul_Basit_Murattal_64kbps/">عبد الباسط عبد الصمد</option>
+            <option value="https://everyayah.com/data/Minshawi_Murattal_128kbps/">محمد صديق المنشاوي</option>
+            <option value="https://everyayah.com/data/Saood_ash-Shuraym_128kbps/">سعود الشريم</option>
+            <option value="https://everyayah.com/data/Abdurrahmaan_As-Sudais_192kbps/">عبد الرحمن السديس</option>
+            <option value="https://everyayah.com/data/Maher_AlMuaiqly_64kbps/">ماهر المعيقلي</option>
+            <option value="https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/">ياسر الدوسري</option>
         </select>
 
         <label style="font-size:0.85em; color:var(--text-muted);">اختر السورة الشريفة:</label>
@@ -459,7 +439,6 @@ header p { font-size: 0.85em; color: var(--text-muted); }
             <p style="font-size:0.95em; margin-bottom:8px;">أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه</p>
             <button class="btn-main" style="padding:6px; font-size:0.85em;" onclick="speakText('أستغفر الله العظيم')">🔊 نطق</button>
         </div>
-
         <div style="background:#0b1a13; padding:12px; border-radius:10px; border:1px solid var(--card-border);">
             <p style="font-size:0.95em; margin-bottom:8px;">سبحان الله وبحمده، سبحان الله العظيم</p>
             <button class="btn-main" style="padding:6px; font-size:0.85em;" onclick="speakText('سبحان الله وبحمده سبحان الله العظيم')">🔊 نطق</button>
@@ -530,16 +509,16 @@ function loadVoices() {
     if ('speechSynthesis' in window) {
         let allVoices = window.speechSynthesis.getVoices();
         voices = allVoices.filter(v => v.lang.startsWith('ar'));
-        
-        // إذا لم يجد أصوات عربية، يستعرض باقي الأصوات المتاحة
         if (voices.length === 0) voices = allVoices;
 
         voiceSelect.innerHTML = "";
         voices.forEach((v, i) => {
             let opt = document.createElement("option");
             opt.value = i;
-            let gender = v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('salma') ? "أنثى (بنت)" : "ذكر (ولد)";
-            opt.textContent = `${v.name} - [${gender}] (${v.lang})`;
+            // تصنيف دقيق وواضح (ذكر / أنثى)
+            let isFemale = v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('zira') || v.name.toLowerCase().includes('salma') || v.name.toLowerCase().includes('mariam');
+            let genderLabel = isFemale ? "أنثى ♀️" : "ذكر ♂️";
+            opt.textContent = `${v.name} - [${genderLabel}]`;
             voiceSelect.appendChild(opt);
         });
     }
@@ -585,7 +564,7 @@ function closeSections() {
     document.getElementById("mainHomeSection").style.display = "block";
 }
 
-/* ================= صوت وصورة ورقة المصحف بتأثير 3D ================= */
+/* صوت وصورة ورقة المصحف بتأثير 3D */
 let audioCtx = null;
 function playPageFlipSound() {
     try {
@@ -608,8 +587,6 @@ let currentPage = 1;
 function updateQuranPage(direction = 'next') {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
-    
-    // تشغيل صوت وحركة تقليب الورقة
     playPageFlipSound();
     img.classList.add(direction === 'next' ? 'flip-next' : 'flip-prev');
 
@@ -646,7 +623,7 @@ function prevPage() {
     }
 }
 
-/* ================= لوحة الصدارة الحقيقية للمستغفرين TOP ================= */
+/* لوحة الصدارة TOP */
 let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
 document.getElementById("counter").innerText = userIstighfarCount;
 
@@ -659,15 +636,11 @@ let mockLeaderboard = [
 
 function updateLeaderboard() {
     let currentUserName = localStorage.getItem("qareeb_username") || "مستخدم قريب";
-    
-    // تحديث بيانات المستخدم
     let userEntry = mockLeaderboard.find(u => u.name === "مستخدم قريب" || u.name === currentUserName);
     if (userEntry) {
         userEntry.name = currentUserName;
         userEntry.count = userIstighfarCount;
     }
-
-    // ترتيب القائمة تصاعدياً
     mockLeaderboard.sort((a, b) => b.count - a.count);
 
     let listEl = document.getElementById("topList");
@@ -696,7 +669,7 @@ function countUp() {
     updateLeaderboard();
 }
 
-/* ================= 1. نظام مواقيت الصلاة الحقيقية المباشرة (API) ================= */
+/* مواقيت الصلاة الحقيقية */
 let userLat = 30.0444, userLng = 31.2357; 
 let prayerTimesData = {};
 
@@ -738,7 +711,6 @@ function fetchPrayerTimes(lat, lng) {
 function startPrayerCountdown() {
     setInterval(() => {
         if (!prayerTimesData.Fajr) return;
-
         let now = new Date();
         let prayers = [
             { name: "الفجر", time: prayerTimesData.Fajr },
@@ -755,7 +727,6 @@ function startPrayerCountdown() {
             let [h, m] = p.time.split(':').map(Number);
             let pDate = new Date();
             pDate.setHours(h, m, 0, 0);
-
             if (pDate > now) {
                 nextPrayer = p;
                 nextPrayerDate = pDate;
@@ -779,11 +750,10 @@ function startPrayerCountdown() {
         document.getElementById("nextPrayerName").innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
         document.getElementById("prayerTimer").innerText = 
             `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-
     }, 1000);
 }
 
-/* ================= 2. بوصلة القبلة ================= */
+/* بوصلة القبلة */
 let qiblaBearing = 136.8;
 
 function calculateQiblaAngle(lat, lng) {
@@ -801,22 +771,14 @@ function calculateQiblaAngle(lat, lng) {
 
 function requestCompassPermission() {
     calculateQiblaAngle(userLat, userLng);
-
     if (window.DeviceOrientationEvent) {
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission()
-                .then(permissionState => {
-                    if (permissionState === 'granted') {
-                        window.addEventListener('deviceorientation', handleOrientation, true);
-                    } else {
-                        alert("يرجى تفعيل صلاحية الحركة والتوجيه لمشاهدة القبلة.");
-                    }
-                });
+            DeviceOrientationEvent.requestPermission().then(state => {
+                if (state === 'granted') window.addEventListener('deviceorientation', handleOrientation, true);
+            });
         } else {
             window.addEventListener('deviceorientation', handleOrientation, true);
         }
-    } else {
-        document.getElementById("qiblaStatus").innerText = "جهازك لا يدعم حسّاس البوصلة تلقائياً.";
     }
 }
 
@@ -830,7 +792,7 @@ function handleOrientation(event) {
     }
 }
 
-// القرآن الصوتي وقائمة الشيوخ
+/* القرآن الصوتي وقائمة الشيوخ المحدثة */
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
 const select = document.getElementById("surahSelect");
 const audio = document.getElementById("audioPlayer");
@@ -849,10 +811,10 @@ function loadSurahs() {
 
 function changeSurah() {
     let num = select.value;
-    let reciter = document.getElementById("reciterSelect").value;
-    if(!num || !reciter) return;
+    let reciterBaseUrl = document.getElementById("reciterSelect").value;
+    if(!num || !reciterBaseUrl) return;
     let file = num.toString().padStart(3, '0') + ".mp3";
-    audio.src = `https://download.quranicaudio.com/quran/${reciter}/${file}`;
+    audio.src = reciterBaseUrl + file;
 }
 
 function performLogin() {
