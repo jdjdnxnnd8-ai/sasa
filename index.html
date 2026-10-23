@@ -188,12 +188,12 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف */
+/* المصحف الشريف وضبط ظهور الصور تماماً */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
-    width: 100%; max-width: 480px; height: auto; border-radius: 12px;
+    width: 100%; max-width: 480px; height: auto; min-height: 500px; border-radius: 12px;
     border: 2px solid #0b3d2c; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    background: #fff; min-height: 400px; object-fit: contain;
+    background: #ffffff; object-fit: contain;
 }
 .page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 15px auto 0; }
 
@@ -351,11 +351,11 @@ input, select, audio {
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف -->
+        <!-- المصحف الشريف بالصور المؤكدة -->
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://www.qurankerm.com/quran/images/1.png" onerror="this.src='https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png'" alt="صفحة المصحف">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -429,7 +429,6 @@ function speakCustomText() {
     if(text.trim() !== "") speak(text);
 }
 
-// التحكم بالإعدادات
 function toggleSettings() {
     document.getElementById("settingsModal").classList.toggle("active");
 }
@@ -458,7 +457,6 @@ function requestNotificationPermission() {
     }
 }
 
-// تبويبات عبادتي
 function switchTab(tabId, btnEl) {
     const parent = btnEl.closest('.category-box');
     parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -467,11 +465,15 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف وتقليب الصفحات
+// المصحف وتقليب الصفحات مع توفير رابطين احتياطيين لضمان ظهور الصور فوراً
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
-    document.getElementById("quranImage").src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
+    const img = document.getElementById("quranImage");
+    img.src = `https://www.qurankerm.com/quran/images/${currentPage}.png`;
+    img.onerror = function() {
+        this.src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
+    };
 }
 
 function nextPage() { if(currentPage < 604) { currentPage++; updateQuranPage(); } }
@@ -488,7 +490,6 @@ if(quranBox) {
     });
 }
 
-// القرآن الصوتي والبحث
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
 const select = document.getElementById("surahSelect");
 const audio = document.getElementById("audioPlayer");
@@ -516,11 +517,9 @@ function changeSurah() {
 
 function filterSurahs() { loadSurahs(document.getElementById("quranSearch").value.trim()); }
 
-// المسبحة
 let c = 0;
 function countUp() { c++; document.getElementById("counter").innerText = c; }
 
-// تسجيل الدخول والخروج
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
