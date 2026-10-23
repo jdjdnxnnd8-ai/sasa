@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>قريب - احتیاجاتك توصل بكلمة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0f5431;
+      --primary-hover: #0a3c22;
+      --bg-color: #f7f9f6;
+      --text-main: #1f2937;
+      --text-muted: #4b5563;
+      --border-radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 450px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      line-height: 1.1;
+      margin-top: 10px;
+      margin-bottom: 6px;
+      letter-spacing: -1px;
+    }
+
+    .app-subtitle {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .app-subtitle svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--primary-color);
+    }
+
+    .app-description {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .btn-card {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 18px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      min-height: 105px;
+    }
+
+    .btn-card:active {
+      transform: scale(0.96);
+      background-color: var(--primary-hover);
+    }
+
+    .btn-card svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-card span {
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: #ffffff;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 -10px 25px rgba(0,0,0,0.2);
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      position: sticky;
+      top: 0;
+      background: #fff;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .azkar-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .azkar-item {
+      background-color: #f0f7f3;
+      border-right: 4px solid var(--primary-color);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      cursor: pointer;
+      transition: background-color 0.2s;
+      line-height: 1.5;
+    }
+
+    .azkar-item:active {
+      background-color: #e1efe7;
+    }
+
+    .hasanat-badge {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.85rem;
+      color: #2e7d32;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <h1 class="app-title">قريب</h1>
+    
+    <div class="app-subtitle">
+      احتياجاتك توصل بكلمة
+      <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    </div>
+
+    <p class="app-description">اختر ما تحتاج إليه، وسنساعدك على التعبير عنه.</p>
+
+    <div class="grid-container">
+      <button class="btn-card" onclick="speak('أحتاج مساعدة')">
+        <svg viewBox="0 0 24 24"><path d="M7 11v 8a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-7a1 1 0 0 0 -1 -1h-3a1 1 0 0 0 -1 1z"/><path d="M14 11v 8a1 1 0 0 0 1 1h2a1 1 0 0 0 1 -1v-7a1 1 0 0 0 -1 -1h-3a1 1 0 0 0 -1 1z"/><path d="M8 8a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M16 8a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/></svg>
+        <span>أحتاج مساعدة</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أشعر بالألم')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M12 10v4"/><path d="M9 13l-2 5"/><path d="M15 13l2 5"/><path d="M4 4l3 3"/><path d="M20 4l-3 3"/></svg>
+        <span>أشعر بالألم</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج ماء')">
+        <svg viewBox="0 0 24 24"><path d="M12 3l5.5 6.5a7 7 0 1 1 -11 0z"/></svg>
+        <span>أحتاج ماء</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج دواء')">
+        <svg viewBox="0 0 24 24"><path d="M4.5 12.5l8 -8a4.95 4.95 0 1 1 7 7l-8 8a4.95 4.95 0 1 1 -7 -7Z"/><path d="M8.5 8.5l7 7"/></svg>
+        <span>أحتاج دواء</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج طعام')">
+        <svg viewBox="0 0 24 24"><path d="M19 3v12h-5c-.023-3.681.184-7.406 5-12zm0 12v6h-2v-6h2zM6 3v6c0 1.1.9 2 2 2h1v10h2V11h1c1.1 0 2-.9 2-2V3H6z"/></svg>
+        <span>أحتاج طعام</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج الذهاب إلى الطبيب')">
+        <svg viewBox="0 0 24 24"><path d="M6 14h12v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-4z"/><path d="M12 6v6"/><path d="M9 9h6"/><circle cx="12" cy="4" r="2"/></svg>
+        <span>أحتاج الذهاب إلى الطبيب</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج دورة المياه')">
+        <svg viewBox="0 0 24 24"><path d="M10 4a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M10 8v7m0 0l-2 5m2 -5l2 5"/><path d="M17 4a2 2 0 1 0 0 -4a2 2 0 0 0 0 4z"/><path d="M17 8v4m-2 0h4v5l-1 4m-2 -4l-1 -5"/></svg>
+        <span>أحتاج دورة المياه</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج راحة')">
+        <svg viewBox="0 0 24 24"><path d="M3 7v11m0 -4h18m0 -7v11"/><path d="M7 10h5a2 2 0 0 1 2 2v2h-9z"/><path d="M18 6a2 2 0 0 1 2 2v1"/><path d="M15 4h2a2 2 0 0 1 2 2"/></svg>
+        <span>أحتاج راحة</span>
+      </button>
+
+      <button class="btn-card" onclick="openAzkar()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2m10 -10h-2m-16 0h-2m15.071 -7.071l-1.414 1.414m-11.314 11.314l-1.414 1.414m0 -14.142l1.414 1.414m11.314 11.314l1.414 1.414"/></svg>
+        <span>أذكار واستغفار</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج شيئاً آخر')">
+        <svg viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>
+        <span>أحتاج شيئاً آخر</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أريد قراءة القرآن الكريم')">
+        <svg viewBox="0 0 24 24"><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6v13"/><path d="M12 6v13"/><path d="M21 6v13"/></svg>
+        <span>قرآن</span>
+      </button>
+
+      <button class="btn-card" onclick="speak('أحتاج للتواصل مع أحد')">
+        <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"/></svg>
+        <span>أحتاج أتواصل مع أحد</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="azkarModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">الأذكار والاستغفار</h3>
+        <button class="close-btn" onclick="closeAzkar()">&times;</button>
+      </div>
+      <div class="azkar-list">
+        <!-- الاستغفار والحسنات -->
+        <div class="azkar-item" onclick="speakIstighfar('أستغفر الله العظيم وأتوب إليه', 'كتبت لك عشر حسنات، ويضاعف الله لمن يشاء إلى سبعمائة ضعف')">
+          🟢 أستغفر الله العظيم وأتوب إليه.
+          <span class="hasanat-badge">✨ الثواب: 10 حسنات على الأقل وتضاعف لـ 700 ضعف</span>
+        </div>
+
+        <div class="azkar-item" onclick="speakIstighfar('أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه', 'كتبت لك عشر حسنات وتغفر ذنوبك وإن كانت مثل زبد البحر')">
+          🟢 أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه.
+          <span class="hasanat-badge">✨ الثواب: 10 حسنات وتكفير للذنوب العظام</span>
+        </div>
+
+        <div class="azkar-item" onclick="speakIstighfar('أستغفر الله للمؤمنين والمؤمنات والمسلمين والمسلمات الأحياء منهم والأموات', 'كتبت لك ملايين الحسنات بعدد كل مؤمن ومؤمنة')">
+          🟢 أستغفر الله للمؤمنين والمؤمنات والمسلمين والمسلمات الأحياء منهم والأموات.
+          <span class="hasanat-badge">💎 الثواب: أكثر من 2 مليار حسنة (حسنة عن كل مؤمن)</span>
+        </div>
+
+        <div class="azkar-item" onclick="speak('أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له')">
+          ☀️ أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له.
+        </div>
+        <div class="azkar-item" onclick="speak('أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له')">
+          🌙 أمسينا وأمسى الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له.
+        </div>
+        <div class="azkar-item" onclick="speak('آية الكرسي: الله لا إله إلا هو الحي القيوم')">
+          📖 آية الكرسي
+        </div>
+        <div class="azkar-item" onclick="speak('رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً')">
+          ✨ رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً.
+        </div>
+        <div class="azkar-item" onclick="speak('بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم')">
+          🛡️ بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء...
+        </div>
+        <div class="azkar-item" onclick="speak('سبحان الله وبحمده عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته')">
+          🌸 سبحان الله وبحمده، عدد خلقه ورضا نفسه وزنة عرشه ومداد كلماته.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function speak(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function speakIstighfar(phrase, hasanatText) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        
+        // نطق صيغة الاستغفار أولاً
+        const utt1 = new SpeechSynthesisUtterance(phrase);
+        utt1.lang = 'ar-SA';
+        utt1.rate = 0.85;
+
+        // ثم نطق أجر الحسنات مباشرة
+        const utt2 = new SpeechSynthesisUtterance(hasanatText);
+        utt2.lang = 'ar-SA';
+        utt2.rate = 0.9;
+
+        window.speechSynthesis.speak(utt1);
+        window.speechSynthesis.speak(utt2);
+      }
+    }
+
+    function openAzkar() {
+      speak('الأذكار والاستغفار');
+      document.getElementById('azkarModal').classList.add('active');
+    }
+
+    function closeAzkar() {
+      document.getElementById('azkarModal').classList.remove('active');
+    }
+
+    // تنبيهات الصلاة (قبل كل صلاة بـ 5 دقائق)
+    const prayerTimes = [
+      { name: 'الفجر', time: '04:45' },
+      { name: 'الظهر', time: '11:41' },
+      { name: 'العصر', time: '14:52' },
+      { name: 'المغرب', time: '17:40' },
+      { name: 'العشاء', time: '18:58' }
+    ];
+
+    let alertedPrayers = {};
+
+    function checkPrayerTimes() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const currentTimeStr = `${hours}:${minutes}`;
+      const todayKey = now.toDateString();
+
+      prayerTimes.forEach(prayer => {
+        const [pHour, pMin] = prayer.time.split(':').map(Number);
+        const prayerDate = new Date();
+        prayerDate.setHours(pHour, pMin - 5, 0);
+
+        const alertHour = String(prayerDate.getHours()).padStart(2, '0');
+        const alertMin = String(prayerDate.getMinutes()).padStart(2, '0');
+        const alertTimeStr = `${alertHour}:${alertMin}`;
+
+        const uniqueKey = `${todayKey}-${prayer.name}`;
+
+        if (currentTimeStr === alertTimeStr && !alertedPrayers[uniqueKey]) {
+          speak(`اقتربت صلاة ${prayer.name}`);
+          alertedPrayers[uniqueKey] = true;
+        }
+      });
+    }
+
+    setInterval(checkPrayerTimes, 30000);
+  </script>
+</body>
+</html>
