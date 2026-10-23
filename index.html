@@ -188,7 +188,7 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف وحل مشكلة الشاشة البيضا نهائياً */
+/* المصحف الشريف وضبط الصور الأصلية تماماً */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
     width: 100%; max-width: 480px; height: auto; min-height: 520px; border-radius: 12px;
@@ -197,7 +197,7 @@ header {
 }
 .page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 15px auto 0; }
 
-/* قسم الأذكار والشامل */
+/* موسوعة الأذكار */
 .azkar-card {
     background: #f8f9fa;
     border: 1px solid #dcdcdc;
@@ -365,11 +365,11 @@ input, select, audio {
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 موسوعة الأذكار الشاملة والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف المضبوط تماماً بدون شاشات بيضا -->
+        <!-- المصحف الشريف المظبوط بالرابط الصحيح 100% -->
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://www.everyayah.com/data/images/img_001.png" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/1.png" alt="صفحة المصحف">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -433,32 +433,6 @@ input, select, audio {
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- القسم الثالث: لغة الإشارة -->
-    <!-- ========================================== -->
-    <div class="category-box">
-        <div class="category-header">🤟 قسم لغة الإشارة (للصم والبكم)</div>
-        <p style="margin-bottom:15px; font-size:15px; color:#555;">اضغط على الكلمة لتنطق بصوت عالٍ، مع الإشارات التوضيحية والإيموجيز:</p>
-        <div class="grid-container">
-            <button class="card-btn" style="background:#165b43;" onclick="speak('شكراً لك')">
-                <span class="icon">🤝❤️</span>
-                <span>شكراً لك</span>
-            </button>
-            <button class="card-btn" style="background:#165b43;" onclick="speak('مرحباً وأهلاً بك')">
-                <span class="icon">👋😊</span>
-                <span>مرحباً</span>
-            </button>
-            <button class="card-btn" style="background:#165b43;" onclick="speak('نعم موافق')">
-                <span class="icon">👍✅</span>
-                <span>نعم / موافق</span>
-            </button>
-            <button class="card-btn" style="background:#165b43;" onclick="speak('ممتاز أحسنت')">
-                <span class="icon">👏⭐</span>
-                <span>ممتاز</span>
-            </button>
-        </div>
-    </div>
-
 </div>
 
 <script>
@@ -515,13 +489,11 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف الشريف وضبط ظهور الصور بدون شاشة بيضا
+// المصحف الشريف بالرابط الأصلي المظبوط تماماً
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
-    const img = document.getElementById("quranImage");
-    let pageStr = String(currentPage).padStart(3, '0');
-    img.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
+    document.getElementById("quranImage").src = `https://raw.githubusercontent.com/GlobalQuran/quran-images/master/images-1024/${currentPage}.png`;
 }
 
 function nextPage() { if(currentPage < 604) { currentPage++; updateQuranPage(); } }
