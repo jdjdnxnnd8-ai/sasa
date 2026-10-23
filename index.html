@@ -6,18 +6,13 @@
 <title>تطبيق قريب - Qareeb</title>
 <style>
 :root {
-    --bg-color: #f4f7f6;
-    --text-color: #2c3e50;
-    --card-bg: #0b3d2c;
-    --card-text: #ffffff;
-    --base-font-size: 16px;
-}
-
-body.high-contrast {
-    --bg-color: #000000;
+    --bg-color: #0b1a13;
+    --card-bg: #11291d;
+    --card-border: #1e4d36;
     --text-color: #ffffff;
-    --card-bg: #004d33;
-    --card-text: #ffff00;
+    --text-muted: #a3c1ad;
+    --accent-color: #d4af37;
+    --primary-green: #0f4c3a;
 }
 
 * {
@@ -29,19 +24,17 @@ body.high-contrast {
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    font-size: var(--base-font-size);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 50px;
-    transition: all 0.3s ease;
+    padding-bottom: 80px;
 }
 
 /* شاشة تسجيل الدخول */
 #loginOverlay {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(11, 61, 44, 0.96);
+    background: rgba(11, 26, 19, 0.98);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,158 +42,167 @@ body {
 }
 
 .login-card {
-    background: white;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     padding: 35px;
     border-radius: 20px;
     width: 90%;
     max-width: 400px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    color: #2c3e50;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
 }
 
-.login-card h2 { color: #0b3d2c; margin-bottom: 8px; font-size: 2em; }
-.login-card p { color: #666; font-size: 0.9em; margin-bottom: 20px; }
+.login-card h2 { color: var(--accent-color); margin-bottom: 8px; font-size: 2em; }
+.login-card p { color: var(--text-muted); font-size: 0.9em; margin-bottom: 20px; }
 .login-card input {
     width: 100%; padding: 12px; margin: 8px 0;
-    border: 1px solid #ccc; border-radius: 10px; font-size: 1em; outline: none;
+    background: #0b1a13; border: 1px solid var(--card-border);
+    color: white; border-radius: 10px; font-size: 1em; outline: none;
 }
 
 .btn-main {
-    width: 100%; padding: 14px; background: #0b3d2c; color: white;
+    width: 100%; padding: 14px; background: var(--accent-color); color: #0b1a13;
     border: none; border-radius: 10px; font-size: 1em; font-weight: bold;
     cursor: pointer; margin-top: 10px; transition: 0.2s;
 }
+.btn-main:hover { opacity: 0.9; }
 
-.btn-main:hover { background: #165b43; }
-
+/* الهيدر العلوي */
 header {
     width: 100%;
-    max-width: 1000px;
-    padding: 20px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 500px;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid var(--card-border);
+    margin-bottom: 15px;
 }
+header h1 { font-size: 1.4em; color: var(--accent-color); }
+header p { font-size: 0.85em; color: var(--text-muted); }
 
-.logo-group { text-align: right; }
-.logo-title { font-size: 2.5em; color: #0b3d2c; font-weight: bold; }
-.sub-title { color: #1e6b52; font-size: 1.1em; font-weight: bold; }
+.container { width: 100%; max-width: 500px; padding: 0 15px; }
 
-.settings-icon-btn {
-    background: #e8f0ec;
-    border: 1px solid #0b3d2c;
-    color: #0b3d2c;
-    padding: 10px 16px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.95em;
-}
-
-.settings-modal {
-    display: none;
-    background: white;
-    width: 100%;
-    max-width: 1000px;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+/* شريط أوقات الصلاة */
+.prayer-bar {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 15px;
     margin-bottom: 20px;
-    border: 1px solid #ddd;
-    color: #2c3e50;
+    text-align: center;
 }
+.prayer-title { color: var(--accent-color); font-size: 1.1em; font-weight: bold; margin-bottom: 5px; }
+.prayer-timer { font-size: 1.5em; font-weight: bold; margin-bottom: 10px; }
+.prayer-times-grid { display: flex; justify-content: space-around; font-size: 0.85em; color: var(--text-muted); border-top: 1px solid var(--card-border); padding-top: 8px; }
 
-.settings-modal.active { display: block; }
-.settings-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-.settings-row:last-child { border-bottom: none; }
-
-.settings-label { display: flex; align-items: center; gap: 12px; }
-.settings-label .icon { font-size: 1.5em; background: #e8f0ec; padding: 8px; border-radius: 10px; }
-
-.container { width: 100%; max-width: 1000px; padding: 0 15px; }
-
+/* قسم الكتابة والنطق */
 .speak-box {
-    background: white; padding: 20px; border-radius: 18px;
-    border: 1px solid #e0e7e3; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 25px; color: #2c3e50;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 15px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+.speak-box h3 { font-size: 1em; color: var(--accent-color); margin-bottom: 8px; }
+.speak-box input, .speak-box select {
+    width: 100%; padding: 10px; margin-bottom: 10px;
+    background: #0b1a13; border: 1px solid var(--card-border);
+    color: white; border-radius: 8px; font-size: 0.95em; outline: none;
 }
 
-.speak-box h3 { color: #0b3d2c; font-size: 1.1em; margin-bottom: 12px; }
-.speak-box input {
-    width: 100%; padding: 14px; border: 1px solid #ccc;
-    border-radius: 10px; font-size: 1em; outline: none; margin-bottom: 12px;
+/* شبكة أزرار الاحتياجات (للصم والبكم) */
+.needs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 25px;
 }
 
-.section-title {
-    font-size: 1.3em; color: #0b3d2c; margin-bottom: 15px;
-    border-right: 4px solid #0b3d2c; padding-right: 10px; font-weight: bold;
+.need-btn {
+    background: var(--primary-green);
+    border: 1px solid var(--card-border);
+    color: white;
+    border-radius: 14px;
+    padding: 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: bold;
+    transition: 0.2s;
 }
+.need-btn:active { transform: scale(0.96); background: var(--card-bg); }
+.need-btn .icon { font-size: 1.6em; }
 
+/* الأقسام الشبكية */
+.section-title { font-size: 1.1em; color: var(--accent-color); margin-bottom: 12px; font-weight: bold; }
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
 .card-btn {
-    background: var(--card-bg); color: var(--card-text); border: none; border-radius: 18px;
-    padding: 20px 15px; display: flex; flex-direction: column; align-items: center;
-    justify-content: center; gap: 10px; cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.2s;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+    border-radius: 14px;
+    padding: 15px 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.card-btn:active { transform: scale(0.95); background: var(--primary-green); }
+.card-btn .icon { font-size: 1.5em; }
+.card-btn span { font-size: 0.8em; font-weight: bold; text-align: center; }
+
+/* الأقسام المنبثقة */
+.content-section {
+    display: none;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.content-section.active { display: block; }
+.back-btn {
+    background: none; border: none; color: var(--accent-color);
+    font-weight: bold; cursor: pointer; font-size: 1em; margin-bottom: 15px;
+    display: flex; align-items: center; gap: 5px;
 }
 
-.card-btn:active { transform: scale(0.96); }
-.card-btn .icon { font-size: 2em; }
-.card-btn span { font-size: 1em; font-weight: bold; text-align: center; }
-
-.special-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px; }
-.special-btn {
-    background: linear-gradient(135deg, #165b43, #0b3d2c);
-    color: #ffd700; border: 2px solid #ffd700; border-radius: 18px;
-    padding: 18px; display: flex; align-items: center; justify-content: center;
-    gap: 10px; cursor: pointer; font-size: 1.1em; font-weight: bold;
-}
-
-.section-box {
-    display: none; background: white; padding: 25px; border-radius: 20px;
-    margin-bottom: 30px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); border: 1px solid #e0e7e3;
-    color: #2c3e50;
-}
-
-.tab-menu { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; flex-wrap: wrap; }
-.tab-btn {
-    padding: 10px 18px; background: #e8f0ec; border: none; border-radius: 8px;
-    color: #0b3d2c; font-weight: bold; cursor: pointer;
-}
-.tab-btn.active { background: #0b3d2c; color: white; }
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-/* المصحف الشريف المضمون بدون تفريغ شاشة */
-.quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
+/* المصحف الشريف */
+.quran-viewer { text-align: center; }
 .quran-img {
-    width: 100%; max-width: 480px; height: auto; min-height: 520px;
-    border-radius: 12px; border: 2px solid #0b3d2c; background: #ffffff;
-    object-fit: contain; display: block; margin: 0 auto;
+    width: 100%; max-width: 400px; height: auto; min-height: 450px;
+    border-radius: 10px; border: 1px solid var(--card-border);
+    background: #fff; object-fit: contain; display: block; margin: 0 auto 15px;
 }
-.page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 15px auto 0; }
 
-input, select, audio {
-    width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px;
-    border: 1px solid #ccc; font-size: 1em;
+/* الشريط السفلي الثابت */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; width: 100%;
+    background: #07130e;
+    border-top: 1px solid var(--card-border);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    z-index: 1000;
 }
+.nav-item {
+    background: none; border: none; color: var(--text-muted);
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    cursor: pointer; font-size: 0.75em;
+}
+.nav-item.active { color: var(--accent-color); }
+.nav-item span.icon { font-size: 1.3em; }
 </style>
 </head>
 
@@ -218,263 +220,270 @@ input, select, audio {
 </div>
 
 <header>
-    <div class="logo-group">
-        <div class="logo-title">قـريـب</div>
-        <div class="sub-title">احتياجاتك توصل بكلمة 💚</div>
-    </div>
-    <button class="settings-icon-btn" onclick="toggleSettings()">
-        <span>⚙️</span>
-        <span>الإعدادات</span>
-    </button>
+    <h1>تطبيق قريب - Qareeb</h1>
+    <p>احتياجاتك توصل بكلمة 💚</p>
 </header>
 
 <div class="container">
 
-    <!-- نافذة الإعدادات -->
-    <div id="settingsModal" class="settings-modal">
-        <h3 style="margin-bottom: 15px; color: #0b3d2c;">⚙️ إعدادات التطبيق</h3>
-        
-        <div class="settings-row">
-            <div class="settings-label">
-                <span class="icon">T</span>
-                <div>
-                    <b>حجم الخط</b>
-                    <p style="font-size:0.85em; color:#666;">عادي - كبير - كبير جداً</p>
-                </div>
-            </div>
-            <select style="width:auto;" onchange="changeFontSize(this.value)">
-                <option value="16px">عادي</option>
-                <option value="19px">كبير</option>
-                <option value="22px">كبير جداً</option>
-            </select>
-        </div>
-
-        <div class="settings-row">
-            <div class="settings-label">
-                <span class="icon">🔊</span>
-                <div>
-                    <b>الصوت والسرعة</b>
-                    <p style="font-size:0.85em; color:#666;">التحكم بمستوى ونبرة ونطق الصوت</p>
-                </div>
-            </div>
-            <select id="speechRate" style="width:auto;" onchange="updateSpeechRate(this.value)">
-                <option value="0.7">بطيء جداً</option>
-                <option value="0.85" selected>متوسط (موصى به)</option>
-                <option value="1.0">سريع</option>
-            </select>
-        </div>
-
-        <div class="settings-row">
-            <div class="settings-label">
-                <span class="icon">🔔</span>
-                <div>
-                    <b>التنبيهات وتذكير الصلاة</b>
-                    <p style="font-size:0.85em; color:#666;">تفعيل تذكير الصلاة والأذكار بالصوت</p>
-                </div>
-            </div>
-            <button class="btn-main" style="width:auto; padding:8px 15px;" onclick="requestNotificationPermission()">تفعيل التنبيهات</button>
-        </div>
-
-        <div class="settings-row">
-            <div class="settings-label">
-                <span class="icon">🎨</span>
-                <div>
-                    <b>مظهر التطبيق</b>
-                    <p style="font-size:0.85em; color:#666;">خيار تباين وضوح القراءة لضعاف البصر</p>
-                </div>
-            </div>
-            <button class="btn-main" style="width:auto; padding:8px 15px; background:#333;" onclick="toggleContrast()">تغيير التباين</button>
+    <!-- شريط أوقات الصلاة -->
+    <div class="prayer-bar">
+        <div class="prayer-title">أذان المغرب</div>
+        <div class="prayer-timer" id="prayerTimer">01:13:49</div>
+        <div style="font-size: 0.8em; color: var(--text-muted); margin-bottom: 8px;">باقي على الأذان • Alexandria</div>
+        <div class="prayer-times-grid">
+            <div>الفجر 04:45</div>
+            <div>الظهر 11:41</div>
+            <div>العصر 14:52</div>
+            <div>المغرب 17:40</div>
+            <div>العشاء 18:58</div>
         </div>
     </div>
 
-    <!-- قسم اكتب والنظام ينطق -->
+    <!-- قسم الكتابة والنطق المباشر -->
     <div class="speak-box">
-        <h3>✍️ اكتب أي كلمة أو جملة وينطقها فوراً:</h3>
-        <input type="text" id="customTextInput" placeholder="اكتب جملتك هنا...">
+        <h3>✍️ كتابة ونطق فوري (اختر صوت بنت/ولد):</h3>
+        <input type="text" id="customTextInput" placeholder="اكتب جملتك هنا لتنطق فورا...">
+        <select id="voiceSelect"></select>
         <button class="btn-main" onclick="speakCustomText()">🔊 نطق الجملة</button>
     </div>
 
-    <!-- زر قسم عبادتي -->
-    <div class="special-grid">
-        <button class="special-btn" onclick="toggleSection('ibadatiSection')">
-            <span>🌙</span>
-            <span>قسم «عبادتي» (المصحف الشريف والقرآن الصوتي والأذكار)</span>
-        </button>
+    <!-- الشاشة الرئيسية -->
+    <div id="mainHomeSection">
+        
+        <!-- قسم الاحتياجات الصوتية (الصم والبكم) -->
+        <div class="section-title">🔊 أزرار الاحتياجات والتواصل السريع</div>
+        <div class="needs-grid">
+            <button class="need-btn" onclick="speakText('أحتاج مساعدة من فضلك')">
+                <span class="icon">✋</span>
+                <span>أحتاج مساعدة</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أشعر بالألم أرجوك ساعدني')">
+                <span class="icon">😣</span>
+                <span>أشعر بالألم</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أريد أن أشرب الماء')">
+                <span class="icon">💧</span>
+                <span>أحتاج ماء</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أحتاج لتناول الدواء')">
+                <span class="icon">💊</span>
+                <span>أحتاج دواء</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أشعر بالجوع وأريد الطعام')">
+                <span class="icon">🍲</span>
+                <span>أحتاج طعام</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أحتاج الذهاب إلى الطبيب')">
+                <span class="icon">🩺</span>
+                <span>أحتاج الطبيب</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أريد الذهاب إلى دورة المياه')">
+                <span class="icon">🚻</span>
+                <span>دورة المياه</span>
+            </button>
+            <button class="need-btn" onclick="speakText('أشعر بالتعب وأحتاج إلى الراحة')">
+                <span class="icon">🛌</span>
+                <span>أحتاج راحة</span>
+            </button>
+        </div>
+
+        <!-- الأقسام الرئيسية -->
+        <div class="section-title">الأقسام العامة</div>
+        <div class="grid-container">
+            <button class="card-btn" onclick="openSection('quranSection')">
+                <span class="icon">📖</span>
+                <span>القرآن</span>
+            </button>
+            <button class="card-btn" onclick="openSection('audioSection')">
+                <span class="icon">🎧</span>
+                <span>الاستماع</span>
+            </button>
+            <button class="card-btn" onclick="openSection('azkarSection')">
+                <span class="icon">📿</span>
+                <span>الأذكار</span>
+            </button>
+            <button class="card-btn" onclick="openSection('hadithSection')">
+                <span class="icon">📜</span>
+                <span>الأحاديث</span>
+            </button>
+            <button class="card-btn" onclick="openSection('tasbihSection')">
+                <span class="icon">💎</span>
+                <span>التسبيح</span>
+            </button>
+            <button class="card-btn" onclick="openSection('qiblaSection')">
+                <span class="icon">🕋</span>
+                <span>القبلة</span>
+            </button>
+            <button class="card-btn" onclick="openSection('tahfeezSection')">
+                <span class="icon">📈</span>
+                <span>التحفيظ</span>
+            </button>
+            <button class="card-btn" onclick="openSection('booksSection')">
+                <span class="icon">📚</span>
+                <span>الكتب</span>
+            </button>
+        </div>
     </div>
 
-    <!-- أزرار الاحتياجات -->
-    <div class="section-title">التعبير عن الاحتياجات اليومية</div>
-    <div class="grid-container">
-        <button class="card-btn" onclick="speak('أحتاج مساعدة من فضلك')">
-            <span class="icon">✋</span>
-            <span>أحتاج مساعدة</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أشعر بالألم أرجوك ساعدني')">
-            <span class="icon">😣</span>
-            <span>أشعر بالألم</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أريد أن أشرب الماء')">
-            <span class="icon">💧</span>
-            <span>أحتاج ماء</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أحتاج لتناول الدواء')">
-            <span class="icon">💊</span>
-            <span>أحتاج دواء</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أشعر بالجوع وأريد الطعام')">
-            <span class="icon">🍲</span>
-            <span>أحتاج طعام</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أحتاج الذهاب إلى الطبيب')">
-            <span class="icon">🩺</span>
-            <span>أحتاج الذهاب للطبيب</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أشعر بالتعب وأحتاج إلى الراحة')">
-            <span class="icon">🛌</span>
-            <span>أحتاج راحة</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أريد الذهاب إلى دورة المياه')">
-            <span class="icon">🚻</span>
-            <span>أحتاج دورة المياه</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أريد التحدث والحديث مع أحد')">
-            <span class="icon">📞</span>
-            <span>أحتاج أتواصل مع أحد</span>
-        </button>
-
-        <button class="card-btn" onclick="speak('أحتاج شيئاً آخر غير مذكور')">
-            <span class="icon">❓</span>
-            <span>أحتاج شيئاً آخر</span>
-        </button>
+    <!-- 1. قسم المصحف الشريف -->
+    <div id="quranSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color); margin-bottom: 10px;">📖 المصحف الشريف</h3>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px;">صفحة رقم: <b id="pageNum">1</b> من 604</p>
+        <div class="quran-viewer" id="quranBox">
+            <img id="quranImage" class="quran-img" src="https://android.quran.com/data/width_1024/page001.png" alt="صفحة المصحف" onerror="handleImgError(this)">
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+            <button class="btn-main" style="width: 48%; margin-top:0;" onclick="nextPage()">التالية ⬅️</button>
+            <button class="btn-main" style="width: 48%; margin-top:0;" onclick="prevPage()">➡️ السابقة</button>
+        </div>
     </div>
 
-    <!-- قسم عبادتي الشامل -->
-    <div id="ibadatiSection" class="section-box">
-        <h3>🌙 قسم «عبادتي»</h3>
-        <div class="tab-menu">
-            <button class="tab-btn active" onclick="switchTab('mushafTab', this)">📖 المصحف الشريف</button>
-            <button class="tab-btn" onclick="switchTab('quranAudioTab', this)">🎧 القرآن الصوتي</button>
-            <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
-        </div>
+    <!-- 2. قسم الاستماع للقرآن -->
+    <div id="audioSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color); margin-bottom: 10px;">🎧 الاستماع للقرآن</h3>
+        <select id="surahSelect" onchange="changeSurah()"></select>
+        <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
+    </div>
 
-        <!-- المصحف الشريف مع معالجة حظر الصور البديلة تلقائياً -->
-        <div id="mushafTab" class="tab-content active">
-            <p style="text-align:center; font-size:0.95em; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604</p>
-            <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://android.quran.com/data/width_1024/page001.png" alt="صفحة المصحف" onerror="handleImgError(this)">
-            </div>
-            <div class="page-controls">
-                <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
-                <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="prevPage()">➡️ السابقة</button>
-            </div>
+    <!-- 3. قسم الأذكار -->
+    <div id="azkarSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color); margin-bottom: 10px;">📿 الأذكار</h3>
+        <div style="background:#0b1a13; padding:12px; border-radius:10px; margin-bottom:10px; border:1px solid var(--card-border);">
+            <p style="font-size:0.95em; margin-bottom:8px;">أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه</p>
+            <button class="btn-main" style="padding:6px; font-size:0.85em;" onclick="speakText('أستغفر الله العظيم')">🔊 نطق</button>
         </div>
+        <div style="background:#0b1a13; padding:12px; border-radius:10px; border:1px solid var(--card-border);">
+            <p style="font-size:0.95em; margin-bottom:8px;">سبحان الله وبحمده، سبحان الله العظيم</p>
+            <button class="btn-main" style="padding:6px; font-size:0.85em;" onclick="speakText('سبحان الله وبحمده سبحان الله العظيم')">🔊 نطق</button>
+        </div>
+    </div>
 
-        <!-- القرآن الصوتي -->
-        <div id="quranAudioTab" class="tab-content">
-            <input type="text" id="quranSearch" placeholder="🔍 ابحث باسم السورة..." oninput="filterSurahs()">
-            <select id="surahSelect" onchange="changeSurah()"></select>
-            <audio id="audioPlayer" controls></audio>
-        </div>
+    <!-- الأقسام الثانوية -->
+    <div id="hadithSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color);">📜 الأحاديث النبوية</h3>
+        <p style="margin-top:10px; color:var(--text-muted);">عن عمر بن الخطاب رضي الله عنه قال: سمعت رسول الله صلى الله عليه وسلم يقول: "إنما الأعمال بالنيات..."</p>
+    </div>
 
-        <!-- الأذكار والمسبحة -->
-        <div id="azkarTab" class="tab-content">
-            <div style="text-align:center; margin-bottom:15px;">
-                <button style="background:#0b3d2c; color:white; border:none; width:80px; height:80px; border-radius:50%; font-size:1.5em; font-weight:bold; cursor:pointer;" onclick="countUp()">
-                    <span id="counter">0</span>
-                </button>
-                <p style="margin-top:5px; color:#666;">اضغط للاستغفار والتسبيح</p>
-            </div>
-            <button class="btn-main" onclick="speak('أستغفر الله العظيم وأتوب إليه')">🔊 نطق: أستغفر الله</button>
-            <button class="btn-main" style="margin-top:8px;" onclick="speak('سبحان الله وبحمده سبحان الله العظيم')">🔊 نطق: التسبيح</button>
+    <div id="tasbihSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color);">💎 التسبيح</h3>
+        <div style="text-align:center; margin-top:20px;">
+            <button style="background:var(--accent-color); color:#0b1a13; border:none; width:90px; height:90px; border-radius:50%; font-size:1.8em; font-weight:bold; cursor:pointer;" onclick="countUp()">
+                <span id="counter">0</span>
+            </button>
+            <p style="margin-top:10px; color:var(--text-muted);">اضغط للتسبيح</p>
         </div>
+    </div>
+
+    <div id="qiblaSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color);">🕋 اتجاه القبلة</h3>
+        <p style="margin-top:10px; color:var(--text-muted);">زاوية القبلة من الشمال: 135 درجة (Alexandria, Egypt).</p>
+    </div>
+
+    <div id="tahfeezSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color);">📈 خطة التحفيظ</h3>
+        <p style="margin-top:10px; color:var(--text-muted);">اختر السورة ونطاق الآيات وعدد مرات التكرار لتبدأ الحفظ بكل سهولة.</p>
+    </div>
+
+    <div id="booksSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--accent-color);">📚 الكتب الدينية</h3>
+        <p style="margin-top:10px; color:var(--text-muted);">مكتبة متكاملة من كتب التفسير والفقه والسيرة النبوية.</p>
     </div>
 
 </div>
 
-<script>
-let currentRate = 0.85;
+<!-- الشريط السفلي الثابت -->
+<nav class="bottom-nav">
+    <button class="nav-item active" onclick="closeSections()">
+        <span class="icon">🏠</span>
+        <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="openSection('quranSection')">
+        <span class="icon">📖</span>
+        <span>المصحف</span>
+    </button>
+    <button class="nav-item" onclick="openSection('audioSection')">
+        <span class="icon">🎧</span>
+        <span>الاستماع</span>
+    </button>
+    <button class="nav-item" onclick="openSection('azkarSection')">
+        <span class="icon">📿</span>
+        <span>الأذكار</span>
+    </button>
+    <button class="nav-item" onclick="openSection('hadithSection')">
+        <span class="icon">⚙️</span>
+        <span>المزيد</span>
+    </button>
+</nav>
 
-function speak(text) {
+<script>
+let voices = [];
+let voiceSelect = document.getElementById("voiceSelect");
+
+function loadVoices() {
+    if ('speechSynthesis' in window) {
+        voices = window.speechSynthesis.getVoices().filter(v => v.lang.startsWith('ar'));
+        voiceSelect.innerHTML = "";
+        voices.forEach((v, i) => {
+            let opt = document.createElement("option");
+            opt.value = i;
+            opt.textContent = `${v.name} (${v.lang})`;
+            voiceSelect.appendChild(opt);
+        });
+    }
+}
+
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    loadVoices();
+}
+
+function speakText(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ar-SA';
-        utterance.rate = currentRate;
+        let selectedIdx = voiceSelect.value;
+        if (voices[selectedIdx]) {
+            utterance.voice = voices[selectedIdx];
+        }
         window.speechSynthesis.speak(utterance);
     }
 }
 
 function speakCustomText() {
     let text = document.getElementById("customTextInput").value;
-    if(text.trim() !== "") speak(text);
+    if(text.trim() !== "") speakText(text);
 }
 
-function toggleSettings() {
-    document.getElementById("settingsModal").classList.toggle("active");
+function openSection(sectionId) {
+    document.getElementById("mainHomeSection").style.display = "none";
+    document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+    document.getElementById(sectionId).classList.add("active");
+    window.scrollTo(0, 0);
 }
 
-function changeFontSize(size) {
-    document.documentElement.style.setProperty('--base-font-size', size);
+function closeSections() {
+    document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+    document.getElementById("mainHomeSection").style.display = "block";
 }
 
-function updateSpeechRate(rate) {
-    currentRate = parseFloat(rate);
-}
-
-function toggleContrast() {
-    document.body.classList.toggle("high-contrast");
-}
-
-function requestNotificationPermission() {
-    if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                alert("تم تفعيل إشعارات وتنبيهات الصلاة بنجاح!");
-            } else {
-                alert("يرجى السماح بالإشعارات من إعدادات متصفحك.");
-            }
-        });
-    }
-}
-
-function toggleSection(id) {
-    let el = document.getElementById(id);
-    if(el.style.display === "block") {
-        el.style.display = "none";
-    } else {
-        document.querySelectorAll('.section-box').forEach(s => s.style.display = 'none');
-        el.style.display = "block";
-    }
-}
-
-function switchTab(tabId, btnEl) {
-    const parent = btnEl.closest('.section-box');
-    parent.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    btnEl.classList.add('active');
-}
-
-// نظام عارض المصحف وسيرفرات الصور الآمنة
+// التحكم بالمصحف
 let currentPage = 1;
-
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
     let pageStr = String(currentPage).padStart(3, '0');
-    // استخدام السيرفر الأساسي المعتمد لـ Quran Android Direct CDN
     img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
 }
-
-// دالة لمعالجة عدم التحميل والتبديل لسيرفر بديل فوراً
 function handleImgError(image) {
     let pageStr = String(currentPage).padStart(3, '0');
     if (!image.dataset.retried) {
@@ -484,7 +493,6 @@ function handleImgError(image) {
         image.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
     }
 }
-
 function nextPage() {
     if(currentPage < 604) {
         currentPage++;
@@ -492,7 +500,6 @@ function nextPage() {
         updateQuranPage();
     }
 }
-
 function prevPage() {
     if(currentPage > 1) {
         currentPage--;
@@ -501,36 +508,22 @@ function prevPage() {
     }
 }
 
-let touchStartX = 0, touchEndX = 0;
-const quranBox = document.getElementById("quranBox");
-if(quranBox) {
-    quranBox.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
-    quranBox.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) nextPage();
-        if (touchEndX - touchStartX > 50) prevPage();
-    });
-}
-
 // القرآن الصوتي
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
 const select = document.getElementById("surahSelect");
 const audio = document.getElementById("audioPlayer");
 
-function loadSurahs(filter = "") {
+function loadSurahs() {
     if(!select) return;
     select.innerHTML = "";
     surahs.forEach((s, i) => {
-        if(s.includes(filter)) {
-            let opt = document.createElement("option");
-            opt.value = i + 1;
-            opt.textContent = (i + 1) + " - سورة " + s;
-            select.appendChild(opt);
-        }
+        let opt = document.createElement("option");
+        opt.value = i + 1;
+        opt.textContent = (i + 1) + " - سورة " + s;
+        select.appendChild(opt);
     });
-    if(select.options.length > 0) changeSurah();
+    changeSurah();
 }
-
 function changeSurah() {
     let num = select.value;
     if(!num) return;
@@ -538,10 +531,8 @@ function changeSurah() {
     audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
-function filterSurahs() { loadSurahs(document.getElementById("quranSearch").value.trim()); }
-
-let c = 0;
-function countUp() { c++; document.getElementById("counter").innerText = c; }
+let counterVal = 0;
+function countUp() { counterVal++; document.getElementById("counter").innerText = counterVal; }
 
 function performLogin() {
     let name = document.getElementById("loginName").value;
