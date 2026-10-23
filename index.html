@@ -13,12 +13,17 @@
     --text-dark: #1f2937;
     --text-muted: #6b7280;
     --accent-gold: #d4af37;
+    --base-font-size: 16px;
 }
 
 * {
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; padding: 0;
+}
+
+html {
+    font-size: var(--base-font-size);
 }
 
 body {
@@ -28,6 +33,21 @@ body {
     flex-direction: column;
     align-items: center;
     padding-bottom: 90px;
+    transition: font-size 0.2s ease, background-color 0.2s ease;
+}
+
+/* التباين العالي (High Contrast Mode) */
+body.high-contrast {
+    --bg-color: #000000;
+    --card-green: #00ff66;
+    --text-dark: #ffffff;
+    --text-muted: #e5e7eb;
+}
+body.high-contrast .need-row-btn,
+body.high-contrast .footer-btn,
+body.high-contrast .btn-main {
+    background: #00ff66 !important;
+    color: #000000 !important;
 }
 
 /* شاشة تسجيل الدخول */
@@ -72,9 +92,9 @@ header {
     padding: 25px 15px 15px 15px;
     text-align: center;
 }
-header h1 { font-size: 2.8em; color: var(--card-green); font-weight: bold; margin-bottom: 5px; }
-header .sub-title { font-size: 1.05em; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 6px; }
-header p { font-size: 0.85em; color: var(--text-muted); }
+header h1 { font-size: 2.5rem; color: var(--card-green); font-weight: bold; margin-bottom: 5px; }
+header .sub-title { font-size: 1.05rem; color: var(--text-dark); font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 6px; }
+header p { font-size: 0.85rem; color: var(--text-muted); }
 
 .container { width: 100%; max-width: 450px; padding: 0 15px; }
 
@@ -88,10 +108,10 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     text-align: center;
     box-shadow: 0 4px 12px rgba(20, 67, 49, 0.2);
 }
-.prayer-title { color: var(--accent-gold); font-size: 1.1em; font-weight: bold; margin-bottom: 5px; }
-.prayer-timer { font-size: 1.5em; font-weight: bold; margin-bottom: 10px; color: #ffffff; }
-.prayer-location { font-size: 0.8em; color: #e2e8f0; margin-bottom: 8px; }
-.prayer-times-grid { display: flex; justify-content: space-around; font-size: 0.8em; color: #e2e8f0; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; flex-wrap: wrap; gap: 5px; }
+.prayer-title { color: var(--accent-gold); font-size: 1.1rem; font-weight: bold; margin-bottom: 5px; }
+.prayer-timer { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; color: #ffffff; }
+.prayer-location { font-size: 0.8rem; color: #e2e8f0; margin-bottom: 8px; }
+.prayer-times-grid { display: flex; justify-content: space-around; font-size: 0.8rem; color: #e2e8f0; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 8px; flex-wrap: wrap; gap: 5px; }
 .prayer-times-grid div { display: flex; flex-direction: column; align-items: center; }
 .prayer-times-grid span.p-time { color: var(--accent-gold); font-weight: bold; }
 
@@ -104,11 +124,11 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     margin-bottom: 20px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.speak-box h3 { font-size: 1em; color: var(--card-green); margin-bottom: 8px; }
+.speak-box h3 { font-size: 1rem; color: var(--card-green); margin-bottom: 8px; }
 .speak-box input {
     width: 100%; padding: 10px; margin-bottom: 10px;
     background: #f9fafb; border: 1px solid #d1d5db;
-    color: var(--text-dark); border-radius: 8px; font-size: 0.95em; outline: none;
+    color: var(--text-dark); border-radius: 8px; font-size: 0.95rem; outline: none;
 }
 
 /* الأزرار الطولية للمطالب والتواصل السريع */
@@ -131,13 +151,13 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     justify-content: center;
     gap: 6px;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1.1rem;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(20, 67, 49, 0.2);
     transition: 0.2s;
 }
 .need-row-btn:active { transform: scale(0.98); background: var(--card-hover); }
-.need-row-btn .icon { font-size: 1.5em; }
+.need-row-btn .icon { font-size: 1.5rem; }
 
 /* أزرار الفوتر السفلي */
 .footer-row {
@@ -157,13 +177,13 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     align-items: center;
     gap: 5px;
     font-weight: bold;
-    font-size: 0.95em;
+    font-size: 0.95rem;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(20, 67, 49, 0.2);
 }
 
 /* الأقسام الشبكية */
-.section-title { font-size: 1.1em; color: var(--card-green); margin: 20px 0 10px 0; font-weight: bold; }
+.section-title { font-size: 1.1rem; color: var(--card-green); margin: 20px 0 10px 0; font-weight: bold; }
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -185,8 +205,8 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
-.card-btn .icon { font-size: 1.4em; }
-.card-btn span { font-size: 0.75em; font-weight: bold; text-align: center; }
+.card-btn .icon { font-size: 1.4rem; }
+.card-btn span { font-size: 0.75rem; font-weight: bold; text-align: center; }
 
 /* الأقسام المنبثقة */
 .content-section {
@@ -202,7 +222,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .content-section.active { display: block; }
 .back-btn {
     background: none; border: none; color: var(--card-green);
-    font-weight: bold; cursor: pointer; font-size: 1em; margin-bottom: 15px;
+    font-weight: bold; cursor: pointer; font-size: 1rem; margin-bottom: 15px;
     display: flex; align-items: center; gap: 5px;
 }
 
@@ -242,7 +262,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 }
 .kaaba-marker {
     position: absolute;
-    font-size: 1.8em;
+    font-size: 1.8rem;
     transform-origin: center 115px;
     transition: transform 0.15s ease-out;
 }
@@ -253,7 +273,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     padding: 6px 14px;
     border-radius: 20px;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.9rem;
     bottom: -15px;
     display: none;
     align-items: center;
@@ -277,23 +297,81 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 .nav-item {
     background: none; border: none; color: var(--text-muted);
     display: flex; flex-direction: column; align-items: center; gap: 3px;
-    cursor: pointer; font-size: 0.75em;
+    cursor: pointer; font-size: 0.75rem;
 }
 .nav-item.active { color: var(--card-green); font-weight: bold; }
-.nav-item span.icon { font-size: 1.3em; }
+.nav-item span.icon { font-size: 1.3rem; }
+
+/* عناصر كروت الإعدادات المطابقة للصورة بالضبط */
+.setting-item {
+    padding: 16px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.setting-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+.setting-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.setting-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+.setting-icon {
+    background: #e6f4ea;
+    color: #137333;
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.setting-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.font-options-btn {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+.font-btn {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+.font-btn.active {
+    background: var(--card-green);
+    color: white;
+    border-color: var(--card-green);
+}
 
 .azkar-card, .hadith-card, .book-card {
     background: #f9fafb; border: 1px solid #e5e7eb;
     padding: 14px; border-radius: 12px; margin-bottom: 12px;
 }
 .azkar-card h4 { color: var(--card-green); margin-bottom: 6px; }
-.azkar-card p, .hadith-card p, .book-card p { font-size: 0.95em; line-height: 1.7; color: #374151; }
+.azkar-card p, .hadith-card p, .book-card p { font-size: 0.95rem; line-height: 1.7; color: #374151; }
 </style>
 </head>
 
 <body>
 
-<!-- شاشة تسجيل الدخول التلقائية -->
+<!-- شاشة تسجيل الدخول -->
 <div id="loginOverlay">
     <div class="login-card">
         <h2>قـريـب 💚</h2>
@@ -336,7 +414,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <!-- الشاشة الرئيسية -->
     <div id="mainHomeSection">
         
-        <!-- الأزرار الطولية المضافة والموسعة جداً -->
+        <!-- الأزرار الطولية للمطالب -->
         <div class="needs-stack">
             <button class="need-row-btn" onclick="speakText('أحتاج مساعدة من فضلك')">
                 <span class="icon">🤍</span>
@@ -404,7 +482,7 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <div class="footer-row">
             <button class="footer-btn" onclick="openSection('settingsSection')">
                 <span style="font-size:1.3em;">⚙️</span>
-                <span>الإعدادات والحساب</span>
+                <span>الإعدادات</span>
             </button>
             <button class="footer-btn" onclick="openSection('aboutSection')">
                 <span style="font-size:1.3em;">ℹ️</span>
@@ -549,16 +627,16 @@ header p { font-size: 0.85em; color: var(--text-muted); }
     <div id="tasbihSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green);">💎 التسبيح واحتساب الحسنات</h3>
-        <p style="margin-top:5px; font-size:0.9em; color:var(--text-muted);">كل تسبيحة تزيد حسناتك وثوابك في الآخرة (كل حرف بعشر حسنات وأجر عظيم):</p>
+        <p style="margin-top:5px; font-size:0.9rem; color:var(--text-muted);">كل تسبيحة تزيد حسناتك وثوابك في الآخرة (كل حرف بعشر حسنات وأجر عظيم):</p>
         
         <div style="text-align:center; margin-top:20px; background:#f0fdf4; border:1px solid #bbf7d0; padding:20px; border-radius:15px;">
-            <p style="font-size:1.1em; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
-            <div id="hasanatCount" style="font-size:2.2em; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
+            <p style="font-size:1.1rem; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
+            <div id="hasanatCount" style="font-size:2.2rem; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
             
-            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8em; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);" onclick="countUp()">
+            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8rem; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);" onclick="countUp()">
                 <span id="counter">0</span>
             </button>
-            <p style="margin-top:12px; font-size:0.85em; color:var(--text-muted);">اضغط للتسبيح والاستغفار ورفع رصيد حسناتك</p>
+            <p style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">اضغط للتسبيح والاستغفار ورفع رصيد حسناتك</p>
         </div>
     </div>
 
@@ -579,19 +657,91 @@ header p { font-size: 0.85em; color: var(--text-muted); }
         <div class="book-card"><h4>4. كتاب التوحيد</h4><p>شرح العقيدة والتوحيد الإسلامي الصافي.</p></div>
     </div>
 
-    <!-- الإعدادات -->
+    <!-- قسم الإعدادات المطابق للصورة تماماً مع التحكم في حجم الخط والتباين والإشعارات -->
     <div id="settingsSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">⚙️ الإعدادات والحساب الأساسي</h3>
-        <p style="margin-top:10px; color:var(--text-muted);">حسابك الحالي مسجل باسم: <b id="currentLoggedInUser">Sasa medo</b></p>
-        <button class="btn-main" style="margin-top:15px; background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
+        <h3 style="color: var(--card-green); margin-bottom:15px;">⚙️ إعدادات التطبيق</h3>
+        
+        <!-- 1. حجم الخط -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">T</span>
+                    <span class="setting-title">حجم الخط</span>
+                </div>
+            </div>
+            <p class="setting-desc">عادي – كبير – كبير جداً</p>
+            <div class="font-options-btn">
+                <button class="font-btn active" id="f-normal" onclick="setFontSize('normal')">عادي</button>
+                <button class="font-btn" id="f-large" onclick="setFontSize('large')">كبير</button>
+                <button class="font-btn" id="f-xlarge" onclick="setFontSize('xlarge')">كبير جداً</button>
+            </div>
+        </div>
+
+        <!-- 2. الصوت -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🔊</span>
+                    <span class="setting-title">الصوت</span>
+                </div>
+            </div>
+            <p class="setting-desc">تشغيل الصوت، وإعادة الرسالة، والتحكم بمستوى الصوت.</p>
+            <div style="margin-top:10px;">
+                <label style="font-size:0.85rem; color:var(--text-muted);">مستوى الصوت:</label>
+                <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="1" style="width:100%; margin-top:5px;">
+            </div>
+        </div>
+
+        <!-- 3. التنبيهات -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🔔</span>
+                    <span class="setting-title">التنبيهات</span>
+                </div>
+                <input type="checkbox" id="notifyToggle" checked style="width:20px; height:20px;" onchange="toggleNotifications()">
+            </div>
+            <p class="setting-desc">تفعيل تذكير الصلاة والأذكار أو إيقافهما (تنبيه قبل الأذان بـ 5 دقائق).</p>
+        </div>
+
+        <!-- 4. مظهر التطبيق -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🎨</span>
+                    <span class="setting-title">مظهر التطبيق</span>
+                </div>
+                <input type="checkbox" id="contrastToggle" style="width:20px; height:20px;" onchange="toggleContrast()">
+            </div>
+            <p class="setting-desc">الحفاظ على الأخضر والأبيض، مع خيار تباين أوضح لتسهيل القراءة.</p>
+        </div>
+
+        <div style="margin-top:20px;">
+            <p style="font-size:0.9rem; color:var(--text-muted); text-align:center;">حسابك الحالي: <b id="currentLoggedInUser">Sasa medo</b></p>
+            <button class="btn-main" style="margin-top:10px; background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
+        </div>
     </div>
 
-    <!-- معلومات التطبيق -->
+    <!-- قسم معلومات عن التطبيق بالكامل والنص المكتوب بالنص -->
     <div id="aboutSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">ℹ️ معلومات عن التطبيق</h3>
-        <p style="margin-top:10px; color:var(--text-muted);">تطبيق قريب (Qareeb) لمساعدة ذوي الاحتياجات الخاصة وخدمة المسلم تطوير Sasa medo 💚.</p>
+        <h3 style="color: var(--card-green); text-align:center; font-size:1.5rem; margin-bottom:10px;">معلومات عن تطبيق قريب 💚</h3>
+        
+        <div style="line-height:1.8; color:var(--text-dark); font-size:0.95rem; text-align:justify;">
+            <p style="font-weight:bold; font-size:1.1rem; color:var(--card-green); text-align:center; margin-bottom:15px;">قريب — احتياجك يوصل بكلمة</p>
+            
+            <p style="margin-bottom:12px;">قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية، من خلال واجهة بسيطة تحتوي على أزرار كبيرة ورسائل جاهزة، مع إمكانية نطق الرسائل صوتيًا لتسهيل إيصال احتياجاتهم إلى الآخرين.</p>
+            
+            <p style="margin-bottom:12px;">نسعى من خلال قريب إلى تقليل صعوبات التواصل، وتعزيز الاستقلالية، وتوفير تجربة استخدام مريحة تراعي احتياجات المستخدمين المختلفة.</p>
+            
+            <div style="background:#f0fdf4; border-right:4px solid var(--card-green); padding:12px; margin:15px 0; border-radius:6px;">
+                <p style="margin-bottom:8px;"><b>رؤيتنا:</b> عالم يستطيع فيه الجميع التعبير عن احتياجاتهم بسهولة ووضوح.</p>
+                <p><b>رسالتنا:</b> جعل التواصل أسهل، وجعل كل احتياج مسموعًا.</p>
+            </div>
+            
+            <p style="text-align:center; font-weight:bold; color:var(--card-green); font-size:1.05rem; margin-top:15px;">قريب… لأن احتياجك يستحق أن يُسمع. 💚</p>
+        </div>
     </div>
 
 </div>
@@ -621,12 +771,48 @@ header p { font-size: 0.85em; color: var(--text-muted); }
 </nav>
 
 <script>
+/* التحكم بحجم الخط البرمجي والتغيير المباشر في الموقع */
+function setFontSize(size) {
+    let root = document.documentElement;
+    document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
+    
+    if (size === 'normal') {
+        root.style.setProperty('--base-font-size', '16px');
+        document.getElementById('f-normal').classList.add('active');
+    } else if (size === 'large') {
+        root.style.setProperty('--base-font-size', '19px');
+        document.getElementById('f-large').classList.add('active');
+    } else if (size === 'xlarge') {
+        root.style.setProperty('--base-font-size', '22px');
+        document.getElementById('f-xlarge').classList.add('active');
+    }
+    localStorage.setItem("qareeb_fontsize", size);
+}
+
+function toggleContrast() {
+    let isChecked = document.getElementById("contrastToggle").checked;
+    if (isChecked) {
+        document.body.classList.add("high-contrast");
+    } else {
+        document.body.classList.remove("high-contrast");
+    }
+}
+
+function toggleNotifications() {
+    let isChecked = document.getElementById("notifyToggle").checked;
+    if (isChecked && "Notification" in window) {
+        Notification.requestPermission();
+    }
+}
+
 function speakText(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ar-SA';
         utterance.rate = 0.95;
+        let vol = document.getElementById("volumeRange") ? document.getElementById("volumeRange").value : 1;
+        utterance.volume = parseFloat(vol);
         window.speechSynthesis.speak(utterance);
     }
 }
@@ -758,7 +944,7 @@ function handleOrientation(event) {
     }
 }
 
-/* نظام التسبيح وحساب الحسنات الدقيقة */
+/* التسبيح */
 let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
 updateTasbihUI();
 
@@ -774,8 +960,10 @@ function updateTasbihUI() {
     document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
 }
 
-/* مواقيت الصلاة الحقيقية */
+/* مواقيت الصلاة الحقيقية والتنبيه قبل الصلاة بـ 5 دقائق */
 let prayerTimesData = {};
+let notifiedPrayers = {};
+
 function initRealPrayerTimes() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -809,6 +997,15 @@ function fetchPrayerTimes(lat, lng) {
         }).catch(() => {
             document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
         });
+}
+
+function sendPrayerNotification(prayerName) {
+    if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("تطبيق قريب 🕌", {
+            body: `متبقي 5 دقائق على صلاة ${prayerName}، استعد للصلاة 💚`,
+            icon: "https://cdn-icons-png.flaticon.com/512/2913/2913109.png"
+        });
+    }
 }
 
 function startPrayerCountdown() {
@@ -849,6 +1046,12 @@ function startPrayerCountdown() {
         let hours = Math.floor(diff / (1000 * 60 * 60));
         let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         let secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // التنبيه قبل الصلاة بـ 5 دقائق بالضبط
+        if (hours === 0 && mins === 5 && secs === 0 && !notifiedPrayers[nextPrayer.name]) {
+            sendPrayerNotification(nextPrayer.name);
+            notifiedPrayers[nextPrayer.name] = true;
+        }
 
         let pNameEl = document.getElementById("nextPrayerName");
         let pTimerEl = document.getElementById("prayerTimer");
@@ -907,6 +1110,9 @@ if(localStorage.getItem("qareeb_logged") === "true") {
     document.getElementById("welcomeUser").innerText = savedName;
     document.getElementById("currentLoggedInUser").innerText = savedName;
 }
+
+let savedFontSize = localStorage.getItem("qareeb_fontsize") || "normal";
+setFontSize(savedFontSize);
 
 loadSurahs();
 initRealPrayerTimes();
