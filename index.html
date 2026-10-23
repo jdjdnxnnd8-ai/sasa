@@ -188,7 +188,7 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف الحقيقي */
+/* المصحف الشريف المضمون بدون تفريغ شاشة */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
     width: 100%; max-width: 480px; height: auto; min-height: 520px;
@@ -365,11 +365,11 @@ input, select, audio {
             <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف الحقيقي بالصور والتقليب -->
+        <!-- المصحف الشريف مع معالجة حظر الصور البديلة تلقائياً -->
         <div id="mushafTab" class="tab-content active">
-            <p style="text-align:center; font-size:0.95em; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة أو استخدم الأزرار للتقليب)</p>
+            <p style="text-align:center; font-size:0.95em; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://www.everyayah.com/data/images/img_001.png" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://android.quran.com/data/width_1024/page001.png" alt="صفحة المصحف" onerror="handleImgError(this)">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -463,16 +463,43 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف الشريف الحقيقي بالصور (الصفحات من 1 إلى 604)
+// نظام عارض المصحف وسيرفرات الصور الآمنة
 let currentPage = 1;
+
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
     let pageStr = String(currentPage).padStart(3, '0');
-    img.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
+    // استخدام السيرفر الأساسي المعتمد لـ Quran Android Direct CDN
+    img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
 }
-function nextPage() { if(currentPage < 604) { currentPage++; updateQuranPage(); } }
-function prevPage() { if(currentPage > 1) { currentPage--; updateQuranPage(); } }
+
+// دالة لمعالجة عدم التحميل والتبديل لسيرفر بديل فوراً
+function handleImgError(image) {
+    let pageStr = String(currentPage).padStart(3, '0');
+    if (!image.dataset.retried) {
+        image.dataset.retried = "true";
+        image.src = `https://quran.ksu.edu.sa/aya/images/1/p${currentPage}.png`;
+    } else {
+        image.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
+    }
+}
+
+function nextPage() {
+    if(currentPage < 604) {
+        currentPage++;
+        document.getElementById("quranImage").removeAttribute("data-retried");
+        updateQuranPage();
+    }
+}
+
+function prevPage() {
+    if(currentPage > 1) {
+        currentPage--;
+        document.getElementById("quranImage").removeAttribute("data-retried");
+        updateQuranPage();
+    }
+}
 
 let touchStartX = 0, touchEndX = 0;
 const quranBox = document.getElementById("quranBox");
