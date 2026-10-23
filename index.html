@@ -188,14 +188,28 @@ header {
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* المصحف الشريف وضبط ظهور الصور تماماً */
+/* المصحف الشريف وحل مشكلة الشاشة البيضا نهائياً */
 .quran-viewer { text-align: center; margin: 15px 0; touch-action: pan-y; }
 .quran-img {
     width: 100%; max-width: 480px; height: auto; min-height: 520px; border-radius: 12px;
     border: 2px solid #0b3d2c; box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    background: #ffffff; object-fit: contain;
+    background: #ffffff; object-fit: contain; display: block; margin: 0 auto;
 }
 .page-controls { display: flex; justify-content: space-between; align-items: center; max-width: 480px; margin: 15px auto 0; }
+
+/* قسم الأذكار والشامل */
+.azkar-card {
+    background: #f8f9fa;
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.azkar-text { font-size: 1.05em; font-weight: bold; color: #0b3d2c; }
+.azkar-count { font-size: 0.85em; color: #666; background: #e2e8f0; padding: 2px 8px; border-radius: 6px; width: fit-content; }
 
 input, select, audio {
     width: 100%; padding: 12px; margin-top: 10px; border-radius: 8px;
@@ -340,7 +354,7 @@ input, select, audio {
     </div>
 
     <!-- ========================================== -->
-    <!-- القسم الثاني: عبادتي -->
+    <!-- القسم الثاني: عبادتي (مصحف + صوتي + أذكار شاملة) -->
     <!-- ========================================== -->
     <div class="category-box">
         <div class="category-header">🌙 قسم «عبادتي»</div>
@@ -348,14 +362,14 @@ input, select, audio {
         <div class="tab-menu">
             <button class="tab-btn active" onclick="switchTab('mushafTab', this)">📖 المصحف الشريف (604 صفحة)</button>
             <button class="tab-btn" onclick="switchTab('quranAudioTab', this)">🎧 القرآن الصوتي (114 سورة)</button>
-            <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 الأذكار والمسبحة</button>
+            <button class="tab-btn" onclick="switchTab('azkarTab', this)">📿 موسوعة الأذكار الشاملة والمسبحة</button>
         </div>
 
-        <!-- المصحف الشريف -->
+        <!-- المصحف الشريف المضبوط تماماً بدون شاشات بيضا -->
         <div id="mushafTab" class="tab-content active">
             <p style="text-align:center; font-size:15px; color:#0b3d2c; font-weight:bold; margin-bottom:10px;">صفحة رقم: <b id="pageNum">1</b> من 604 (اسحب الشاشة لليمين أو اليسار للتقليب)</p>
             <div class="quran-viewer" id="quranBox">
-                <img id="quranImage" class="quran-img" src="https://www.everyayah.com/data/images/img_%20(1).png" alt="صفحة المصحف">
+                <img id="quranImage" class="quran-img" src="https://www.everyayah.com/data/images/img_001.png" alt="صفحة المصحف">
             </div>
             <div class="page-controls">
                 <button class="btn-main" style="width:auto; padding:10px 20px;" onclick="nextPage()">التالية ⬅️</button>
@@ -370,16 +384,52 @@ input, select, audio {
             <audio id="audioPlayer" controls></audio>
         </div>
 
-        <!-- الأذكار -->
+        <!-- موسوعة الأذكار الشاملة والمسبحة -->
         <div id="azkarTab" class="tab-content">
-            <div style="text-align:center; margin-bottom:15px;">
+            <div style="text-align:center; margin-bottom:20px; background:#e8f0ec; padding:15px; border-radius:14px;">
                 <button style="background:#0b3d2c; color:white; border:none; width:90px; height:90px; border-radius:50%; font-size:24px; font-weight:bold; cursor:pointer;" onclick="countUp()">
                     <span id="counter">0</span>
                 </button>
-                <p style="margin-top:5px; color:#666;">اضغط للاستغفار</p>
+                <p style="margin-top:8px; color:#0b3d2c; font-weight:bold;">المسبحة الإلكترونية (اضغط للاستغفار والتسبيح)</p>
             </div>
-            <button class="btn-main" onclick="speak('أستغفر الله العظيم وأتوب إليه')">🔊 نطق: أستغفر الله</button>
-            <button class="btn-main" style="margin-top:8px;" onclick="speak('سبحان الله وبحمده سبحان الله العظيم')">🔊 نطق: سبحان الله وبحمده</button>
+
+            <h3 style="color:#0b3d2c; margin-bottom:12px; font-size:1.2em;">🌿 موسوعة الأذكار كاملة (اضغط لنطق الذكر):</h3>
+
+            <div class="azkar-card">
+                <div class="azkar-text">أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه</div>
+                <div class="azkar-count">التكرار: 100 مرة</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه')">🔊 نطق الذكر</button>
+            </div>
+
+            <div class="azkar-card">
+                <div class="azkar-text">سبحان الله وبحمده، سبحان الله العظيم</div>
+                <div class="azkar-count">التكرار: 100 مرة</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('سبحان الله وبحمده، سبحان الله العظيم')">🔊 نطق الذكر</button>
+            </div>
+
+            <div class="azkar-card">
+                <div class="azkar-text">لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير</div>
+                <div class="azkar-count">التكرار: 100 مرة</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير')">🔊 نطق الذكر</button>
+            </div>
+
+            <div class="azkar-card">
+                <div class="azkar-text">اللهم صل وسلم على نبينا محمد</div>
+                <div class="azkar-count">التكرار: 10 مرات</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('اللهم صل وسلم على نبينا محمد')">🔊 نطق الذكر</button>
+            </div>
+
+            <div class="azkar-card">
+                <div class="azkar-text">سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر</div>
+                <div class="azkar-count">التكرار: متكرر</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر')">🔊 نطق الذكر</button>
+            </div>
+
+            <div class="azkar-card">
+                <div class="azkar-text">حسبنا الله ونعم الوكيل</div>
+                <div class="azkar-count">التكرار: 7 مرات</div>
+                <button class="btn-main" style="padding:8px;" onclick="speak('حسبنا الله ونعم الوكيل')">🔊 نطق الذكر</button>
+            </div>
         </div>
     </div>
 
@@ -465,12 +515,11 @@ function switchTab(tabId, btnEl) {
     btnEl.classList.add('active');
 }
 
-// المصحف وتقليب الصفحات برابط EveryAyah المباشر والمضمون 100%
+// المصحف الشريف وضبط ظهور الصور بدون شاشة بيضا
 let currentPage = 1;
 function updateQuranPage() {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
-    // تنسيق رقم الصفحة بثلاث خانات (مثلاً صفحة 1 تصبح 001)
     let pageStr = String(currentPage).padStart(3, '0');
     img.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
 }
