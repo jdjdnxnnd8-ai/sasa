@@ -226,57 +226,6 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
-/* شبكة أزرار لغة بريل الكبيرة والواضحة */
-.braille-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 15px;
-}
-.braille-card {
-    background: #f0fdf4;
-    border: 2px solid #bbf7d0;
-    border-radius: 14px;
-    padding: 15px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.braille-card:active {
-    background: #dcfce7;
-    transform: scale(0.96);
-}
-.braille-letter {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--card-green);
-    margin-bottom: 5px;
-}
-.braille-dots {
-    font-size: 1.2rem;
-    color: #15803d;
-    letter-spacing: 3px;
-}
-
-/* سبورة الكلام التفاعلية */
-.speech-board {
-    background: #0f172a;
-    color: #38bdf8;
-    border-radius: 16px;
-    padding: 25px;
-    min-height: 180px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 15px 0;
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-    border: 3px solid #334155;
-    word-break: break-all;
-}
-
 /* المصحف الشريف 3D */
 .quran-viewer { text-align: center; perspective: 1500px; overflow: hidden; padding: 10px 0; }
 .quran-img {
@@ -353,7 +302,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 .nav-item.active { color: var(--card-green); font-weight: bold; }
 .nav-item span.icon { font-size: 1.3rem; }
 
-/* عناصر كروت الإعدادات */
+/* عناصر كروت الإعدادات المطابقة للصورة بالضبط */
 .setting-item {
     padding: 16px 0;
     border-bottom: 1px solid #e5e7eb;
@@ -541,8 +490,8 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             </button>
         </div>
 
-        <!-- أقسام القرآن والعبادات وخدمات الصم -->
-        <div class="section-title">أقسام القرآن والعبادات وتواصل الصم</div>
+        <!-- أقسام القرآن والعبادات -->
+        <div class="section-title">أقسام القرآن والعبادات</div>
         <div class="grid-container">
             <button class="card-btn" onclick="openSection('quranSection')">
                 <span class="icon">📖</span>
@@ -568,70 +517,18 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
                 <span class="icon">🕋</span>
                 <span>القبلة</span>
             </button>
-            <button class="card-btn" onclick="openSection('brailleSection')">
-                <span class="icon">🔤</span>
-                <span>حروف بريل</span>
+            <button class="card-btn" onclick="openSection('tahfeezSection')">
+                <span class="icon">📈</span>
+                <span>التحفيظ</span>
             </button>
-            <button class="card-btn" onclick="openSection('speechBoardSection')">
-                <span class="icon">💬</span>
-                <span>سبورة الكلام</span>
+            <button class="card-btn" onclick="openSection('booksSection')">
+                <span class="icon">📚</span>
+                <span>الكتب</span>
             </button>
         </div>
     </div>
 
-    <!-- 1. قسم حروف بريل الكبيرة والناطقة -->
-    <div id="brailleSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom: 5px;">🔤 حروف بريل الناطقة (للمكفوفين والصم)</h3>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px;">اضغط على أي حرف لتسمع نطقه بصوت واضح وكبير:</p>
-        
-        <div class="braille-grid">
-            <div class="braille-card" onclick="speakText('أ')"><div class="braille-letter">أ</div><div class="braille-dots">⠁</div></div>
-            <div class="braille-card" onclick="speakText('ب')"><div class="braille-letter">ب</div><div class="braille-dots">⠃</div></div>
-            <div class="braille-card" onclick="speakText('ت')"><div class="braille-letter">ت</div><div class="braille-dots">⠡</div></div>
-            <div class="braille-card" onclick="speakText('ث')"><div class="braille-letter">ث</div><div class="braille-dots">⠭</div></div>
-            <div class="braille-card" onclick="speakText('ج')"><div class="braille-letter">ج</div><div class="braille-dots">ج</div></div>
-            <div class="braille-card" onclick="speakText('ح')"><div class="braille-letter">ح</div><div class="braille-dots">⠱</div></div>
-            <div class="braille-card" onclick="speakText('خ')"><div class="braille-letter">خ</div><div class="braille-dots">⠻</div></div>
-            <div class="braille-card" onclick="speakText('د')"><div class="braille-letter">د</div><div class="braille-dots">⠙</div></div>
-            <div class="braille-card" onclick="speakText('ذ')"><div class="braille-letter">ذ</div><div class="braille-dots">⠮</div></div>
-            <div class="braille-card" onclick="speakText('ر')"><div class="braille-letter">ر</div><div class="braille-dots">⠗</div></div>
-            <div class="braille-card" onclick="speakText('ز')"><div class="braille-letter">ز</div><div class="braille-dots">⠾</div></div>
-            <div class="braille-card" onclick="speakText('س')"><div class="braille-letter">س</div><div class="braille-dots">⠎</div></div>
-            <div class="braille-card" onclick="speakText('ش')"><div class="braille-letter">ش</div><div class="braille-dots">⠩</div></div>
-            <div class="braille-card" onclick="speakText('ص')"><div class="braille-letter">ص</div><div class="braille-dots">⠯</div></div>
-            <div class="braille-card" onclick="speakText('ض')"><div class="braille-letter">ض</div><div class="braille-dots">⠫</div></div>
-            <div class="braille-card" onclick="speakText('ط')"><div class="braille-letter">ط</div><div class="braille-dots">⠟</div></div>
-            <div class="braille-card" onclick="speakText('ظ')"><div class="braille-letter">ظ</div><div class="braille-dots">⠿</div></div>
-            <div class="braille-card" onclick="speakText('ع')"><div class="braille-letter">ع</div><div class="braille-dots">ع</div></div>
-            <div class="braille-card" onclick="speakText('غ')"><div class="braille-letter">غ</div><div class="braille-dots">⠲</div></div>
-            <div class="braille-card" onclick="speakText('ف')"><div class="braille-letter">ف</div><div class="braille-dots">⠥</div></div>
-            <div class="braille-card" onclick="speakText('ق')"><div class="braille-letter">ق</div><div class="braille-dots">⠟</div></div>
-            <div class="braille-card" onclick="speakText('ك')"><div class="braille-letter">ك</div><div class="braille-dots">⠅</div></div>
-            <div class="braille-card" onclick="speakText('ل')"><div class="braille-letter">ل</div><div class="braille-dots">⠇</div></div>
-            <div class="braille-card" onclick="speakText('م')"><div class="braille-letter">م</div><div class="braille-dots">⠍</div></div>
-            <div class="braille-card" onclick="speakText('ن')"><div class="braille-letter">ن</div><div class="braille-dots">⠝</div></div>
-            <div class="braille-card" onclick="speakText('ه')"><div class="braille-letter">ه</div><div class="braille-dots">⠓</div></div>
-            <div class="braille-card" onclick="speakText('و')"><div class="braille-letter">و</div><div class="braille-dots">⠺</div></div>
-            <div class="braille-card" onclick="speakText('ي')"><div class="braille-letter">ي</div><div class="braille-dots">⠽</div></div>
-        </div>
-    </div>
-
-    <!-- 2. سبورة الكلام التفاعلية (Speech-to-Text Board) -->
-    <div id="speechBoardSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom: 5px;">💬 سبورة الكلام التفاعلية</h3>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 10px;">تحدث بصوتك وسوف تظهر الكلمات كتابة كبيرة وواضحة على السبورة أدناه:</p>
-        
-        <div class="speech-board" id="speechBoardText">
-            اضغط على زر ابدأ التحدث وتكلم...
-        </div>
-
-        <button class="btn-main" onclick="startSpeechRecognition()">🎙️ ابدأ التحدث الآن</button>
-        <button class="btn-main" style="background:#dc2626; margin-top:8px;" onclick="clearSpeechBoard()">مسح السبورة</button>
-    </div>
-
-    <!-- 3. المصحف الشريف -->
+    <!-- 1. المصحف الشريف -->
     <div id="quranSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 10px;">📖 المصحف الشريف</h3>
@@ -645,7 +542,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- 4. بوصلة القبلة الحقيقية -->
+    <!-- 2. بوصلة القبلة الحقيقية -->
     <div id="qiblaSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); text-align:center;">🕋 بوصلة القبلة من موقعك</h3>
@@ -661,7 +558,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <p style="font-size:0.8em; text-align:center; color:var(--text-muted); margin-top:10px;" id="qiblaAngleText">زاوية القبلة: --</p>
     </div>
 
-    <!-- 5. الاستماع -->
+    <!-- 3. الاستماع -->
     <div id="audioSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 10px;">🎧 الاستماع للقرآن الكريم</h3>
@@ -670,41 +567,110 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 6. أذكار الدين -->
+    <!-- 4. أذكار الدين كلها الضخمة جداً -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين الكبرى</h3>
-        <div class="azkar-card"><h4>☀️ أذكار الصباح</h4><p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له...</p></div>
-        <div class="azkar-card"><h4>🌙 أذكار المساء</h4><p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات...</p></div>
-    </div>
+        
+        <div class="azkar-card">
+            <h4>☀️ أذكار الصباح</h4>
+            <p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. رضيت بالله رباً وبالإسلام ديناً وبمحمد صلى الله عليه وسلم نبياً (3 مرات).</p>
+        </div>
 
-    <!-- 7. الأحاديث -->
-    <div id="hadithSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
-        <div class="hadith-card"><h4>1. حديث النية والإخلاص</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى...</p></div>
-    </div>
+        <div class="azkar-card">
+            <h4>🌙 أذكار المساء</h4>
+            <p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق (3 مرات). بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم (3 مرات). يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين.</p>
+        </div>
 
-    <!-- 8. التسبيح -->
-    <div id="tasbihSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">💎 التسبيح واحتساب الحسنات</h3>
-        <div style="text-align:center; margin-top:20px; background:#f0fdf4; border:1px solid #bbf7d0; padding:20px; border-radius:15px;">
-            <p style="font-size:1.1rem; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
-            <div id="hasanatCount" style="font-size:2.2rem; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
-            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8rem; font-weight:bold; cursor:pointer;" onclick="countUp()">
-                <span id="counter">0</span>
-            </button>
+        <div class="azkar-card">
+            <h4>🛌 أذكار النوم والاستيقاظ</h4>
+            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. قراءة آية الكرسي والمعوذتين. وعند الاستيقاظ: الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🕌 أذكار ما بعد الصلاة الفريضة</h4>
+            <p>أستغفر الله (3 مرات)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام. اللهم لا مانع لما أعطيت ولا معطي لما منعت ولا ينفع ذا الجد منك الجد. سبحان الله (33)، الحمد لله (33)، الله أكبر (33)، تمام المائة: لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🚪 أذكار الدخول والخروج من المنزل والمسجد</h4>
+            <p>خروج المنزل: بسم الله توكلت على الله ولا حول ولا قوة إلا بالله. دخول المنزل: بسم الله ولجنا وبسم الله خرجنا وعلى ربنا توكلنا. دخول المسجد: اللهم افتح لي أبواب رحمتك.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🍲 أذكار الطعام والشراب</h4>
+            <p>قبل الطعام: بسم الله، وفي أوله وآخره إذا نسي: بسم الله أوله وآخره. بعد الطعام: الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين.</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🤲 أذكار الكرب والهم والمغفرة</h4>
+            <p>لا إله إلا أنت سبحانك إني كنت من الظالمين. حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم (7 مرات). سيد الاستغفار: اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت...</p>
+        </div>
+
+        <div class="azkar-card">
+            <h4>🚗 أذكار السفر والسوار</h4>
+            <p>الله أكبر (3 مرات)، سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون. اللهم إنا نسألك في سفرنا هذا البر والتقوى ومن العمل ما ترضى.</p>
         </div>
     </div>
 
-    <!-- الإعدادات -->
+    <!-- 5. الأحاديث الموسعة -->
+    <div id="hadithSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
+        <div class="hadith-card"><h4>1. حديث النية والإخلاص</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله...</p></div>
+        <div class="hadith-card"><h4>2. حديث البر والوالدين</h4><p>جاء رجل إلى النبي فقال: من أحق الناس بحسن صحابتي؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أبوك.</p></div>
+        <div class="hadith-card"><h4>3. حديث الدين النصيحة</h4><p>الدين النصيحة، قلنا: لمن؟ قال: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتها.</p></div>
+        <div class="hadith-card"><h4>4. حديث الأخلاق</h4><p>إن من أحبكم إلي وأقربكم مني مجلسا يوم القيامة أحاسنكم أخلاقا.</p></div>
+    </div>
+
+    <!-- 6. التسبيح واحتساب الحسنات الفورية -->
+    <div id="tasbihSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--card-green);">💎 التسبيح واحتساب الحسنات</h3>
+        <p style="margin-top:5px; font-size:0.9rem; color:var(--text-muted);">كل تسبيحة تزيد حسناتك وثوابك في الآخرة (كل حرف بعشر حسنات وأجر عظيم):</p>
+        
+        <div style="text-align:center; margin-top:20px; background:#f0fdf4; border:1px solid #bbf7d0; padding:20px; border-radius:15px;">
+            <p style="font-size:1.1rem; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
+            <div id="hasanatCount" style="font-size:2.2rem; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
+            
+            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8rem; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);" onclick="countUp()">
+                <span id="counter">0</span>
+            </button>
+            <p style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">اضغط للتسبيح والاستغفار ورفع رصيد حسناتك</p>
+        </div>
+    </div>
+
+    <!-- 7. التحفيظ -->
+    <div id="tahfeezSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--card-green);">📈 برنامج التحفيظ</h3>
+        <p style="color:var(--text-muted); margin-top:10px;">اختر السورة ونطاق الآيات للتكرار والحفظ المتقن.</p>
+    </div>
+
+    <!-- 8. الكتب الموسعة -->
+    <div id="booksSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--card-green); margin-bottom:12px;">📚 الكتب والمكتبة الإسلامية</h3>
+        <div class="book-card"><h4>1. تفسير ابن كثير</h4><p>تفسير القرآن العظيم للعلامة الحافظ ابن كثير.</p></div>
+        <div class="book-card"><h4>2. كتاب رياض الصالحين</h4><p>دليل السالكين إلى طريق رب العالمين للإمام النووي.</p></div>
+        <div class="book-card"><h4>3. السيرة النبوية لابن هشام</h4><p>توثيق السيرة العطرة للنبي صلى الله عليه وسلم.</p></div>
+        <div class="book-card"><h4>4. كتاب التوحيد</h4><p>شرح العقيدة والتوحيد الإسلامي الصافي.</p></div>
+    </div>
+
+    <!-- قسم الإعدادات المطابق للصورة تماماً مع التحكم في حجم الخط والتباين والإشعارات -->
     <div id="settingsSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:15px;">⚙️ إعدادات التطبيق</h3>
         
+        <!-- 1. حجم الخط -->
         <div class="setting-item">
-            <div class="setting-header"><div class="setting-title-group"><span class="setting-icon">T</span><span class="setting-title">حجم الخط</span></div></div>
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">T</span>
+                    <span class="setting-title">حجم الخط</span>
+                </div>
+            </div>
+            <p class="setting-desc">عادي – كبير – كبير جداً</p>
             <div class="font-options-btn">
                 <button class="font-btn active" id="f-normal" onclick="setFontSize('normal')">عادي</button>
                 <button class="font-btn" id="f-large" onclick="setFontSize('large')">كبير</button>
@@ -712,93 +678,131 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             </div>
         </div>
 
+        <!-- 2. الصوت -->
         <div class="setting-item">
             <div class="setting-header">
-                <div class="setting-title-group"><span class="setting-icon">🎨</span><span class="setting-title">مظهر التباين الواضح</span></div>
-                <input type="checkbox" id="contrastToggle" style="width:20px; height:20px;" onchange="toggleContrast()">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🔊</span>
+                    <span class="setting-title">الصوت</span>
+                </div>
+            </div>
+            <p class="setting-desc">تشغيل الصوت، وإعادة الرسالة، والتحكم بمستوى الصوت.</p>
+            <div style="margin-top:10px;">
+                <label style="font-size:0.85rem; color:var(--text-muted);">مستوى الصوت:</label>
+                <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="1" style="width:100%; margin-top:5px;">
             </div>
         </div>
 
+        <!-- 3. التنبيهات -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🔔</span>
+                    <span class="setting-title">التنبيهات</span>
+                </div>
+                <input type="checkbox" id="notifyToggle" checked style="width:20px; height:20px;" onchange="toggleNotifications()">
+            </div>
+            <p class="setting-desc">تفعيل تذكير الصلاة والأذكار أو إيقافهما (تنبيه قبل الأذان بـ 5 دقائق).</p>
+        </div>
+
+        <!-- 4. مظهر التطبيق -->
+        <div class="setting-item">
+            <div class="setting-header">
+                <div class="setting-title-group">
+                    <span class="setting-icon">🎨</span>
+                    <span class="setting-title">مظهر التطبيق</span>
+                </div>
+                <input type="checkbox" id="contrastToggle" style="width:20px; height:20px;" onchange="toggleContrast()">
+            </div>
+            <p class="setting-desc">الحفاظ على الأخضر والأبيض، مع خيار تباين أوضح لتسهيل القراءة.</p>
+        </div>
+
         <div style="margin-top:20px;">
-            <button class="btn-main" style="background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
+            <p style="font-size:0.9rem; color:var(--text-muted); text-align:center;">حسابك الحالي: <b id="currentLoggedInUser">Sasa medo</b></p>
+            <button class="btn-main" style="margin-top:10px; background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
         </div>
     </div>
 
-    <!-- معلومات عن التطبيق -->
+    <!-- قسم معلومات عن التطبيق بالكامل والنص المكتوب بالنص -->
     <div id="aboutSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); text-align:center; font-size:1.5rem; margin-bottom:10px;">معلومات عن تطبيق قريب 💚</h3>
-        <p style="line-height:1.8; text-align:justify;">قريب هو تطبيق ابتكاري يهدف لمساعدة كبار السن وذوي الإعاقة والصم والبكم على التعبير عن احتياجاتهم بسهولة واستقلالية، مع ميزات نطق فوري وحروف بريل وسبورة الكلام.</p>
+        
+        <div style="line-height:1.8; color:var(--text-dark); font-size:0.95rem; text-align:justify;">
+            <p style="font-weight:bold; font-size:1.1rem; color:var(--card-green); text-align:center; margin-bottom:15px;">قريب — احتياجك يوصل بكلمة</p>
+            
+            <p style="margin-bottom:12px;">قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية، من خلال واجهة بسيطة تحتوي على أزرار كبيرة ورسائل جاهزة، مع إمكانية نطق الرسائل صوتيًا لتسهيل إيصال احتياجاتهم إلى الآخرين.</p>
+            
+            <p style="margin-bottom:12px;">نسعى من خلال قريب إلى تقليل صعوبات التواصل، وتعزيز الاستقلالية، وتوفير تجربة استخدام مريحة تراعي احتياجات المستخدمين المختلفة.</p>
+            
+            <div style="background:#f0fdf4; border-right:4px solid var(--card-green); padding:12px; margin:15px 0; border-radius:6px;">
+                <p style="margin-bottom:8px;"><b>رؤيتنا:</b> عالم يستطيع فيه الجميع التعبير عن احتياجاتهم بسهولة ووضوح.</p>
+                <p><b>رسالتنا:</b> جعل التواصل أسهل، وجعل كل احتياج مسموعًا.</p>
+            </div>
+            
+            <p style="text-align:center; font-weight:bold; color:var(--card-green); font-size:1.05rem; margin-top:15px;">قريب… لأن احتياجك يستحق أن يُسمع. 💚</p>
+        </div>
     </div>
 
 </div>
 
 <!-- الشريط السفلي الثابت -->
 <nav class="bottom-nav">
-    <button class="nav-item active" onclick="closeSections()"><span class="icon">🏠</span><span>الرئيسية</span></button>
-    <button class="nav-item" onclick="openSection('quranSection')"><span class="icon">📖</span><span>المصحف</span></button>
-    <button class="nav-item" onclick="openSection('audioSection')"><span class="icon">🎧</span><span>الاستماع</span></button>
-    <button class="nav-item" onclick="openSection('azkarSection')"><span class="icon">📿</span><span>الأذكار</span></button>
-    <button class="nav-item" onclick="openSection('qiblaSection')"><span class="icon">🕋</span><span>القبلة</span></button>
+    <button class="nav-item active" onclick="closeSections()">
+        <span class="icon">🏠</span>
+        <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" onclick="openSection('quranSection')">
+        <span class="icon">📖</span>
+        <span>المصحف</span>
+    </button>
+    <button class="nav-item" onclick="openSection('audioSection')">
+        <span class="icon">🎧</span>
+        <span>الاستماع</span>
+    </button>
+    <button class="nav-item" onclick="openSection('azkarSection')">
+        <span class="icon">📿</span>
+        <span>الأذكار</span>
+    </button>
+    <button class="nav-item" onclick="openSection('qiblaSection')">
+        <span class="icon">🕋</span>
+        <span>القبلة</span>
+    </button>
 </nav>
 
 <script>
-/* 🛡️ حماية كود الموقع ومنع السرقة وسحب الـ HTML */
-document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
-document.addEventListener('keydown', function(e) {
-    if (e.keyCode === 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-        (e.ctrlKey && e.keyCode === 85)) {
-        e.preventDefault();
-        alert('عذراً، محتوى وحماية الموقع محمية ضد السرقة والنسخ!');
-        return false;
-    }
-});
-
-/* 💬 وظيفة سبورة الكلام الفورية (Speech-to-Text) */
-function startSpeechRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("متصفحك لا يدعم خاصية التعرف على الصوتي المباشر.");
-        return;
-    }
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'ar-SA';
-    recognition.interimResults = true;
-    
-    let board = document.getElementById("speechBoardText");
-    board.innerText = "جاري الاستماع والتكليم...";
-
-    recognition.onresult = function(event) {
-        let speechToText = event.results[0][0].transcript;
-        board.innerText = speechToText;
-    };
-
-    recognition.onerror = function() {
-        board.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى.";
-    };
-
-    recognition.start();
-}
-
-function clearSpeechBoard() {
-    document.getElementById("speechBoardText").innerText = "اضغط على زر ابدأ التحدث وتكلم...";
-}
-
-/* دوال التطبيق العامة والنطق */
+/* التحكم بحجم الخط البرمجي والتغيير المباشر في الموقع */
 function setFontSize(size) {
     let root = document.documentElement;
     document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
-    if (size === 'normal') { root.style.setProperty('--base-font-size', '16px'); document.getElementById('f-normal').classList.add('active'); }
-    else if (size === 'large') { root.style.setProperty('--base-font-size', '19px'); document.getElementById('f-large').classList.add('active'); }
-    else if (size === 'xlarge') { root.style.setProperty('--base-font-size', '22px'); document.getElementById('f-xlarge').classList.add('active'); }
+    
+    if (size === 'normal') {
+        root.style.setProperty('--base-font-size', '16px');
+        document.getElementById('f-normal').classList.add('active');
+    } else if (size === 'large') {
+        root.style.setProperty('--base-font-size', '19px');
+        document.getElementById('f-large').classList.add('active');
+    } else if (size === 'xlarge') {
+        root.style.setProperty('--base-font-size', '22px');
+        document.getElementById('f-xlarge').classList.add('active');
+    }
     localStorage.setItem("qareeb_fontsize", size);
 }
 
 function toggleContrast() {
     let isChecked = document.getElementById("contrastToggle").checked;
-    if (isChecked) document.body.classList.add("high-contrast");
-    else document.body.classList.remove("high-contrast");
+    if (isChecked) {
+        document.body.classList.add("high-contrast");
+    } else {
+        document.body.classList.remove("high-contrast");
+    }
+}
+
+function toggleNotifications() {
+    let isChecked = document.getElementById("notifyToggle").checked;
+    if (isChecked && "Notification" in window) {
+        Notification.requestPermission();
+    }
 }
 
 function speakText(text) {
@@ -807,6 +811,8 @@ function speakText(text) {
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ar-SA';
         utterance.rate = 0.95;
+        let vol = document.getElementById("volumeRange") ? document.getElementById("volumeRange").value : 1;
+        utterance.volume = parseFloat(vol);
         window.speechSynthesis.speak(utterance);
     }
 }
@@ -821,7 +827,10 @@ function openSection(sectionId) {
     document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
     document.getElementById(sectionId).classList.add("active");
     window.scrollTo(0, 0);
-    if(sectionId === 'qiblaSection') requestCompassPermission();
+
+    if(sectionId === 'qiblaSection') {
+        requestCompassPermission();
+    }
 }
 
 function closeSections() {
@@ -829,52 +838,226 @@ function closeSections() {
     document.getElementById("mainHomeSection").style.display = "block";
 }
 
+/* صوت وحركة تقليب المصحف */
+let audioCtx = null;
+function playRealisticPageFlipSound() {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        let dur = 0.18;
+        let buf = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
+        let data = buf.getChannelData(0);
+        for (let i = 0; i < buf.length; i++) {
+            data[i] = (Math.random() * 2 - 1) * Math.sin((i / buf.length) * Math.PI);
+        }
+        let src = audioCtx.createBufferSource();
+        src.buffer = buf;
+        let filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+        let gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+        src.start();
+    } catch (e) {}
+}
+
 let currentPage = 1;
-function updateQuranPage() {
+function updateQuranPage(direction = 'next') {
     document.getElementById("pageNum").innerText = currentPage;
     const img = document.getElementById("quranImage");
-    let pageStr = String(currentPage).padStart(3, '0');
-    img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
+    playRealisticPageFlipSound();
+    img.classList.add(direction === 'next' ? 'flip-next' : 'flip-prev');
+    setTimeout(() => {
+        let pageStr = String(currentPage).padStart(3, '0');
+        img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
+        img.classList.remove('flip-next', 'flip-prev');
+    }, 250);
 }
+
 function handleImgError(image) {
     let pageStr = String(currentPage).padStart(3, '0');
     if (!image.dataset.retried) {
         image.dataset.retried = "true";
         image.src = `https://quran.ksu.edu.sa/aya/images/1/p${currentPage}.png`;
+    } else {
+        image.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
     }
 }
-function nextPage() { if(currentPage < 604) { currentPage++; updateQuranPage(); } }
-function prevPage() { if(currentPage > 1) { currentPage--; updateQuranPage(); } }
 
+function nextPage() {
+    if(currentPage < 604) { currentPage++; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('next'); }
+}
+function prevPage() {
+    if(currentPage > 1) { currentPage--; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('prev'); }
+}
+
+/* بوصلة القبلة الحقيقية */
+let qiblaBearing = 136.8;
+let userLat = 30.0444, userLng = 31.2357; 
+
+function calculateQiblaAngle(lat, lng) {
+    let kaabaLat = 21.4225 * Math.PI / 180;
+    let kaabaLng = 39.8262 * Math.PI / 180;
+    let myLat = lat * Math.PI / 180;
+    let myLng = lng * Math.PI / 180;
+    let y = Math.sin(kaabaLng - myLng);
+    let x = Math.cos(myLat) * Math.tan(kaabaLat) - Math.sin(myLat) * Math.cos(kaabaLng - myLng);
+    qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
+    qiblaBearing = (qiblaBearing + 360) % 360;
+    document.getElementById("qiblaAngleText").innerText = `زاوية القبلة لمنطقتك: ${Math.round(qiblaBearing)}°`;
+}
+
+function requestCompassPermission() {
+    calculateQiblaAngle(userLat, userLng);
+    if (window.DeviceOrientationEvent) {
+        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission().then(state => {
+                if (state === 'granted') window.addEventListener('deviceorientation', handleOrientation, true);
+            });
+        } else {
+            window.addEventListener('deviceorientation', handleOrientation, true);
+        }
+    }
+}
+
+function handleOrientation(event) {
+    let alpha = event.alpha || event.webkitCompassHeading;
+    if (alpha !== null && alpha !== undefined) {
+        let compassHeading = event.webkitCompassHeading || (360 - alpha);
+        let lineDegree = (360 - compassHeading) % 360;
+        let kaabaDegree = (qiblaBearing - compassHeading + 360) % 360;
+
+        document.getElementById("compassLine").style.transform = `rotate(${lineDegree}deg)`;
+        document.getElementById("kaabaMarker").style.transform = `rotate(${kaabaDegree}deg) translateY(-95px) rotate(-${kaabaDegree}deg)`;
+
+        let diff = Math.abs(qiblaBearing - compassHeading);
+        if (diff > 180) diff = 360 - diff;
+        let badge = document.getElementById("successBadge");
+        if (diff < 6) {
+            badge.classList.add("show");
+            document.getElementById("qiblaStatus").innerText = "أنت متجه نحو القبلة الشريفة تماماً ✅";
+        } else {
+            badge.classList.remove("show");
+            document.getElementById("qiblaStatus").innerText = "قم بتدوير الهاتف لمطابقة البوصلة مع الكعبة";
+        }
+    }
+}
+
+/* التسبيح */
 let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
 updateTasbihUI();
+
 function countUp() { 
     userIstighfarCount++; 
     localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
     updateTasbihUI();
 }
+
 function updateTasbihUI() {
     document.getElementById("counter").innerText = userIstighfarCount;
-    document.getElementById("hasanatCount").innerText = (userIstighfarCount * 100).toLocaleString() + " حسنة";
+    let totalHasanat = userIstighfarCount * 100;
+    document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
 }
 
-function performLogin() {
-    let name = document.getElementById("loginName").value;
-    if(name.trim() !== "") {
-        localStorage.setItem("qareeb_logged", "true");
-        localStorage.setItem("qareeb_username", name.trim());
-        document.getElementById("loginOverlay").style.display = "none";
-        document.getElementById("welcomeUser").innerText = name.trim();
-    } else { alert("يرجى إدخال اسم المستخدم"); }
+/* مواقيت الصلاة الحقيقية والتنبيه قبل الصلاة بـ 5 دقائق */
+let prayerTimesData = {};
+let notifiedPrayers = {};
+
+function initRealPrayerTimes() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            userLat = position.coords.latitude;
+            userLng = position.coords.longitude;
+            fetchPrayerTimes(userLat, userLng);
+        }, () => {
+            fetchPrayerTimes(userLat, userLng);
+        });
+    } else {
+        fetchPrayerTimes(userLat, userLng);
+    }
 }
-function logoutUser() {
-    localStorage.removeItem("qareeb_logged");
-    localStorage.removeItem("qareeb_username");
-    location.reload();
+
+function fetchPrayerTimes(lat, lng) {
+    document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة لموقعك الحالي...";
+    fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
+        .then(res => res.json())
+        .then(data => {
+            prayerTimesData = data.data.timings;
+            let meta = data.data.meta;
+            document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
+            
+            document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
+            document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
+            document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
+            document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
+            document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
+
+            startPrayerCountdown();
+        }).catch(() => {
+            document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
+        });
 }
-if(localStorage.getItem("qareeb_logged") === "true") {
-    document.getElementById("loginOverlay").style.display = "none";
-    document.getElementById("welcomeUser").innerText = localStorage.getItem("qareeb_username");
+
+function sendPrayerNotification(prayerName) {
+    if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("تطبيق قريب 🕌", {
+            body: `متبقي 5 دقائق على صلاة ${prayerName}، استعد للصلاة 💚`,
+            icon: "https://cdn-icons-png.flaticon.com/512/2913/2913109.png"
+        });
+    }
+}
+
+function startPrayerCountdown() {
+    setInterval(() => {
+        if (!prayerTimesData.Fajr) return;
+        let now = new Date();
+        let prayers = [
+            { name: "الفجر", time: prayerTimesData.Fajr },
+            { name: "الظهر", time: prayerTimesData.Dhuhr },
+            { name: "العصر", time: prayerTimesData.Asr },
+            { name: "المغرب", time: prayerTimesData.Maghrib },
+            { name: "العشاء", time: prayerTimesData.Isha }
+        ];
+
+        let nextPrayer = null;
+        let nextPrayerDate = null;
+
+        for (let p of prayers) {
+            let [h, m] = p.time.split(':').map(Number);
+            let pDate = new Date();
+            pDate.setHours(h, m, 0, 0);
+            if (pDate > now) {
+                nextPrayer = p;
+                nextPrayerDate = pDate;
+                break;
+            }
+        }
+
+        if (!nextPrayer) {
+            nextPrayer = prayers[0];
+            let [h, m] = prayers[0].time.split(':').map(Number);
+            nextPrayerDate = new Date();
+            nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
+            nextPrayerDate.setHours(h, m, 0, 0);
+        }
+
+        let diff = nextPrayerDate - now;
+        let hours = Math.floor(diff / (1000 * 60 * 60));
+        let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // التنبيه قبل الصلاة بـ 5 دقائق بالضبط
+        if (hours === 0 && mins === 5 && secs === 0 && !notifiedPrayers[nextPrayer.name]) {
+            sendPrayerNotification(nextPrayer.name);
+            notifiedPrayers[nextPrayer.name] = true;
+        }
+
+        let pNameEl = document.getElementById("nextPrayerName");
+        let pTimerEl = document.getElementById("prayerTimer");
+        if(pNameEl) pNameEl.innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
+        if(pTimerEl) pTimerEl.innerText = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }, 1000);
 }
 
 const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
@@ -882,6 +1065,7 @@ const surahs = ["الفاتحة","البقرة","آل عمران","النساء"
 function loadSurahs() {
     let select = document.getElementById("surahSelect");
     if(!select) return;
+    select.innerHTML = "";
     surahs.forEach((s, i) => {
         let opt = document.createElement("option");
         opt.value = i + 1;
@@ -890,15 +1074,49 @@ function loadSurahs() {
     });
     changeSurah();
 }
+
 function changeSurah() {
     let select = document.getElementById("surahSelect");
     let audio = document.getElementById("audioPlayer");
     let num = select.value;
     if(!num) return;
-    audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + num.toString().padStart(3, '0') + ".mp3";
+    let file = num.toString().padStart(3, '0') + ".mp3";
+    audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
+/* تسجيل الدخول والاحتفاظ بالحساب */
+function performLogin() {
+    let name = document.getElementById("loginName").value;
+    if(name.trim() !== "") {
+        localStorage.setItem("qareeb_logged", "true");
+        localStorage.setItem("qareeb_username", name.trim());
+        document.getElementById("loginOverlay").style.display = "none";
+        document.getElementById("welcomeUser").innerText = name.trim();
+        document.getElementById("currentLoggedInUser").innerText = name.trim();
+    } else {
+        alert("يرجى إدخال اسم المستخدم أو الحساب الأساسي");
+    }
+}
+
+function logoutUser() {
+    localStorage.removeItem("qareeb_logged");
+    localStorage.removeItem("qareeb_username");
+    location.reload();
+}
+
+if(localStorage.getItem("qareeb_logged") === "true") {
+    document.getElementById("loginOverlay").style.display = "none";
+    let savedName = localStorage.getItem("qareeb_username") || "Sasa medo";
+    document.getElementById("welcomeUser").innerText = savedName;
+    document.getElementById("currentLoggedInUser").innerText = savedName;
+}
+
+let savedFontSize = localStorage.getItem("qareeb_fontsize") || "normal";
+setFontSize(savedFontSize);
+
 loadSurahs();
+initRealPrayerTimes();
 </script>
+
 </body>
 </html>
