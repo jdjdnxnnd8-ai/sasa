@@ -212,7 +212,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
-/* تصميم السبورة البيضاء بالسطور المطلوبة */
+/* تصميم السبورة البيضاء ذات السطور */
 .white-board {
     background: #ffffff;
     border: 4px solid var(--card-green);
@@ -229,10 +229,11 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 }
 .white-board-text {
     color: var(--card-green);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     line-height: 40px;
     width: 100%;
+    word-break: break-word;
 }
 
 /* أزرار التحكم تحت السبورة */
@@ -566,7 +567,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     <div id="blackboardSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 5px; text-align:center;">السبورة الذكية الفورية</h3>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px; text-align:center;">اضغط للحدث، وتحدث ليتم الكتابة على السطور بوضوح:</p>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px; text-align:center;">اضغط تحدث، ووافق على إذن الميكروفون لتظهر كتاباتك على السطور بوضوح:</p>
         
         <!-- السبورة البيضاء ذات السطور -->
         <div class="white-board">
@@ -719,59 +720,69 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     });
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    /* خاصية السبورة الذكية وتحسين طلب الإذن الصوتي */
+    /* خاصية السبورة الذكية وتحسين طلب إذن الميكروفون عبر الوسائط الحديثة */
     let recognition = null;
+    let isListening = false;
 
     function startVoiceRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome.");
+            alert("متصفحك لا يدعم التعرف الصوتي، يرجى فتح الموقع عبر متصفح Google Chrome.");
             return;
         }
 
-        recognition = new SpeechRecognition();
-        recognition.lang = 'ar-SA';
-        recognition.interimResults = true;
-        recognition.maxAlternatives = 1;
+        // أولاً طلب إذن الميكروفون صراحة عبر navigator.mediaDevices لتجنب أخطاء المتصفح
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            // إيقاف الـ stream المؤقت فوراً لنترك المجال للـ SpeechRecognition للعمل
+            stream.getTracks().forEach(track => track.stop());
 
-        const display = document.getElementById("whiteBoardText");
-        display.style.color = "var(--card-green)";
-        display.innerText = "جاري طلب إذن الميكروفون... تحدث الآن 🎙️";
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            recognition.interimResults = true;
+            recognition.maxAlternatives = 1;
 
-        recognition.onresult = function(event) {
-            let transcript = event.results[0][0].transcript;
-            display.innerText = transcript;
-        };
-
-        recognition.onerror = function(event) {
-            display.innerText = "يرجى السماح بالوصول للميكروفون من إعدادات المتصفح ❌";
-            display.style.color = "#dc2626";
-        };
-
-        recognition.onend = function() {
+            const display = document.getElementById("whiteBoardText");
             display.style.color = "var(--card-green)";
-        };
+            display.innerText = "جاري الاستماع... تحدث الآن بوضوح 🎙️";
 
-        try {
+            recognition.onresult = function(event) {
+                let transcript = event.results[event.results.length - 1][0].transcript;
+                display.innerText = transcript;
+            };
+
+            recognition.onerror = function(event) {
+                display.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
+                display.style.color = "#dc2626";
+            };
+
+            recognition.onend = function() {
+                isListening = false;
+            };
+
             recognition.start();
-        } catch(e) {
-            alert("يرجى التأكد من فتح الموقع عبر متصفح كروم وباستخدام رابط آمن HTTPS.");
-        }
+            isListening = true;
+
+        }).catch(err => {
+            alert("يرجى السماح بالوصول للميكروفون من إعدادات المتصفح لكي تعمل السبورة.");
+            document.getElementById("whiteBoardText").innerText = "تم رفض إذن الميكروفون ❌";
+            document.getElementById("whiteBoardText").style.color = "#dc2626";
+        });
     }
 
     function stopVoiceRecognition() {
-        if (recognition) {
+        if (recognition && isListening) {
             recognition.stop();
+            isListening = false;
             document.getElementById("whiteBoardText").style.color = "#374151";
         }
     }
 
     function playBoardText() {
         let text = document.getElementById("whiteBoardText").innerText;
-        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري طلب")) {
+        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري الاستماع") && !text.includes("خطأ")) {
             speakText(text);
         } else {
-            alert("لا يوجد نص لنطقه على السبورة!");
+            alert("لا يوجد نص صحيح لنطقه على السبورة!");
         }
     }
 
