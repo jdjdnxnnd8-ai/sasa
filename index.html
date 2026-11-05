@@ -84,7 +84,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 
 .container { width: 100%; max-width: 450px; padding: 0 15px; }
 
-/* شريط أوقات الصلاة الحقيقية */
+/* شريط أوقات الصلاة الحقيقية الدقيقة */
 .prayer-bar {
     background: var(--card-green);
     color: #ffffff;
@@ -101,7 +101,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 .prayer-times-grid div { display: flex; flex-direction: column; align-items: center; }
 .prayer-times-grid span.p-time { color: var(--accent-gold); font-weight: bold; }
 
-/* قسم الكتابة والنطق الفوري */
+/* كتابة ونطق فوري */
 .speak-box {
     background: #ffffff;
     border: 1px solid #d1d5db;
@@ -212,7 +212,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
-/* تصميم السبورة البيضاء ذات السطور */
+/* تصميم السبورة البيضاء ذات السطور المطلوبة */
 .white-board {
     background: #ffffff;
     border: 4px solid var(--card-green);
@@ -236,7 +236,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     word-break: break-word;
 }
 
-/* أزرار التحكم تحت السبورة */
+/* أزرار التحكم تحت السبورة (تحدث، توقف، تشغيل الصوت) */
 .board-controls {
     display: flex;
     gap: 10px;
@@ -249,7 +249,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     border: none;
     border-radius: 12px;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.95rem;
     cursor: pointer;
     color: white;
     display: flex;
@@ -338,63 +338,6 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 .nav-item.active { color: var(--card-green); font-weight: bold; }
 .nav-item span.icon { font-size: 1.3rem; }
 
-.setting-item {
-    padding: 16px 0;
-    border-bottom: 1px solid #e5e7eb;
-}
-.setting-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-}
-.setting-title-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.setting-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: var(--text-dark);
-}
-.setting-icon {
-    background: #e6f4ea;
-    color: #137333;
-    padding: 8px;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.setting-desc {
-    font-size: 0.88rem;
-    color: var(--text-muted);
-    line-height: 1.5;
-}
-
-.font-options-btn {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-}
-.font-btn {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #d1d5db;
-    background: #f9fafb;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.85rem;
-}
-.font-btn.active {
-    background: var(--card-green);
-    color: white;
-    border-color: var(--card-green);
-}
-
 .azkar-card, .hadith-card, .book-card {
     background: #f9fafb; border: 1px solid #e5e7eb;
     padding: 14px; border-radius: 12px; margin-bottom: 12px;
@@ -425,11 +368,11 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 
 <div class="container">
 
-    <!-- شريط أوقات الصلاة الحقيقية -->
+    <!-- شريط أوقات الصلاة الحقيقية الدقيقة -->
     <div class="prayer-bar">
         <div class="prayer-title" id="nextPrayerName">الصلاة القادمة: ...</div>
         <div class="prayer-timer" id="prayerTimer">00:00:00</div>
-        <div class="prayer-location" id="userLocationText">جاري تحديد الموقع تلقائياً...</div>
+        <div class="prayer-location" id="userLocationText">جاري تحديد أوقات الصلاة...</div>
         <div class="prayer-times-grid">
             <div>الفجر <span class="p-time" id="time-Fajr">--:--</span></div>
             <div>الظهر <span class="p-time" id="time-Dhuhr">--:--</span></div>
@@ -563,18 +506,18 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- قسم السبورة البيضاء الجديدة -->
+    <!-- قسم السبورة البيضاء ذات السطور وزر التحدث الفوري -->
     <div id="blackboardSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 5px; text-align:center;">السبورة الذكية الفورية</h3>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px; text-align:center;">اضغط تحدث، ووافق على إذن الميكروفون لتظهر كتاباتك على السطور بوضوح:</p>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px; text-align:center;">اضغط تحدث، وتكلم ليتم كتابة كلامك على السطور فوراً:</p>
         
         <!-- السبورة البيضاء ذات السطور -->
         <div class="white-board">
             <div id="whiteBoardText" class="white-board-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام...</div>
         </div>
 
-        <!-- أزرار التحكم المطلوبة -->
+        <!-- أزرار التحكم المطلوبة (تحدث، توقف، تشغيل الصوت) -->
         <div class="board-controls">
             <button class="control-btn btn-mic" onclick="startVoiceRecognition()">🎙️ تحدث</button>
             <button class="control-btn btn-stop" onclick="stopVoiceRecognition()">⏸️ توقف</button>
@@ -596,7 +539,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- 2. بوصلة القبلة الحقيقية -->
+    <!-- 2. بوصلة القبلة -->
     <div id="qiblaSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); text-align:center;">🕋 بوصلة القبلة من موقعك</h3>
@@ -720,9 +663,8 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     });
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    /* خاصية السبورة الذكية وتحسين طلب إذن الميكروفون عبر الوسائط الحديثة */
+    /* خاصية السبورة الذكية والتعرف الصوتي المباشر */
     let recognition = null;
-    let isListening = false;
 
     function startVoiceRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -731,55 +673,50 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             return;
         }
 
-        // أولاً طلب إذن الميكروفون صراحة عبر navigator.mediaDevices لتجنب أخطاء المتصفح
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            // إيقاف الـ stream المؤقت فوراً لنترك المجال للـ SpeechRecognition للعمل
-            stream.getTracks().forEach(track => track.stop());
+        if (recognition) {
+            try { recognition.stop(); } catch(e) {}
+        }
 
-            recognition = new SpeechRecognition();
-            recognition.lang = 'ar-SA';
-            recognition.interimResults = true;
-            recognition.maxAlternatives = 1;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'ar-SA';
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
 
-            const display = document.getElementById("whiteBoardText");
-            display.style.color = "var(--card-green)";
-            display.innerText = "جاري الاستماع... تحدث الآن بوضوح 🎙️";
+        const display = document.getElementById("whiteBoardText");
+        display.style.color = "var(--card-green)";
+        display.innerText = "جاري الاستماع... تحدث الآن 🎙️";
 
-            recognition.onresult = function(event) {
-                let transcript = event.results[event.results.length - 1][0].transcript;
-                display.innerText = transcript;
-            };
+        recognition.onresult = function(event) {
+            let transcript = event.results[event.results.length - 1][0].transcript;
+            display.innerText = transcript;
+        };
 
-            recognition.onerror = function(event) {
-                display.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
-                display.style.color = "#dc2626";
-            };
+        recognition.onerror = function(event) {
+            display.innerText = "يرجى السماح بالميكروفون أو إعادة المحاولة ❌";
+            display.style.color = "#dc2626";
+        };
 
-            recognition.onend = function() {
-                isListening = false;
-            };
+        recognition.onend = function() {
+            // توقف الاستماع
+        };
 
+        try {
             recognition.start();
-            isListening = true;
-
-        }).catch(err => {
-            alert("يرجى السماح بالوصول للميكروفون من إعدادات المتصفح لكي تعمل السبورة.");
-            document.getElementById("whiteBoardText").innerText = "تم رفض إذن الميكروفون ❌";
-            document.getElementById("whiteBoardText").style.color = "#dc2626";
-        });
+        } catch(e) {
+            alert("تأكد من السماح للبرنامج بالميكروفون.");
+        }
     }
 
     function stopVoiceRecognition() {
-        if (recognition && isListening) {
-            recognition.stop();
-            isListening = false;
+        if (recognition) {
+            try { recognition.stop(); } catch(e) {}
             document.getElementById("whiteBoardText").style.color = "#374151";
         }
     }
 
     function playBoardText() {
         let text = document.getElementById("whiteBoardText").innerText;
-        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري الاستماع") && !text.includes("خطأ")) {
+        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري الاستماع") && !text.includes("يرجى السماح")) {
             speakText(text);
         } else {
             alert("لا يوجد نص صحيح لنطقه على السبورة!");
@@ -936,7 +873,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
     }
 
-    /* أوقات الصلاة */
+    /* أوقات الصلاة الدقيقة */
     function initRealPrayerTimes() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
@@ -945,30 +882,35 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
                 fetchPrayerTimes(userLat, userLng);
             }, () => {
                 fetchPrayerTimes(userLat, userLng);
-            });
+            }, { timeout: 10000 });
         } else {
             fetchPrayerTimes(userLat, userLng);
         }
     }
 
     function fetchPrayerTimes(lat, lng) {
-        document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة لموقعك الحالي...";
-        fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
+        document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة...";
+        let today = new Date();
+        let dateStr = `${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}`;
+        
+        fetch(`https://api.aladhan.com/v1/timings/${dateStr}?latitude=${lat}&longitude=${lng}&method=5`)
             .then(res => res.json())
             .then(data => {
-                let prayerTimesData = data.data.timings;
-                let meta = data.data.meta;
-                document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
-                
-                document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
-                document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
-                document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
-                document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
-                document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
+                if(data && data.data) {
+                    let prayerTimesData = data.data.timings;
+                    let meta = data.data.meta;
+                    document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
+                    
+                    document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
+                    document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
+                    document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
+                    document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
+                    document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
 
-                startPrayerCountdown(prayerTimesData);
+                    startPrayerCountdown(prayerTimesData);
+                }
             }).catch(() => {
-                document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
+                document.getElementById("userLocationText").innerText = "تعذر تحديث الأوقات، تأكد من الاتصال.";
             });
     }
 
