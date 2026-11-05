@@ -564,7 +564,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         
         <div class="blackboard-container">
             <div id="blackboardTextDisplay" class="blackboard-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام ...</div>
-            <div id="blackboardStatusText" class="blackboard-status">حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌</div>
+            <div id="blackboardStatusText" class="blackboard-status">السبورة جاهزة للاستماع 🟢</div>
         </div>
 
         <button class="btn-main" onclick="startVoiceRecognition()" style="background: #144331; font-size: 1.1rem; padding: 16px; display:flex; align-items:center; justify-content:center; gap:8px;">
@@ -749,367 +749,389 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 </nav>
 
 <script>
-/* خاصية السبورة الذكية للصوت */
-function startVoiceRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        alert("متصفحك لا يدعم التعرف المباشر على الصوت.");
-        return;
-    }
+    // 🛡️ نظام الحماية لمنع سرقة الكود وأدوات المطورين
+    document.addEventListener('keydown', function(e) {
+        if (
+            e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
+            (e.ctrlKey && e.key === 'U')
+        ) {
+            e.preventDefault();
+            alert('عذراً يا صاصا، عرض مصدر الصفحة محمي لحماية حقوق التطبيق! 💚');
+            return false;
+        }
+    });
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = 'ar-SA';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
 
-    const display = document.getElementById("blackboardTextDisplay");
-    const status = document.getElementById("blackboardStatusText");
+    document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+    });
 
-    status.innerText = "جاري الاستماع الآن... تكلم بوضوح 🎙️";
-    status.style.color = "#d4af37";
-    display.style.color = "#ffffff";
-    display.innerText = "...";
+    /* خاصية السبورة الذكية للصوت */
+    function startVoiceRecognition() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            alert("متصفحك لا يدعم التعرف المباشر على الصوت.");
+            return;
+        }
 
-    recognition.onresult = function(event) {
-        const speechResult = event.results[0][0].transcript;
-        display.innerText = speechResult;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'ar-SA';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const display = document.getElementById("blackboardTextDisplay");
+        const status = document.getElementById("blackboardStatusText");
+
+        status.innerText = "جاري الاستماع الآن... تكلم بوضوح 🎙️";
+        status.style.color = "#d4af37";
         display.style.color = "#ffffff";
-        status.innerText = "تم كتابة النص بنجاح ✅";
-        status.style.color = "#10b981";
-        speakText(speechResult);
-    };
+        display.innerText = "...";
 
-    recognition.onerror = function() {
-        status.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
-        status.style.color = "#ef4444";
-    };
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            display.innerText = speechResult;
+            display.style.color = "#ffffff";
+            status.innerText = "تم كتابة النص بنجاح ✅";
+            status.style.color = "#10b981";
+            speakText(speechResult);
+        };
 
-    recognition.start();
-}
+        recognition.onerror = function() {
+            status.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
+            status.style.color = "#ef4444";
+        };
 
-function speakBlackboardText() {
-    let text = document.getElementById("blackboardTextDisplay").innerText;
-    if(text && !text.includes("اضغط على زر التحدث")) {
-        speakText(text);
+        recognition.start();
     }
-}
 
-function clearBlackboard() {
-    document.getElementById("blackboardTextDisplay").innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
-    document.getElementById("blackboardTextDisplay").style.color = "#ef4444";
-    document.getElementById("blackboardStatusText").innerText = "السبورة في وضع الاستعداد 🟢";
-    document.getElementById("blackboardStatusText").style.color = "#fca5a5";
-}
-
-/* التحكم بحجم الخط البرمجي */
-function setFontSize(size) {
-    let root = document.documentElement;
-    document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
-    
-    if (size === 'normal') {
-        root.style.setProperty('--base-font-size', '16px');
-        document.getElementById('f-normal').classList.add('active');
-    } else if (size === 'large') {
-        root.style.setProperty('--base-font-size', '19px');
-        document.getElementById('f-large').classList.add('active');
-    } else if (size === 'xlarge') {
-        root.style.setProperty('--base-font-size', '22px');
-        document.getElementById('f-xlarge').classList.add('active');
-    }
-    localStorage.setItem("qareeb_fontsize", size);
-}
-
-function speakText(text) {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ar-SA';
-        utterance.rate = 0.95;
-        window.speechSynthesis.speak(utterance);
-    }
-}
-
-function speakCustomText() {
-    let text = document.getElementById("customTextInput").value;
-    if(text.trim() !== "") speakText(text);
-}
-
-function openSection(sectionId) {
-    document.getElementById("mainHomeSection").style.display = "none";
-    document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
-    document.getElementById(sectionId).classList.add("active");
-    window.scrollTo(0, 0);
-
-    if(sectionId === 'qiblaSection') {
-        requestCompassPermission();
-    }
-}
-
-function closeSections() {
-    document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
-    document.getElementById("mainHomeSection").style.display = "block";
-}
-
-/* تقليب المصحف الصوت */
-let audioCtx = null;
-function playRealisticPageFlipSound() {
-    try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        let dur = 0.18;
-        let buf = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
-        let data = buf.getChannelData(0);
-        for (let i = 0; i < buf.length; i++) {
-            data[i] = (Math.random() * 2 - 1) * Math.sin((i / buf.length) * Math.PI);
+    function speakBlackboardText() {
+        let text = document.getElementById("blackboardTextDisplay").innerText;
+        if(text && !text.includes("اضغط على زر التحدث")) {
+            speakText(text);
         }
-        let src = audioCtx.createBufferSource();
-        src.buffer = buf;
-        let filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
-        let gain = audioCtx.createGain();
-        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-        src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
-        src.start();
-    } catch (e) {}
-}
+    }
 
-let currentPage = 1;
-function updateQuranPage(direction = 'next') {
-    document.getElementById("pageNum").innerText = currentPage;
-    const img = document.getElementById("quranImage");
-    playRealisticPageFlipSound();
-    img.classList.add(direction === 'next' ? 'flip-next' : 'flip-prev');
-    setTimeout(() => {
+    function clearBlackboard() {
+        document.getElementById("blackboardTextDisplay").innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
+        document.getElementById("blackboardTextDisplay").style.color = "#ef4444";
+        document.getElementById("blackboardStatusText").innerText = "السبورة جاهزة للاستماع 🟢";
+        document.getElementById("blackboardStatusText").style.color = "#fca5a5";
+    }
+
+    /* التحكم بحجم الخط البرمجي */
+    function setFontSize(size) {
+        let root = document.documentElement;
+        document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
+        
+        if (size === 'normal') {
+            root.style.setProperty('--base-font-size', '16px');
+            document.getElementById('f-normal').classList.add('active');
+        } else if (size === 'large') {
+            root.style.setProperty('--base-font-size', '19px');
+            document.getElementById('f-large').classList.add('active');
+        } else if (size === 'xlarge') {
+            root.style.setProperty('--base-font-size', '22px');
+            document.getElementById('f-xlarge').classList.add('active');
+        }
+        localStorage.setItem("qareeb_fontsize", size);
+    }
+
+    function speakText(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            utterance.rate = 0.95;
+            window.speechSynthesis.speak(utterance);
+        }
+    }
+
+    function speakCustomText() {
+        let text = document.getElementById("customTextInput").value;
+        if(text.trim() !== "") speakText(text);
+    }
+
+    function openSection(sectionId) {
+        document.getElementById("mainHomeSection").style.display = "none";
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.getElementById(sectionId).classList.add("active");
+        window.scrollTo(0, 0);
+
+        if(sectionId === 'qiblaSection') {
+            requestCompassPermission();
+        }
+    }
+
+    function closeSections() {
+        document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
+        document.getElementById("mainHomeSection").style.display = "block";
+    }
+
+    /* تقليب المصحف الصوت */
+    let audioCtx = null;
+    function playRealisticPageFlipSound() {
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            let dur = 0.18;
+            let buf = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
+            let data = buf.getChannelData(0);
+            for (let i = 0; i < buf.length; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.sin((i / buf.length) * Math.PI);
+            }
+            let src = audioCtx.createBufferSource();
+            src.buffer = buf;
+            let filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            let gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+            src.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+            src.start();
+        } catch (e) {}
+    }
+
+    let currentPage = 1;
+    function updateQuranPage(direction = 'next') {
+        document.getElementById("pageNum").innerText = currentPage;
+        const img = document.getElementById("quranImage");
+        playRealisticPageFlipSound();
+        img.classList.add(direction === 'next' ? 'flip-next' : 'flip-prev');
+        setTimeout(() => {
+            let pageStr = String(currentPage).padStart(3, '0');
+            img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
+            img.classList.remove('flip-next', 'flip-prev');
+        }, 250);
+    }
+
+    function handleImgError(image) {
         let pageStr = String(currentPage).padStart(3, '0');
-        img.src = `https://android.quran.com/data/width_1024/page${pageStr}.png`;
-        img.classList.remove('flip-next', 'flip-prev');
-    }, 250);
-}
-
-function handleImgError(image) {
-    let pageStr = String(currentPage).padStart(3, '0');
-    if (!image.dataset.retried) {
-        image.dataset.retried = "true";
-        image.src = `https://quran.ksu.edu.sa/aya/images/1/p${currentPage}.png`;
-    } else {
-        image.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
-    }
-}
-
-function nextPage() {
-    if(currentPage < 604) { currentPage++; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('next'); }
-}
-function prevPage() {
-    if(currentPage > 1) { currentPage--; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('prev'); }
-}
-
-/* بوصلة القبلة */
-let qiblaBearing = 136.8;
-let userLat = 30.0444, userLng = 31.2357; 
-
-function calculateQiblaAngle(lat, lng) {
-    let kaabaLat = 21.4225 * Math.PI / 180;
-    let kaabaLng = 39.8262 * Math.PI / 180;
-    let myLat = lat * Math.PI / 180;
-    let myLng = lng * Math.PI / 180;
-    let y = Math.sin(kaabaLng - myLng);
-    let x = Math.cos(myLat) * Math.tan(kaabaLat) - Math.sin(myLat) * Math.cos(kaabaLng - myLng);
-    qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
-    qiblaBearing = (qiblaBearing + 360) % 360;
-    document.getElementById("qiblaAngleText").innerText = `زاوية القبلة لمنطقتك: ${Math.round(qiblaBearing)}°`;
-}
-
-function requestCompassPermission() {
-    calculateQiblaAngle(userLat, userLng);
-    if (window.DeviceOrientationEvent) {
-        if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission().then(state => {
-                if (state === 'granted') window.addEventListener('deviceorientation', handleOrientation, true);
-            });
+        if (!image.dataset.retried) {
+            image.dataset.retried = "true";
+            image.src = `https://quran.ksu.edu.sa/aya/images/1/p${currentPage}.png`;
         } else {
-            window.addEventListener('deviceorientation', handleOrientation, true);
+            image.src = `https://www.everyayah.com/data/images/img_${pageStr}.png`;
         }
     }
-}
 
-function handleOrientation(event) {
-    let alpha = event.alpha || event.webkitCompassHeading;
-    if (alpha !== null && alpha !== undefined) {
-        let compassHeading = event.webkitCompassHeading || (360 - alpha);
-        let lineDegree = (360 - compassHeading) % 360;
-        let kaabaDegree = (qiblaBearing - compassHeading + 360) % 360;
-
-        document.getElementById("compassLine").style.transform = `rotate(${lineDegree}deg)`;
-        document.getElementById("kaabaMarker").style.transform = `rotate(${kaabaDegree}deg) translateY(-95px) rotate(-${kaabaDegree}deg)`;
-
-        let diff = Math.abs(qiblaBearing - compassHeading);
-        if (diff > 180) diff = 360 - diff;
-        let badge = document.getElementById("successBadge");
-        if (diff < 6) {
-            badge.classList.add("show");
-            document.getElementById("qiblaStatus").innerText = "أنت متجه نحو القبلة الشريفة تماماً ✅";
-        } else {
-            badge.classList.remove("show");
-            document.getElementById("qiblaStatus").innerText = "قم بتدوير الهاتف لمطابقة البوصلة مع الكعبة";
-        }
+    function nextPage() {
+        if(currentPage < 604) { currentPage++; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('next'); }
     }
-}
-
-/* التسبيح */
-let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
-updateTasbihUI();
-
-function countUp() { 
-    userIstighfarCount++; 
-    localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
-    updateTasbihUI();
-}
-
-function updateTasbihUI() {
-    document.getElementById("counter").innerText = userIstighfarCount;
-    let totalHasanat = userIstighfarCount * 100;
-    document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
-}
-
-/* أوقات الصلاة */
-function initRealPrayerTimes() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            userLat = position.coords.latitude;
-            userLng = position.coords.longitude;
-            fetchPrayerTimes(userLat, userLng);
-        }, () => {
-            fetchPrayerTimes(userLat, userLng);
-        });
-    } else {
-        fetchPrayerTimes(userLat, userLng);
+    function prevPage() {
+        if(currentPage > 1) { currentPage--; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('prev'); }
     }
-}
 
-function fetchPrayerTimes(lat, lng) {
-    document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة لموقعك الحالي...";
-    fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
-        .then(res => res.json())
-        .then(data => {
-            let prayerTimesData = data.data.timings;
-            let meta = data.data.meta;
-            document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
-            
-            document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
-            document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
-            document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
-            document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
-            document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
+    /* بوصلة القبلة */
+    let qiblaBearing = 136.8;
+    let userLat = 30.0444, userLng = 31.2357; 
 
-            startPrayerCountdown(prayerTimesData);
-        }).catch(() => {
-            document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
-        });
-}
+    function calculateQiblaAngle(lat, lng) {
+        let kaabaLat = 21.4225 * Math.PI / 180;
+        let kaabaLng = 39.8262 * Math.PI / 180;
+        let myLat = lat * Math.PI / 180;
+        let myLng = lng * Math.PI / 180;
+        let y = Math.sin(kaabaLng - myLng);
+        let x = Math.cos(myLat) * Math.tan(kaabaLat) - Math.sin(myLat) * Math.cos(kaabaLng - myLng);
+        qiblaBearing = Math.atan2(y, x) * 180 / Math.PI;
+        qiblaBearing = (qiblaBearing + 360) % 360;
+        document.getElementById("qiblaAngleText").innerText = `زاوية القبلة لمنطقتك: ${Math.round(qiblaBearing)}°`;
+    }
 
-function startPrayerCountdown(prayerTimesData) {
-    setInterval(() => {
-        if (!prayerTimesData.Fajr) return;
-        let now = new Date();
-        let prayers = [
-            { name: "الفجر", time: prayerTimesData.Fajr },
-            { name: "الظهر", time: prayerTimesData.Dhuhr },
-            { name: "العصر", time: prayerTimesData.Asr },
-            { name: "المغرب", time: prayerTimesData.Maghrib },
-            { name: "العشاء", time: prayerTimesData.Isha }
-        ];
-
-        let nextPrayer = null;
-        let nextPrayerDate = null;
-
-        for (let p of prayers) {
-            let [h, m] = p.time.split(':').map(Number);
-            let pDate = new Date();
-            pDate.setHours(h, m, 0, 0);
-            if (pDate > now) {
-                nextPrayer = p;
-                nextPrayerDate = pDate;
-                break;
+    function requestCompassPermission() {
+        calculateQiblaAngle(userLat, userLng);
+        if (window.DeviceOrientationEvent) {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission().then(state => {
+                    if (state === 'granted') window.addEventListener('deviceorientation', handleOrientation, true);
+                });
+            } else {
+                window.addEventListener('deviceorientation', handleOrientation, true);
             }
         }
-
-        if (!nextPrayer) {
-            nextPrayer = prayers[0];
-            let [h, m] = prayers[0].time.split(':').map(Number);
-            nextPrayerDate = new Date();
-            nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
-            nextPrayerDate.setHours(h, m, 0, 0);
-        }
-
-        let diff = nextPrayerDate - now;
-        let hours = Math.floor(diff / (1000 * 60 * 60));
-        let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        let secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        let pNameEl = document.getElementById("nextPrayerName");
-        let pTimerEl = document.getElementById("prayerTimer");
-        if(pNameEl) pNameEl.innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
-        if(pTimerEl) pTimerEl.innerText = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }, 1000);
-}
-
-const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
-
-function loadSurahs() {
-    let select = document.getElementById("surahSelect");
-    if(!select) return;
-    select.innerHTML = "";
-    surahs.forEach((s, i) => {
-        let opt = document.createElement("option");
-        opt.value = i + 1;
-        opt.textContent = (i + 1) + " - سورة " + s;
-        select.appendChild(opt);
-    });
-    changeSurah();
-}
-
-function changeSurah() {
-    let select = document.getElementById("surahSelect");
-    let audio = document.getElementById("audioPlayer");
-    let num = select.value;
-    if(!num) return;
-    let file = num.toString().padStart(3, '0') + ".mp3";
-    audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
-}
-
-/* تسجيل الدخول */
-function performLogin() {
-    let name = document.getElementById("loginName").value;
-    if(name.trim() !== "") {
-        localStorage.setItem("qareeb_logged", "true");
-        localStorage.setItem("qareeb_username", name.trim());
-        document.getElementById("loginOverlay").style.display = "none";
-        document.getElementById("welcomeUser").innerText = name.trim();
-        document.getElementById("currentLoggedInUser").innerText = name.trim();
-    } else {
-        alert("يرجى إدخال اسم المستخدم أو الحساب الأساسي");
     }
-}
 
-function logoutUser() {
-    localStorage.removeItem("qareeb_logged");
-    localStorage.removeItem("qareeb_username");
-    location.reload();
-}
+    function handleOrientation(event) {
+        let alpha = event.alpha || event.webkitCompassHeading;
+        if (alpha !== null && alpha !== undefined) {
+            let compassHeading = event.webkitCompassHeading || (360 - alpha);
+            let lineDegree = (360 - compassHeading) % 360;
+            let kaabaDegree = (qiblaBearing - compassHeading + 360) % 360;
 
-if(localStorage.getItem("qareeb_logged") === "true") {
-    document.getElementById("loginOverlay").style.display = "none";
-    let savedName = localStorage.getItem("qareeb_username") || "Sasa medo";
-    document.getElementById("welcomeUser").innerText = savedName;
-    document.getElementById("currentLoggedInUser").innerText = savedName;
-}
+            document.getElementById("compassLine").style.transform = `rotate(${lineDegree}deg)`;
+            document.getElementById("kaabaMarker").style.transform = `rotate(${kaabaDegree}deg) translateY(-95px) rotate(-${kaabaDegree}deg)`;
 
-let savedFontSize = localStorage.getItem("qareeb_fontsize") || "normal";
-setFontSize(savedFontSize);
+            let diff = Math.abs(qiblaBearing - compassHeading);
+            if (diff > 180) diff = 360 - diff;
+            let badge = document.getElementById("successBadge");
+            if (diff < 6) {
+                badge.classList.add("show");
+                document.getElementById("qiblaStatus").innerText = "أنت متجه نحو القبلة الشريفة تماماً ✅";
+            } else {
+                badge.classList.remove("show");
+                document.getElementById("qiblaStatus").innerText = "قم بتدوير الهاتف لمطابقة البوصلة مع الكعبة";
+            }
+        }
+    }
 
-loadSurahs();
-initRealPrayerTimes();
+    /* التسبيح */
+    let userIstighfarCount = localStorage.getItem("qareeb_tasbih_count") ? parseInt(localStorage.getItem("qareeb_tasbih_count")) : 0;
+    updateTasbihUI();
+
+    function countUp() { 
+        userIstighfarCount++; 
+        localStorage.setItem("qareeb_tasbih_count", userIstighfarCount);
+        updateTasbihUI();
+    }
+
+    function updateTasbihUI() {
+        document.getElementById("counter").innerText = userIstighfarCount;
+        let totalHasanat = userIstighfarCount * 100;
+        document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
+    }
+
+    /* أوقات الصلاة */
+    function initRealPrayerTimes() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                userLat = position.coords.latitude;
+                userLng = position.coords.longitude;
+                fetchPrayerTimes(userLat, userLng);
+            }, () => {
+                fetchPrayerTimes(userLat, userLng);
+            });
+        } else {
+            fetchPrayerTimes(userLat, userLng);
+        }
+    }
+
+    function fetchPrayerTimes(lat, lng) {
+        document.getElementById("userLocationText").innerText = "جاري جلب أوقات الصلاة لموقعك الحالي...";
+        fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
+            .then(res => res.json())
+            .then(data => {
+                let prayerTimesData = data.data.timings;
+                let meta = data.data.meta;
+                document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
+                
+                document.getElementById("time-Fajr").innerText = prayerTimesData.Fajr;
+                document.getElementById("time-Dhuhr").innerText = prayerTimesData.Dhuhr;
+                document.getElementById("time-Asr").innerText = prayerTimesData.Asr;
+                document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
+                document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
+
+                startPrayerCountdown(prayerTimesData);
+            }).catch(() => {
+                document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
+            });
+    }
+
+    function startPrayerCountdown(prayerTimesData) {
+        setInterval(() => {
+            if (!prayerTimesData.Fajr) return;
+            let now = new Date();
+            let prayers = [
+                { name: "الفجر", time: prayerTimesData.Fajr },
+                { name: "الظهر", time: prayerTimesData.Dhuhr },
+                { name: "العصر", time: prayerTimesData.Asr },
+                { name: "المغرب", time: prayerTimesData.Maghrib },
+                { name: "العشاء", time: prayerTimesData.Isha }
+            ];
+
+            let nextPrayer = null;
+            let nextPrayerDate = null;
+
+            for (let p of prayers) {
+                let [h, m] = p.time.split(':').map(Number);
+                let pDate = new Date();
+                pDate.setHours(h, m, 0, 0);
+                if (pDate > now) {
+                    nextPrayer = p;
+                    nextPrayerDate = pDate;
+                    break;
+                }
+            }
+
+            if (!nextPrayer) {
+                nextPrayer = prayers[0];
+                let [h, m] = prayers[0].time.split(':').map(Number);
+                nextPrayerDate = new Date();
+                nextPrayerDate.setDate(nextPrayerDate.getDate() + 1);
+                nextPrayerDate.setHours(h, m, 0, 0);
+            }
+
+            let diff = nextPrayerDate - now;
+            let hours = Math.floor(diff / (1000 * 60 * 60));
+            let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            let secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            let pNameEl = document.getElementById("nextPrayerName");
+            let pTimerEl = document.getElementById("prayerTimer");
+            if(pNameEl) pNameEl.innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
+            if(pTimerEl) pTimerEl.innerText = `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+
+    function loadSurahs() {
+        let select = document.getElementById("surahSelect");
+        if(!select) return;
+        select.innerHTML = "";
+        surahs.forEach((s, i) => {
+            let opt = document.createElement("option");
+            opt.value = i + 1;
+            opt.textContent = (i + 1) + " - سورة " + s;
+            select.appendChild(opt);
+        });
+        changeSurah();
+    }
+
+    function changeSurah() {
+        let select = document.getElementById("surahSelect");
+        let audio = document.getElementById("audioPlayer");
+        let num = select.value;
+        if(!num) return;
+        let file = num.toString().padStart(3, '0') + ".mp3";
+        audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
+    }
+
+    /* تسجيل الدخول */
+    function performLogin() {
+        let name = document.getElementById("loginName").value;
+        if(name.trim() !== "") {
+            localStorage.setItem("qareeb_logged", "true");
+            localStorage.setItem("qareeb_username", name.trim());
+            document.getElementById("loginOverlay").style.display = "none";
+            document.getElementById("welcomeUser").innerText = name.trim();
+            document.getElementById("currentLoggedInUser").innerText = name.trim();
+        } else {
+            alert("يرجى إدخال اسم المستخدم أو الحساب الأساسي");
+        }
+    }
+
+    function logoutUser() {
+        localStorage.removeItem("qareeb_logged");
+        localStorage.removeItem("qareeb_username");
+        location.reload();
+    }
+
+    if(localStorage.getItem("qareeb_logged") === "true") {
+        document.getElementById("loginOverlay").style.display = "none";
+        let savedName = localStorage.getItem("qareeb_username") || "Sasa medo";
+        document.getElementById("welcomeUser").innerText = savedName;
+        document.getElementById("currentLoggedInUser").innerText = savedName;
+    }
+
+    let savedFontSize = localStorage.getItem("qareeb_fontsize") || "normal";
+    setFontSize(savedFontSize);
+
+    loadSurahs();
+    initRealPrayerTimes();
 </script>
 
 </body>
