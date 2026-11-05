@@ -235,7 +235,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     width: 100%;
 }
 
-/* أزرار التحكم الجديدة تحت السبورة */
+/* أزرار التحكم تحت السبورة */
 .board-controls {
     display: flex;
     gap: 10px;
@@ -573,7 +573,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             <div id="whiteBoardText" class="white-board-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام...</div>
         </div>
 
-        <!-- أزرار التحكم الجديدة (تحدث، توقف، تشغيل الصوت) -->
+        <!-- أزرار التحكم المطلوبة -->
         <div class="board-controls">
             <button class="control-btn btn-mic" onclick="startVoiceRecognition()">🎙️ تحدث</button>
             <button class="control-btn btn-stop" onclick="stopVoiceRecognition()">⏸️ توقف</button>
@@ -719,13 +719,13 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     });
     document.addEventListener('contextmenu', e => e.preventDefault());
 
-    /* تفاعل السبورة البيضاء والتعرف الصوتي الجديد */
+    /* خاصية السبورة الذكية وتحسين طلب الإذن الصوتي */
     let recognition = null;
 
     function startVoiceRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("متصفحك لا يدعم التعرف الصوتي المباشر.");
+            alert("متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome.");
             return;
         }
 
@@ -736,25 +736,26 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 
         const display = document.getElementById("whiteBoardText");
         display.style.color = "var(--card-green)";
-        display.innerText = "جاري طلب إذن الصوت والاستماع... 🎙️";
+        display.innerText = "جاري طلب إذن الميكروفون... تحدث الآن 🎙️";
 
         recognition.onresult = function(event) {
             let transcript = event.results[0][0].transcript;
             display.innerText = transcript;
         };
 
-        recognition.onerror = function() {
-            display.innerText = "حدث خطأ في الميكروفون، حاول مرة أخرى ❌";
+        recognition.onerror = function(event) {
+            display.innerText = "يرجى السماح بالوصول للميكروفون من إعدادات المتصفح ❌";
+            display.style.color = "#dc2626";
         };
 
         recognition.onend = function() {
-            // توقف التسجيل
+            display.style.color = "var(--card-green)";
         };
 
         try {
             recognition.start();
         } catch(e) {
-            alert("يرجى السماح باستخدام الميكروفون من إعدادات المتصفح.");
+            alert("يرجى التأكد من فتح الموقع عبر متصفح كروم وباستخدام رابط آمن HTTPS.");
         }
     }
 
