@@ -36,20 +36,6 @@ body {
     transition: font-size 0.2s ease, background-color 0.2s ease;
 }
 
-/* التباين العالي (High Contrast Mode) */
-body.high-contrast {
-    --bg-color: #000000;
-    --card-green: #00ff66;
-    --text-dark: #ffffff;
-    --text-muted: #e5e7eb;
-}
-body.high-contrast .need-row-btn,
-body.high-contrast .footer-btn,
-body.high-contrast .btn-main {
-    background: #00ff66 !important;
-    color: #000000 !important;
-}
-
 /* شاشة تسجيل الدخول */
 #loginOverlay {
     position: fixed;
@@ -226,34 +212,54 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
-/* تصميم السبورة الذكية (Voice Blackboard) */
-.blackboard-container {
-    background: #0f2e21;
-    border: 6px solid #144331;
+/* تصميم السبورة البيضاء بالسطور المطلوبة */
+.white-board {
+    background: #ffffff;
+    border: 4px solid var(--card-green);
     border-radius: 16px;
-    padding: 20px;
-    min-height: 220px;
+    padding: 25px 15px;
+    min-height: 200px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background-image: repeating-linear-gradient(white, white 39px, #e5e7eb 40px);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    justify-content: center;
+    text-align: center;
+}
+.white-board-text {
+    color: var(--card-green);
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 40px;
+    width: 100%;
+}
+
+/* أزرار التحكم الجديدة تحت السبورة */
+.board-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
     margin-bottom: 15px;
 }
-.blackboard-text {
-    color: #ffffff;
-    font-size: 1.6rem;
+.control-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
     font-weight: bold;
-    text-align: center;
-    line-height: 1.6;
-    word-break: break-word;
+    font-size: 1rem;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
-.blackboard-status {
-    color: #fca5a5;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-top: 15px;
-}
+.btn-mic { background: var(--card-green); }
+.btn-stop { background: #dc2626; }
+.btn-play { background: #2563eb; }
 
 /* المصحف الشريف 3D */
 .quran-viewer { text-align: center; perspective: 1500px; overflow: hidden; padding: 10px 0; }
@@ -522,7 +528,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <div class="section-title">أقسام القرآن والعبادات والسبورة</div>
         <div class="grid-container">
             <button class="card-btn" onclick="openSection('blackboardSection')">
-                <span class="icon">⬛</span>
+                <span class="icon">📋</span>
                 <span>السبورة</span>
             </button>
             <button class="card-btn" onclick="openSection('quranSection')">
@@ -556,23 +562,22 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- قسم السبورة الذكية للصوت والكتابة (تم الإصلاح) -->
+    <!-- قسم السبورة البيضاء الجديدة -->
     <div id="blackboardSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green); margin-bottom: 5px;">سبورة التحدث والكتابة الفورية</h3>
-        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px;">تحدث بصوتك لتظهر الكلمات فوراً بخط واضح على السبورة:</p>
+        <h3 style="color: var(--card-green); margin-bottom: 5px; text-align:center;">السبورة الذكية الفورية</h3>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-bottom: 15px; text-align:center;">اضغط للحدث، وتحدث ليتم الكتابة على السطور بوضوح:</p>
         
-        <div class="blackboard-container">
-            <div id="blackboardTextDisplay" class="blackboard-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام ...</div>
-            <div id="blackboardStatusText" class="blackboard-status">السبورة جاهزة للاستماع 🟢</div>
+        <!-- السبورة البيضاء ذات السطور -->
+        <div class="white-board">
+            <div id="whiteBoardText" class="white-board-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام...</div>
         </div>
 
-        <button class="btn-main" onclick="startVoiceRecognition()" style="background: #144331; font-size: 1.1rem; padding: 16px; display:flex; align-items:center; justify-content:center; gap:8px;">
-            <span>🎙️</span> اضغط هنا وابدأ التحدث
-        </button>
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button class="btn-main" style="background: #374151; margin-top:0;" onclick="clearBlackboard()">🗑️ مسح السبورة</button>
-            <button class="btn-main" style="background: #1f2937; margin-top:0;" onclick="speakBlackboardText()">🔊 نطق المكتوب</button>
+        <!-- أزرار التحكم الجديدة (تحدث، توقف، تشغيل الصوت) -->
+        <div class="board-controls">
+            <button class="control-btn btn-mic" onclick="startVoiceRecognition()">🎙️ تحدث</button>
+            <button class="control-btn btn-stop" onclick="stopVoiceRecognition()">⏸️ توقف</button>
+            <button class="control-btn btn-play" onclick="playBoardText()">▶️ تشغيل الصوت</button>
         </div>
     </div>
 
@@ -615,56 +620,28 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 4. موسوعة الأذكار الضخمة والمحدثة -->
+    <!-- 4. الأذكار -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين الكبرى</h3>
-        
         <div class="azkar-card">
             <h4>☀️ أذكار الصباح الكاملة</h4>
-            <p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. (تقرأ 3 مرات).</p>
+            <p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير...</p>
         </div>
-
         <div class="azkar-card">
             <h4>🌙 أذكار المساء الكاملة</h4>
-            <p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق (3 مرات). بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم (3 مرات).</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🛌 أذكار النوم والاستيقاظ</h4>
-            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. آية الكرسي والمعوذتين قبل النوم.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🕌 أذكار المسجد والدخول والخروج</h4>
-            <p>دخول المسجد: اللهم افتح لي أبواب رحمتك. خروج المسجد: اللهم إني أسألك من فضلك. خروج المنزل: بسم الله توكلت على الله ولا حول ولا قوة إلا بالله.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🤲 أذكار الكرب والهم والفرج</h4>
-            <p>لا إله إلا أنت سبحانك إني كنت من الظالمين. حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم (7 مرات).</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>💧 أذكار الوضوء والطعام</h4>
-            <p>بعد الوضوء: أشهد أن لا إله إلا الله وحده لا شريك له وأشهد أن محمداً عبده ورسوله، اللهم اجعلني من التوابين واجعلني من المتطهرين.</p>
+            <p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق...</p>
         </div>
     </div>
 
-    <!-- 5. موسوعة الأحاديث النبوية الموسعة -->
+    <!-- 5. الأحاديث -->
     <div id="hadithSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
-        
         <div class="hadith-card">
             <h4>1. حديث النية</h4>
-            <p>قال رسول الله صلى الله عليه وسلم: (إنما الأعمال بالنيات وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله...).</p>
+            <p>قال رسول الله صلى الله عليه وسلم: (إنما الأعمال بالنيات وإنما لكل امرئ ما نوى...).</p>
         </div>
-
-        <div class="hadith-card"><h4>2. حديث بر الوالدين</h4><p>جاء رجل إلى النبي صلى الله عليه وسلم فقال: من أحق الناس بححسن صحابتي؟ قال: أمك. قال: ثم من؟ قال: أمك. قال: ثم من؟ قال: أمك. قال: ثم من؟ قال: أبوك.</p></div>
-        <div class="hadith-card"><h4>3. حديث الإحسان والخلق</h4><p>قال رسول الله صلى الله عليه وسلم: (إن من أحبكم إلي وأقربكم مني مجلساً يوم القيامة أحاسنكم أخلاقاً).</p></div>
-        <div class="hadith-card"><h4>4. حديث التباغض والحسد</h4><p>قال رسول الله صلى الله عليه وسلم: (لا تحاسدوا ولا تناجشوا ولا تباغضوا ولا تدابروا، وكونوا عباد الله إخواناً).</p></div>
-        <div class="hadith-card"><h4>5. حديث الصدق البر</h4><p>قال رسول الله صلى الله عليه وسلم: (إن الصدق يهدي إلى البر وإن البر يهدي إلى الجنة وإن الرجل ليصدق حتى يكتب عند الله صديقاً).</p></div>
     </div>
 
     <!-- 6. التسبيح -->
@@ -685,28 +662,12 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:12px;">📚 الكتب والمكتبة الإسلامية</h3>
         <div class="book-card"><h4>1. تفسير ابن كثير</h4><p>تفسير القرآن العظيم للحافظ ابن كثير.</p></div>
-        <div class="book-card"><h4>2. رياض الصالحين</h4><p>دليل السالكين للإمام النووي.</p></div>
     </div>
 
     <!-- الإعدادات -->
     <div id="settingsSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:15px;">⚙️ إعدادات التطبيق</h3>
-        
-        <div class="setting-item">
-            <div class="setting-header">
-                <div class="setting-title-group">
-                    <span class="setting-icon">T</span>
-                    <span class="setting-title">حجم الخط</span>
-                </div>
-            </div>
-            <div class="font-options-btn">
-                <button class="font-btn active" id="f-normal" onclick="setFontSize('normal')">عادي</button>
-                <button class="font-btn" id="f-large" onclick="setFontSize('large')">كبير</button>
-                <button class="font-btn" id="f-xlarge" onclick="setFontSize('xlarge')">كبير جداً</button>
-            </div>
-        </div>
-
         <div style="margin-top:20px;">
             <p style="font-size:0.9rem; color:var(--text-muted); text-align:center;">حسابك الحالي: <b id="currentLoggedInUser">Sasa medo</b></p>
             <button class="btn-main" style="margin-top:10px; background:#dc2626;" onclick="logoutUser()">تسجيل الخروج من الحساب</button>
@@ -718,7 +679,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); text-align:center; font-size:1.5rem; margin-bottom:10px;">معلومات عن تطبيق قريب 💚</h3>
         <p style="line-height:1.8; color:var(--text-dark); font-size:0.95rem; text-align:justify;">
-            قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية، من خلال واجهة بسيطة تحتوي على أزرار كبيرة والسبورة الصوتية الفورية.
+            قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية.
         </p>
     </div>
 
@@ -731,7 +692,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <span>الرئيسية</span>
     </button>
     <button class="nav-item" onclick="openSection('blackboardSection')">
-        <span class="icon">⬛</span>
+        <span class="icon">📋</span>
         <span>السبورة</span>
     </button>
     <button class="nav-item" onclick="openSection('quranSection')">
@@ -749,108 +710,68 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 </nav>
 
 <script>
-    // 🛡️ نظام الحماية لمنع سرقة الكود وأدوات المطورين
+    // 🛡️ حماية الكود
     document.addEventListener('keydown', function(e) {
-        if (
-            e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || 
-            (e.ctrlKey && e.key === 'U')
-        ) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) || (e.ctrlKey && e.key === 'U')) {
             e.preventDefault();
-            alert('عذراً يا صاصا، عرض مصدر الصفحة محمي لحماية حقوق التطبيق! 💚');
             return false;
         }
     });
+    document.addEventListener('contextmenu', e => e.preventDefault());
 
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-    });
+    /* تفاعل السبورة البيضاء والتعرف الصوتي الجديد */
+    let recognition = null;
 
-    document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-    });
-
-    /* خاصية السبورة الذكية للصوت (المعدلة والمصلحة تماماً) */
     function startVoiceRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("متصفحك لا يدعم التعرف المباشر على الصوت، يرجى استخدام متصفح حديث.");
+            alert("متصفحك لا يدعم التعرف الصوتي المباشر.");
             return;
         }
 
-        const recognition = new SpeechRecognition();
+        recognition = new SpeechRecognition();
         recognition.lang = 'ar-SA';
-        recognition.interimResults = false;
+        recognition.interimResults = true;
         recognition.maxAlternatives = 1;
 
-        const display = document.getElementById("blackboardTextDisplay");
-        const status = document.getElementById("blackboardStatusText");
-
-        status.innerText = "جاري الاستماع الآن... تكلم بوضوح 🎙️";
-        status.style.color = "#d4af37";
-        display.style.color = "#ffffff";
-        display.innerText = "جاري الاستماع...";
+        const display = document.getElementById("whiteBoardText");
+        display.style.color = "var(--card-green)";
+        display.innerText = "جاري طلب إذن الصوت والاستماع... 🎙️";
 
         recognition.onresult = function(event) {
-            const speechResult = event.results[0][0].transcript;
-            display.innerText = speechResult;
-            display.style.color = "#ffffff";
-            status.innerText = "تم كتابة النص بنجاح ✅";
-            status.style.color = "#10b981";
-            speakText(speechResult);
+            let transcript = event.results[0][0].transcript;
+            display.innerText = transcript;
         };
 
-        recognition.onerror = function(event) {
-            status.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
-            status.style.color = "#ef4444";
-            display.innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
+        recognition.onerror = function() {
+            display.innerText = "حدث خطأ في الميكروفون، حاول مرة أخرى ❌";
         };
 
         recognition.onend = function() {
-            if(status.innerText.includes("جاري الاستماع")) {
-                status.innerText = "السبورة جاهزة للاستماع 🟢";
-                status.style.color = "#fca5a5";
-            }
+            // توقف التسجيل
         };
 
         try {
             recognition.start();
-        } catch(err) {
-            status.innerText = "يرجى السماح باستخدام الميكروفون 🎤";
+        } catch(e) {
+            alert("يرجى السماح باستخدام الميكروفون من إعدادات المتصفح.");
         }
     }
 
-    function speakBlackboardText() {
-        let text = document.getElementById("blackboardTextDisplay").innerText;
-        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري الاستماع")) {
+    function stopVoiceRecognition() {
+        if (recognition) {
+            recognition.stop();
+            document.getElementById("whiteBoardText").style.color = "#374151";
+        }
+    }
+
+    function playBoardText() {
+        let text = document.getElementById("whiteBoardText").innerText;
+        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري طلب")) {
             speakText(text);
+        } else {
+            alert("لا يوجد نص لنطقه على السبورة!");
         }
-    }
-
-    function clearBlackboard() {
-        document.getElementById("blackboardTextDisplay").innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
-        document.getElementById("blackboardTextDisplay").style.color = "#ffffff";
-        document.getElementById("blackboardStatusText").innerText = "السبورة جاهزة للاستماع 🟢";
-        document.getElementById("blackboardStatusText").style.color = "#fca5a5";
-    }
-
-    /* التحكم بحجم الخط البرمجي */
-    function setFontSize(size) {
-        let root = document.documentElement;
-        document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
-        
-        if (size === 'normal') {
-            root.style.setProperty('--base-font-size', '16px');
-            document.getElementById('f-normal').classList.add('active');
-        } else if (size === 'large') {
-            root.style.setProperty('--base-font-size', '19px');
-            document.getElementById('f-large').classList.add('active');
-        } else if (size === 'xlarge') {
-            root.style.setProperty('--base-font-size', '22px');
-            document.getElementById('f-xlarge').classList.add('active');
-        }
-        localStorage.setItem("qareeb_fontsize", size);
     }
 
     function speakText(text) {
@@ -873,10 +794,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         document.querySelectorAll(".content-section").forEach(s => s.classList.remove("active"));
         document.getElementById(sectionId).classList.add("active");
         window.scrollTo(0, 0);
-
-        if(sectionId === 'qiblaSection') {
-            requestCompassPermission();
-        }
+        if(sectionId === 'qiblaSection') requestCompassPermission();
     }
 
     function closeSections() {
@@ -884,7 +802,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         document.getElementById("mainHomeSection").style.display = "block";
     }
 
-    /* تقليب المصحف الصوت */
+    /* المصحف الصوتي والتقليب */
     let audioCtx = null;
     function playRealisticPageFlipSound() {
         try {
@@ -1138,9 +1056,6 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         document.getElementById("welcomeUser").innerText = savedName;
         document.getElementById("currentLoggedInUser").innerText = savedName;
     }
-
-    let savedFontSize = localStorage.getItem("qareeb_fontsize") || "normal";
-    setFontSize(savedFontSize);
 
     loadSurahs();
     initRealPrayerTimes();
