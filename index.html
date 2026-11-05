@@ -241,7 +241,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     margin-bottom: 15px;
 }
 .blackboard-text {
-    color: #ef4444;
+    color: #ffffff;
     font-size: 1.6rem;
     font-weight: bold;
     text-align: center;
@@ -556,7 +556,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- قسم السبورة الذكية للصوت والكتابة -->
+    <!-- قسم السبورة الذكية للصوت والكتابة (تم الإصلاح) -->
     <div id="blackboardSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 5px;">سبورة التحدث والكتابة الفورية</h3>
@@ -771,11 +771,11 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         e.preventDefault();
     });
 
-    /* خاصية السبورة الذكية للصوت */
+    /* خاصية السبورة الذكية للصوت (المعدلة والمصلحة تماماً) */
     function startVoiceRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("متصفحك لا يدعم التعرف المباشر على الصوت.");
+            alert("متصفحك لا يدعم التعرف المباشر على الصوت، يرجى استخدام متصفح حديث.");
             return;
         }
 
@@ -790,7 +790,7 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         status.innerText = "جاري الاستماع الآن... تكلم بوضوح 🎙️";
         status.style.color = "#d4af37";
         display.style.color = "#ffffff";
-        display.innerText = "...";
+        display.innerText = "جاري الاستماع...";
 
         recognition.onresult = function(event) {
             const speechResult = event.results[0][0].transcript;
@@ -801,24 +801,36 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             speakText(speechResult);
         };
 
-        recognition.onerror = function() {
+        recognition.onerror = function(event) {
             status.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
             status.style.color = "#ef4444";
+            display.innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
         };
 
-        recognition.start();
+        recognition.onend = function() {
+            if(status.innerText.includes("جاري الاستماع")) {
+                status.innerText = "السبورة جاهزة للاستماع 🟢";
+                status.style.color = "#fca5a5";
+            }
+        };
+
+        try {
+            recognition.start();
+        } catch(err) {
+            status.innerText = "يرجى السماح باستخدام الميكروفون 🎤";
+        }
     }
 
     function speakBlackboardText() {
         let text = document.getElementById("blackboardTextDisplay").innerText;
-        if(text && !text.includes("اضغط على زر التحدث")) {
+        if(text && !text.includes("اضغط على زر التحدث") && !text.includes("جاري الاستماع")) {
             speakText(text);
         }
     }
 
     function clearBlackboard() {
         document.getElementById("blackboardTextDisplay").innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام ...";
-        document.getElementById("blackboardTextDisplay").style.color = "#ef4444";
+        document.getElementById("blackboardTextDisplay").style.color = "#ffffff";
         document.getElementById("blackboardStatusText").innerText = "السبورة جاهزة للاستماع 🟢";
         document.getElementById("blackboardStatusText").style.color = "#fca5a5";
     }
