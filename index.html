@@ -226,6 +226,35 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
     display: flex; align-items: center; gap: 5px;
 }
 
+/* تصميم السبورة الذكية (Voice Blackboard) */
+.blackboard-container {
+    background: #0f2e21;
+    border: 6px solid #144331;
+    border-radius: 16px;
+    padding: 20px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
+}
+.blackboard-text {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.6;
+    word-break: break-word;
+    font-family: 'Courier New', Courier, monospace;
+}
+.blackboard-status {
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
 /* المصحف الشريف 3D */
 .quran-viewer { text-align: center; perspective: 1500px; overflow: hidden; padding: 10px 0; }
 .quran-img {
@@ -302,7 +331,6 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 .nav-item.active { color: var(--card-green); font-weight: bold; }
 .nav-item span.icon { font-size: 1.3rem; }
 
-/* عناصر كروت الإعدادات المطابقة للصورة بالضبط */
 .setting-item {
     padding: 16px 0;
     border-bottom: 1px solid #e5e7eb;
@@ -490,9 +518,13 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             </button>
         </div>
 
-        <!-- أقسام القرآن والعبادات -->
-        <div class="section-title">أقسام القرآن والعبادات</div>
+        <!-- أقسام القرآن والعبادات والسبورة الصوتية -->
+        <div class="section-title">أقسام القرآن والعبادات والسبورة</div>
         <div class="grid-container">
+            <button class="card-btn" onclick="openSection('blackboardSection')">
+                <span class="icon">⬛</span>
+                <span>السبورة الصوتية</span>
+            </button>
             <button class="card-btn" onclick="openSection('quranSection')">
                 <span class="icon">📖</span>
                 <span>المصحف</span>
@@ -517,14 +549,28 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
                 <span class="icon">🕋</span>
                 <span>القبلة</span>
             </button>
-            <button class="card-btn" onclick="openSection('tahfeezSection')">
-                <span class="icon">📈</span>
-                <span>التحفيظ</span>
-            </button>
             <button class="card-btn" onclick="openSection('booksSection')">
                 <span class="icon">📚</span>
                 <span>الكتب</span>
             </button>
+        </div>
+    </div>
+
+    <!-- قسم السبورة الذكية للكتابة الصوتية الفورية -->
+    <div id="blackboardSection" class="content-section">
+        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
+        <h3 style="color: var(--card-green); margin-bottom: 10px; text-align: center;">⬛ سبورة التحدث والكتابة الفورية</h3>
+        <p style="font-size: 0.85em; color: var(--text-muted); text-align: center; margin-bottom: 15px;">تحدث بصوتك لتظهر الكلمات فوراً بخط واضح على السبورة:</p>
+        
+        <div class="blackboard-container">
+            <div id="blackboardTextDisplay" class="blackboard-text">اضغط على زر التحدث بالأسفل وابدأ بالكلام...</div>
+            <div id="blackboardStatusText" class="blackboard-status">السبورة في وضع الاستعداد 🟢</div>
+        </div>
+
+        <button class="btn-main" onclick="startVoiceRecognition()" style="background: var(--card-green); font-size: 1.1rem; padding: 16px;">🎙️ اضغط هنا وابدأ التحدث</button>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="btn-main" style="background: #374151; margin-top:0;" onclick="speakBlackboardText()">🔊 نطق المكتوب</button>
+            <button class="btn-main" style="background: #dc2626; margin-top:0;" onclick="clearBlackboard()">🗑️ مسح السبورة</button>
         </div>
     </div>
 
@@ -567,102 +613,46 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <audio id="audioPlayer" controls style="width:100%; margin-top:15px;"></audio>
     </div>
 
-    <!-- 4. أذكار الدين كلها الضخمة جداً -->
+    <!-- 4. أذكار الدين -->
     <div id="azkarSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom: 12px;">📿 موسوعة أذكار الدين الكبرى</h3>
-        
-        <div class="azkar-card">
-            <h4>☀️ أذكار الصباح</h4>
-            <p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير. رب أسألك خير ما في هذا اليوم وخير ما بعده، وأعوذ بك من شر ما في هذا اليوم وشر ما بعده. رضيت بالله رباً وبالإسلام ديناً وبمحمد صلى الله عليه وسلم نبياً (3 مرات).</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🌙 أذكار المساء</h4>
-            <p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق (3 مرات). بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم (3 مرات). يا حي يا قيوم برحمتك أستغيث أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🛌 أذكار النوم والاستيقاظ</h4>
-            <p>باسمك ربي وضعت جنبي وبك أرفعه، إن أمسكت نفسي فارحمها وإن أرسلتها فاحفظها بما تحفظ به عبادك الصالحين. قراءة آية الكرسي والمعوذتين. وعند الاستيقاظ: الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🕌 أذكار ما بعد الصلاة الفريضة</h4>
-            <p>أستغفر الله (3 مرات)، اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام. اللهم لا مانع لما أعطيت ولا معطي لما منعت ولا ينفع ذا الجد منك الجد. سبحان الله (33)، الحمد لله (33)، الله أكبر (33)، تمام المائة: لا إله إلا الله وحده لا شريك له له الملك وله الحمد وهو على كل شيء قدير.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🚪 أذكار الدخول والخروج من المنزل والمسجد</h4>
-            <p>خروج المنزل: بسم الله توكلت على الله ولا حول ولا قوة إلا بالله. دخول المنزل: بسم الله ولجنا وبسم الله خرجنا وعلى ربنا توكلنا. دخول المسجد: اللهم افتح لي أبواب رحمتك.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🍲 أذكار الطعام والشراب</h4>
-            <p>قبل الطعام: بسم الله، وفي أوله وآخره إذا نسي: بسم الله أوله وآخره. بعد الطعام: الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين.</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🤲 أذكار الكرب والهم والمغفرة</h4>
-            <p>لا إله إلا أنت سبحانك إني كنت من الظالمين. حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم (7 مرات). سيد الاستغفار: اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك وأنا على عهدك ووعدك ما استطعت...</p>
-        </div>
-
-        <div class="azkar-card">
-            <h4>🚗 أذكار السفر والسوار</h4>
-            <p>الله أكبر (3 مرات)، سبحان الذي سخر لنا هذا وما كنا له مقرنين وإنا إلى ربنا لمنقلبون. اللهم إنا نسألك في سفرنا هذا البر والتقوى ومن العمل ما ترضى.</p>
-        </div>
+        <div class="azkar-card"><h4>☀️ أذكار الصباح</h4><p>أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير...</p></div>
+        <div class="azkar-card"><h4>🌙 أذكار المساء</h4><p>أمسينا وأمسى الملك لله والحمد لله، أعوذ بكلمات الله التامات من شر ما خلق...</p></div>
     </div>
 
-    <!-- 5. الأحاديث الموسعة -->
+    <!-- 5. الأحاديث -->
     <div id="hadithSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:12px;">📜 موسوعة الأحاديث النبوية الشريفة</h3>
-        <div class="hadith-card"><h4>1. حديث النية والإخلاص</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى فمن كانت هجرته إلى الله ورسوله فهجرته إلى الله ورسوله...</p></div>
-        <div class="hadith-card"><h4>2. حديث البر والوالدين</h4><p>جاء رجل إلى النبي فقال: من أحق الناس بحسن صحابتي؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أمك، قال ثم من؟ قال: أبوك.</p></div>
-        <div class="hadith-card"><h4>3. حديث الدين النصيحة</h4><p>الدين النصيحة، قلنا: لمن؟ قال: لله ولكتابه ولرسوله ولأئمة المسلمين وعامتها.</p></div>
-        <div class="hadith-card"><h4>4. حديث الأخلاق</h4><p>إن من أحبكم إلي وأقربكم مني مجلسا يوم القيامة أحاسنكم أخلاقا.</p></div>
+        <div class="hadith-card"><h4>1. حديث النية والإخلاص</h4><p>إنما الأعمال بالنيات وإنما لكل امرئ ما نوى...</p></div>
     </div>
 
-    <!-- 6. التسبيح واحتساب الحسنات الفورية -->
+    <!-- 6. التسبيح -->
     <div id="tasbihSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green);">💎 التسبيح واحتساب الحسنات</h3>
-        <p style="margin-top:5px; font-size:0.9rem; color:var(--text-muted);">كل تسبيحة تزيد حسناتك وثوابك في الآخرة (كل حرف بعشر حسنات وأجر عظيم):</p>
-        
         <div style="text-align:center; margin-top:20px; background:#f0fdf4; border:1px solid #bbf7d0; padding:20px; border-radius:15px;">
             <p style="font-size:1.1rem; font-weight:bold; color:#166534; margin-bottom:5px;">إجمالي الحسنات المكتسبة:</p>
             <div id="hasanatCount" style="font-size:2.2rem; font-weight:bold; color:#15803d; margin-bottom:15px;">0 حسنة</div>
-            
-            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8rem; font-weight:bold; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.2);" onclick="countUp()">
+            <button style="background:var(--card-green); color:#fff; border:none; width:100px; height:100px; border-radius:50%; font-size:1.8rem; font-weight:bold; cursor:pointer;" onclick="countUp()">
                 <span id="counter">0</span>
             </button>
-            <p style="margin-top:12px; font-size:0.85rem; color:var(--text-muted);">اضغط للتسبيح والاستغفار ورفع رصيد حسناتك</p>
         </div>
     </div>
 
-    <!-- 7. التحفيظ -->
-    <div id="tahfeezSection" class="content-section">
-        <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
-        <h3 style="color: var(--card-green);">📈 برنامج التحفيظ</h3>
-        <p style="color:var(--text-muted); margin-top:10px;">اختر السورة ونطاق الآيات للتكرار والحفظ المتقن.</p>
-    </div>
-
-    <!-- 8. الكتب الموسعة -->
+    <!-- 7. الكتب -->
     <div id="booksSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:12px;">📚 الكتب والمكتبة الإسلامية</h3>
-        <div class="book-card"><h4>1. تفسير ابن كثير</h4><p>تفسير القرآن العظيم للعلامة الحافظ ابن كثير.</p></div>
-        <div class="book-card"><h4>2. كتاب رياض الصالحين</h4><p>دليل السالكين إلى طريق رب العالمين للإمام النووي.</p></div>
-        <div class="book-card"><h4>3. السيرة النبوية لابن هشام</h4><p>توثيق السيرة العطرة للنبي صلى الله عليه وسلم.</p></div>
-        <div class="book-card"><h4>4. كتاب التوحيد</h4><p>شرح العقيدة والتوحيد الإسلامي الصافي.</p></div>
+        <div class="book-card"><h4>1. تفسير ابن كثير</h4><p>تفسير القرآن العظيم للحافظ ابن كثير.</p></div>
     </div>
 
-    <!-- قسم الإعدادات المطابق للصورة تماماً مع التحكم في حجم الخط والتباين والإشعارات -->
+    <!-- الإعدادات -->
     <div id="settingsSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); margin-bottom:15px;">⚙️ إعدادات التطبيق</h3>
         
-        <!-- 1. حجم الخط -->
         <div class="setting-item">
             <div class="setting-header">
                 <div class="setting-title-group">
@@ -670,7 +660,6 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
                     <span class="setting-title">حجم الخط</span>
                 </div>
             </div>
-            <p class="setting-desc">عادي – كبير – كبير جداً</p>
             <div class="font-options-btn">
                 <button class="font-btn active" id="f-normal" onclick="setFontSize('normal')">عادي</button>
                 <button class="font-btn" id="f-large" onclick="setFontSize('large')">كبير</button>
@@ -678,43 +667,14 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
             </div>
         </div>
 
-        <!-- 2. الصوت -->
-        <div class="setting-item">
-            <div class="setting-header">
-                <div class="setting-title-group">
-                    <span class="setting-icon">🔊</span>
-                    <span class="setting-title">الصوت</span>
-                </div>
-            </div>
-            <p class="setting-desc">تشغيل الصوت، وإعادة الرسالة، والتحكم بمستوى الصوت.</p>
-            <div style="margin-top:10px;">
-                <label style="font-size:0.85rem; color:var(--text-muted);">مستوى الصوت:</label>
-                <input type="range" id="volumeRange" min="0" max="1" step="0.1" value="1" style="width:100%; margin-top:5px;">
-            </div>
-        </div>
-
-        <!-- 3. التنبيهات -->
-        <div class="setting-item">
-            <div class="setting-header">
-                <div class="setting-title-group">
-                    <span class="setting-icon">🔔</span>
-                    <span class="setting-title">التنبيهات</span>
-                </div>
-                <input type="checkbox" id="notifyToggle" checked style="width:20px; height:20px;" onchange="toggleNotifications()">
-            </div>
-            <p class="setting-desc">تفعيل تذكير الصلاة والأذكار أو إيقافهما (تنبيه قبل الأذان بـ 5 دقائق).</p>
-        </div>
-
-        <!-- 4. مظهر التطبيق -->
         <div class="setting-item">
             <div class="setting-header">
                 <div class="setting-title-group">
                     <span class="setting-icon">🎨</span>
-                    <span class="setting-title">مظهر التطبيق</span>
+                    <span class="setting-title">مظهر التباين</span>
                 </div>
                 <input type="checkbox" id="contrastToggle" style="width:20px; height:20px;" onchange="toggleContrast()">
             </div>
-            <p class="setting-desc">الحفاظ على الأخضر والأبيض، مع خيار تباين أوضح لتسهيل القراءة.</p>
         </div>
 
         <div style="margin-top:20px;">
@@ -723,25 +683,13 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         </div>
     </div>
 
-    <!-- قسم معلومات عن التطبيق بالكامل والنص المكتوب بالنص -->
+    <!-- معلومات عن التطبيق -->
     <div id="aboutSection" class="content-section">
         <button class="back-btn" onclick="closeSections()">⬅ عودة للرئيسية</button>
         <h3 style="color: var(--card-green); text-align:center; font-size:1.5rem; margin-bottom:10px;">معلومات عن تطبيق قريب 💚</h3>
-        
-        <div style="line-height:1.8; color:var(--text-dark); font-size:0.95rem; text-align:justify;">
-            <p style="font-weight:bold; font-size:1.1rem; color:var(--card-green); text-align:center; margin-bottom:15px;">قريب — احتياجك يوصل بكلمة</p>
-            
-            <p style="margin-bottom:12px;">قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية، من خلال واجهة بسيطة تحتوي على أزرار كبيرة ورسائل جاهزة، مع إمكانية نطق الرسائل صوتيًا لتسهيل إيصال احتياجاتهم إلى الآخرين.</p>
-            
-            <p style="margin-bottom:12px;">نسعى من خلال قريب إلى تقليل صعوبات التواصل، وتعزيز الاستقلالية، وتوفير تجربة استخدام مريحة تراعي احتياجات المستخدمين المختلفة.</p>
-            
-            <div style="background:#f0fdf4; border-right:4px solid var(--card-green); padding:12px; margin:15px 0; border-radius:6px;">
-                <p style="margin-bottom:8px;"><b>رؤيتنا:</b> عالم يستطيع فيه الجميع التعبير عن احتياجاتهم بسهولة ووضوح.</p>
-                <p><b>رسالتنا:</b> جعل التواصل أسهل، وجعل كل احتياج مسموعًا.</p>
-            </div>
-            
-            <p style="text-align:center; font-weight:bold; color:var(--card-green); font-size:1.05rem; margin-top:15px;">قريب… لأن احتياجك يستحق أن يُسمع. 💚</p>
-        </div>
+        <p style="line-height:1.8; color:var(--text-dark); font-size:0.95rem; text-align:justify;">
+            قريب هو تطبيق ابتكاري يهدف إلى مساعدة كبار السن والأشخاص ذوي الإعاقة على التعبير عن احتياجاتهم بسهولة واستقلالية، من خلال واجهة بسيطة تحتوي على أزرار كبيرة ورسائل جاهزة والسبورة الصوتية الفورية.
+        </p>
     </div>
 
 </div>
@@ -752,13 +700,13 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
         <span class="icon">🏠</span>
         <span>الرئيسية</span>
     </button>
+    <button class="nav-item" onclick="openSection('blackboardSection')">
+        <span class="icon">⬛</span>
+        <span>السبورة</span>
+    </button>
     <button class="nav-item" onclick="openSection('quranSection')">
         <span class="icon">📖</span>
         <span>المصحف</span>
-    </button>
-    <button class="nav-item" onclick="openSection('audioSection')">
-        <span class="icon">🎧</span>
-        <span>الاستماع</span>
     </button>
     <button class="nav-item" onclick="openSection('azkarSection')">
         <span class="icon">📿</span>
@@ -771,7 +719,61 @@ header p { font-size: 0.85rem; color: var(--text-muted); }
 </nav>
 
 <script>
-/* التحكم بحجم الخط البرمجي والتغيير المباشر في الموقع */
+/* خاصية السبورة الذكية للصوت */
+function startVoiceRecognition() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        alert("متصفحك لا يدعم التعرف المباشر على الصوت، يرجى استخدام متصفح حديث.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ar-SA';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    const display = document.getElementById("blackboardTextDisplay");
+    const status = document.getElementById("blackboardStatusText");
+
+    status.innerText = "جاري الاستماع الآن... تكلم بوضوح 🎙️";
+    display.style.color = "#d4af37";
+
+    recognition.onresult = function(event) {
+        const speechResult = event.results[0][0].transcript;
+        display.innerText = speechResult;
+        display.style.color = "#ffffff";
+        status.innerText = "تم كتابة النص بنجاح ✅";
+        speakText(speechResult); // نطق النص تلقائياً إذا رغب المستخدم
+    };
+
+    recognition.onerror = function() {
+        status.innerText = "حدث خطأ في التقاط الصوت، حاول مرة أخرى ❌";
+        display.style.color = "#ef4444";
+    };
+
+    recognition.onend = function() {
+        if(status.innerText.includes("جاري الاستماع")) {
+            status.innerText = "السبورة في وضع الاستعداد 🟢";
+        }
+    };
+
+    recognition.start();
+}
+
+function speakBlackboardText() {
+    let text = document.getElementById("blackboardTextDisplay").innerText;
+    if(text && !text.includes("اضغط على زر التحدث")) {
+        speakText(text);
+    }
+}
+
+function clearBlackboard() {
+    document.getElementById("blackboardTextDisplay").innerText = "اضغط على زر التحدث بالأسفل وابدأ بالكلام...";
+    document.getElementById("blackboardTextDisplay").style.color = "#ffffff";
+    document.getElementById("blackboardStatusText").innerText = "تم مسح السبورة 🗑️";
+}
+
+/* التحكم بحجم الخط البرمجي */
 function setFontSize(size) {
     let root = document.documentElement;
     document.querySelectorAll('.font-btn').forEach(btn => btn.classList.remove('active'));
@@ -798,21 +800,12 @@ function toggleContrast() {
     }
 }
 
-function toggleNotifications() {
-    let isChecked = document.getElementById("notifyToggle").checked;
-    if (isChecked && "Notification" in window) {
-        Notification.requestPermission();
-    }
-}
-
 function speakText(text) {
     if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ar-SA';
         utterance.rate = 0.95;
-        let vol = document.getElementById("volumeRange") ? document.getElementById("volumeRange").value : 1;
-        utterance.volume = parseFloat(vol);
         window.speechSynthesis.speak(utterance);
     }
 }
@@ -838,7 +831,7 @@ function closeSections() {
     document.getElementById("mainHomeSection").style.display = "block";
 }
 
-/* صوت وحركة تقليب المصحف */
+/* تقليب المصحف الصوت */
 let audioCtx = null;
 function playRealisticPageFlipSound() {
     try {
@@ -892,7 +885,7 @@ function prevPage() {
     if(currentPage > 1) { currentPage--; document.getElementById("quranImage").removeAttribute("data-retried"); updateQuranPage('prev'); }
 }
 
-/* بوصلة القبلة الحقيقية */
+/* بوصلة القبلة */
 let qiblaBearing = 136.8;
 let userLat = 30.0444, userLng = 31.2357; 
 
@@ -960,10 +953,7 @@ function updateTasbihUI() {
     document.getElementById("hasanatCount").innerText = totalHasanat.toLocaleString() + " حسنة";
 }
 
-/* مواقيت الصلاة الحقيقية والتنبيه قبل الصلاة بـ 5 دقائق */
-let prayerTimesData = {};
-let notifiedPrayers = {};
-
+/* أوقات الصلاة */
 function initRealPrayerTimes() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -983,7 +973,7 @@ function fetchPrayerTimes(lat, lng) {
     fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=5`)
         .then(res => res.json())
         .then(data => {
-            prayerTimesData = data.data.timings;
+            let prayerTimesData = data.data.timings;
             let meta = data.data.meta;
             document.getElementById("userLocationText").innerText = `موقعك الحالي • ${meta.timezone}`;
             
@@ -993,22 +983,13 @@ function fetchPrayerTimes(lat, lng) {
             document.getElementById("time-Maghrib").innerText = prayerTimesData.Maghrib;
             document.getElementById("time-Isha").innerText = prayerTimesData.Isha;
 
-            startPrayerCountdown();
+            startPrayerCountdown(prayerTimesData);
         }).catch(() => {
             document.getElementById("userLocationText").innerText = "تعذر جلب الأوقات الحية، تحقق من الإنترنت.";
         });
 }
 
-function sendPrayerNotification(prayerName) {
-    if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("تطبيق قريب 🕌", {
-            body: `متبقي 5 دقائق على صلاة ${prayerName}، استعد للصلاة 💚`,
-            icon: "https://cdn-icons-png.flaticon.com/512/2913/2913109.png"
-        });
-    }
-}
-
-function startPrayerCountdown() {
+function startPrayerCountdown(prayerTimesData) {
     setInterval(() => {
         if (!prayerTimesData.Fajr) return;
         let now = new Date();
@@ -1047,12 +1028,6 @@ function startPrayerCountdown() {
         let mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         let secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-        // التنبيه قبل الصلاة بـ 5 دقائق بالضبط
-        if (hours === 0 && mins === 5 && secs === 0 && !notifiedPrayers[nextPrayer.name]) {
-            sendPrayerNotification(nextPrayer.name);
-            notifiedPrayers[nextPrayer.name] = true;
-        }
-
         let pNameEl = document.getElementById("nextPrayerName");
         let pTimerEl = document.getElementById("prayerTimer");
         if(pNameEl) pNameEl.innerText = `الصلاة القادمة: أذان ${nextPrayer.name}`;
@@ -1084,7 +1059,7 @@ function changeSurah() {
     audio.src = "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/" + file;
 }
 
-/* تسجيل الدخول والاحتفاظ بالحساب */
+/* تسجيل الدخول */
 function performLogin() {
     let name = document.getElementById("loginName").value;
     if(name.trim() !== "") {
